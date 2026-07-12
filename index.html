@@ -197,8 +197,8 @@
 
         .item {
             position: absolute;
-            width: 80px;
-            height: 80px;
+            width: 140px;
+            height: 140px;
             background: transparent !important;
             border: none;
             border-radius: 0;
@@ -598,8 +598,13 @@
             
             itemEnArrastre.classList.add('dragging');
             const touch = e.touches[0];
-            offsetX = touch.clientX - itemEnArrastre.offsetLeft;
-            offsetY = touch.clientY - itemEnArrastre.offsetTop;
+            const rect = itemEnArrastre.getBoundingClientRect();
+            const grid = document.getElementById('grid');
+            const gridRect = grid.getBoundingClientRect();
+            
+            // Calcular el offset desde la posición actual del item
+            offsetX = touch.clientX - rect.left;
+            offsetY = touch.clientY - rect.top;
         }
 
         function handleTouchMove(e) {
@@ -613,8 +618,12 @@
             let x = touch.clientX - gridRect.left - offsetX;
             let y = touch.clientY - gridRect.top - offsetY;
             
-            itemEnArrastre.style.left = Math.max(0, Math.min(x, gridRect.width - 80)) + 'px';
-            itemEnArrastre.style.top = Math.max(0, Math.min(y, gridRect.height - 80)) + 'px';
+            // Limitar al área del grid pero permitir mover libremente
+            x = Math.max(0, Math.min(x, gridRect.width - 140));
+            y = Math.max(0, Math.min(y, gridRect.height - 140));
+            
+            itemEnArrastre.style.left = x + 'px';
+            itemEnArrastre.style.top = y + 'px';
         }
 
         function handleTouchEnd(e) {
@@ -622,13 +631,21 @@
             
             const touch = e.changedTouches[0];
             const zonaDrop = document.getElementById('zona-drop');
+            
+            if (!zonaDrop) {
+                itemEnArrastre.classList.remove('dragging');
+                itemEnArrastre = null;
+                return;
+            }
+            
             const dropRect = zonaDrop.getBoundingClientRect();
+            const itemRect = itemEnArrastre.getBoundingClientRect();
             
-            const x = touch.clientX;
-            const y = touch.clientY;
-            
-            const isInDropZone = x >= dropRect.left && x <= dropRect.right &&
-                                 y >= dropRect.top && y <= dropRect.bottom;
+            // Verificar si el item está dentro de la zona de drop
+            const isInDropZone = !(itemRect.right < dropRect.left || 
+                                   itemRect.left > dropRect.right || 
+                                   itemRect.bottom < dropRect.top || 
+                                   itemRect.top > dropRect.bottom);
             
             if (isInDropZone) {
                 const esCorrect = itemEnArrastre.dataset.key === estadoJuego.itemSolicitado.key;
@@ -639,6 +656,7 @@
                     estadoJuego.puntuacion++;
                     elegirNuevoItem();
                 }
+                // Si es incorrecto, el item se queda donde está (no se resetea)
             }
             
             itemEnArrastre.classList.remove('dragging');
