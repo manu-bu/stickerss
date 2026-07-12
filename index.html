@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Idiomas Zero Drag</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f1ed;
+        }
+
+        /* PANTALLA DE INICIO */
+        #pantalla-inicio {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 60px;
+            background: #f5f1ed;
+        }
+
+        .titulo {
+            font-size: 48px;
+            color: #8b7355;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .controles {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .selector {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .selector label {
+            font-size: 18px;
+            color: #6b5a4a;
+            font-weight: 500;
+        }
+
+        .selector select {
+            padding: 12px 16px;
+            font-size: 16px;
+            border: 2.5px solid #d4c5b8;
+            border-radius: 12px;
+            background: #f9f5f0;
+            color: #6b5a4a;
+            cursor: pointer;
+            min-width: 250px;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b5a4a' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 20px;
+            padding-right: 40px;
+        }
+
+        .selector select:hover {
+            background-color: #faf8f6;
+        }
+
+        .selector select:focus {
+            outline: none;
+            border-color: #c9b8a8;
+        }
+
+        #btn-jugar {
+            padding: 14px 40px;
+            font-size: 20px;
+            background: #f9f5f0;
+            color: #6b5a4a;
+            border: 2.5px solid #d4c5b8;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 12px;
+        }
+
+        #btn-jugar:hover:not(:disabled) {
+            background: #faf8f6;
+            border-color: #c9b8a8;
+        }
+
+        #btn-jugar:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* PANTALLA DE JUEGO */
+        #pantalla-juego {
+            display: none;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            background: url('images/fondo.png') center/cover;
+            position: relative;
+        }
+
+        .barra-superior {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            gap: 20px;
+        }
+
+        .barra-superior button {
+            padding: 10px 20px;
+            font-size: 14px;
+            background: #f9f5f0;
+            color: #6b5a4a;
+            border: 2.5px solid #d4c5b8;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .barra-superior button:hover {
+            background: #faf8f6;
+            border-color: #c9b8a8;
+        }
+
+        .espacio-barra {
+            flex: 1;
+        }
+
+        .contenedor-juego {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 12px 20px;
+            gap: 12px;
+            position: relative;
+        }
+
+        .cartelito {
+            background: #f9f5f0;
+            border: 2.5px solid #d4c5b8;
+            border-radius: 12px;
+            padding: 12px 20px;
+            font-size: 24px;
+            color: #6b5a4a;
+            text-align: center;
+            font-weight: 500;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .grid-contenedor {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 12px;
+            position: relative;
+        }
+
+        .celda {
+            position: relative;
+            background: transparent;
+            border-radius: 8px;
+        }
+
+        .celda-drop {
+            grid-column: 1 / 3;
+            grid-row: 4;
+            background: transparent;
+            border: 2px dashed rgba(212, 197, 184, 0.3);
+            border-radius: 8px;
+        }
+
+        .item {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: #f9f5f0;
+            border: 2.5px solid #d4c5b8;
+            border-radius: 12px;
+            cursor: grab;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            user-select: none;
+            transition: box-shadow 0.2s ease;
+            z-index: 10;
+        }
+
+        .item:hover {
+            box-shadow: 0 4px 12px rgba(107, 90, 74, 0.15);
+        }
+
+        .item:active {
+            cursor: grabbing;
+        }
+
+        .item.dragging {
+            opacity: 0.8;
+            z-index: 100;
+        }
+
+        /* COUNTDOWN */
+        .countdown {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 80px;
+            color: #8b7355;
+            font-weight: bold;
+            z-index: 1000;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* PAUSA */
+        #panel-pausa {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 500;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contenido-pausa {
+            background: #f9f5f0;
+            border: 2.5px solid #d4c5b8;
+            border-radius: 12px;
+            padding: 40px 60px;
+            text-align: center;
+            min-width: 400px;
+        }
+
+        .contenido-pausa div {
+            font-size: 48px;
+            color: #6b5a4a;
+            font-weight: 500;
+            margin-bottom: 30px;
+        }
+
+        .contenido-pausa button {
+            padding: 12px 40px;
+            font-size: 18px;
+            background: #f9f5f0;
+            color: #6b5a4a;
+            border: 2.5px solid #d4c5b8;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .contenido-pausa button:hover {
+            background: #faf8f6;
+        }
+
+        /* PARTÍCULAS */
+        .particula {
+            position: absolute;
+            pointer-events: none;
+            font-size: 36px;
+        }
+
+        @keyframes flotar {
+            0% {
+                opacity: 1;
+                transform: translateY(0) translateX(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) translateX(var(--tx));
+            }
+        }
+
+        .particula {
+            animation: flotar 1s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- PANTALLA DE INICIO -->
+    <div id="pantalla-inicio">
+        <div class="titulo">Idiomas Zero</div>
+        <div class="controles">
+            <div class="selector">
+                <label for="idioma">Idioma</label>
+                <select id="idioma">
+                    <option value="">Selecciona un idioma</option>
+                    <option value="ingles">Inglés</option>
+                    <option value="frances">Francés</option>
+                </select>
+            </div>
+            <div class="selector">
+                <label for="tema">Tema</label>
+                <select id="tema">
+                    <option value="">Selecciona un tema</option>
+                    <option value="comida">Comida</option>
+                    <option value="bano">Baño</option>
+                </select>
+            </div>
+            <button id="btn-jugar" disabled>Jugar</button>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE JUEGO -->
+    <div id="pantalla-juego">
+        <div class="barra-superior">
+            <button id="btn-inicio">Inicio</button>
+            <div class="espacio-barra"></div>
+            <button id="btn-pausa">Pausa</button>
+        </div>
+        <div class="contenedor-juego">
+            <div class="cartelito" id="cartelito"></div>
+            <div class="grid-contenedor" id="grid">
+                <div class="celda celda-drop" id="zona-drop"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANEL DE PAUSA -->
+    <div id="panel-pausa">
+        <div class="contenido-pausa">
+            <div>Pausa</div>
+            <button id="btn-reanudar">Continuar</button>
+        </div>
+    </div>
+
+    <script>
+        // DATOS
+        const items = {
+            comida: {
+                ingles: {
+                    pan: 'Bread',
+                    huevo: 'Egg',
+                    leche: 'Milk',
+                    cereales: 'Cereal',
+                    chocolate: 'Chocolate'
+                },
+                frances: {
+                    pan: 'Pain',
+                    huevo: 'Oeuf',
+                    leche: 'Lait',
+                    cereales: 'Céréales',
+                    chocolate: 'Chocolat'
+                }
+            },
+            bano: {
+                ingles: {
+                    alfombra: 'Mat',
+                    shampoo: 'Shampoo',
+                    bata: 'Robe',
+                    pantuflas: 'Slippers',
+                    cortina: 'Curtain'
+                },
+                frances: {
+                    alfombra: 'Tapis',
+                    shampoo: 'Shampoing',
+                    bata: 'Peignoir',
+                    pantuflas: 'Pantoufles',
+                    cortina: 'Rideau'
+                }
+            }
+        };
+
+        // Mapeo de claves a nombres de imagen (igual en todas las categorías)
+        const imagenesItems = {
+            pan: 'pan.png',
+            huevo: 'huevo.png',
+            leche: 'leche.png',
+            cereales: 'cereales.png',
+            chocolate: 'chocolate.png',
+            alfombra: 'alfombra.png',
+            shampoo: 'shampoo.png',
+            bata: 'bata.png',
+            pantuflas: 'pantuflas.png',
+            cortina: 'cortina.png'
+        };
+
+        // ESTADO
+        let estadoJuego = {
+            idioma: null,
+            tema: null,
+            enJuego: false,
+            pausado: false,
+            itemsActuales: [],
+            itemSolicitado: null,
+            puntuacion: 0
+        };
+
+        // ELEMENTOS DOM
+        const selIdioma = document.getElementById('idioma');
+        const selTema = document.getElementById('tema');
+        const btnJugar = document.getElementById('btn-jugar');
+        const pantInicio = document.getElementById('pantalla-inicio');
+        const pantJuego = document.getElementById('pantalla-juego');
+        const btnInicio = document.getElementById('btn-inicio');
+        const btnPausa = document.getElementById('btn-pausa');
+        const panelPausa = document.getElementById('panel-pausa');
+        const btnReanudar = document.getElementById('btn-reanudar');
+        const cartelito = document.getElementById('cartelito');
+        const gridContenedor = document.getElementById('grid');
+        const zonaDrop = document.getElementById('zona-drop');
+
+        // EVENTOS INICIO
+        selIdioma.addEventListener('change', validarSeleccion);
+        selTema.addEventListener('change', validarSeleccion);
+        btnJugar.addEventListener('click', iniciarJuego);
+
+        function validarSeleccion() {
+            btnJugar.disabled = !selIdioma.value || !selTema.value;
+        }
+
+        // INICIAR JUEGO
+        async function iniciarJuego() {
+            estadoJuego.idioma = selIdioma.value;
+            estadoJuego.tema = selTema.value;
+            estadoJuego.enJuego = true;
+            estadoJuego.pausado = false;
+
+            pantInicio.style.display = 'none';
+            pantJuego.style.display = 'flex';
+
+            await mostrarCountdown();
+            inicializarJuego();
+        }
+
+        function mostrarCountdown() {
+            return new Promise(resolve => {
+                let count = 3;
+                const div = document.createElement('div');
+                div.className = 'countdown';
+                document.body.appendChild(div);
+
+                const interval = setInterval(() => {
+                    div.textContent = count;
+                    count--;
+                    if (count < 0) {
+                        clearInterval(interval);
+                        div.remove();
+                        resolve();
+                    }
+                }, 1000);
+            });
+        }
+
+        function inicializarJuego() {
+            gridContenedor.innerHTML = '<div class="celda celda-drop" id="zona-drop"></div>';
+            zonaDrop = document.getElementById('zona-drop');
+
+            const itemsDisponibles = Object.keys(items[estadoJuego.tema][estadoJuego.idioma]);
+            const itemsSeleccionados = itemsDisponibles.length > 15
+                ? itemsDisponibles.sort(() => Math.random() - 0.5).slice(0, 15)
+                : itemsDisponibles;
+
+            estadoJuego.itemsActuales = itemsSeleccionados.map(key => ({
+                key,
+                nombre: key,
+                nombreIdioma: items[estadoJuego.tema][estadoJuego.idioma][key]
+            }));
+
+            colocarItems();
+            elegirNuevoItem();
+        }
+
+        function colocarItems() {
+            const grid = document.getElementById('grid');
+            const gridRect = grid.getBoundingClientRect();
+            const celdas = Array.from(grid.querySelectorAll('.celda')).filter(c => !c.classList.contains('celda-drop'));
+
+            estadoJuego.itemsActuales.forEach((item, idx) => {
+                const element = document.createElement('div');
+                element.className = 'item';
+                element.draggable = true;
+                element.dataset.key = item.key;
+
+                // Crear imagen
+                const img = document.createElement('img');
+                img.src = `images/${estadoJuego.tema}/${imagenesItems[item.key]}`;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'contain';
+                img.style.pointerEvents = 'none';
+                element.appendChild(img);
+
+                const x = Math.random() * (gridRect.width - 140);
+                const y = Math.random() * (gridRect.height - 140);
+                element.style.left = x + 'px';
+                element.style.top = y + 'px';
+
+                element.addEventListener('dragstart', handleDragStart);
+                element.addEventListener('dragend', handleDragEnd);
+                grid.appendChild(element);
+            });
+
+            zonaDrop.addEventListener('dragover', handleDragOver);
+            zonaDrop.addEventListener('drop', handleDrop);
+        }
+
+        function elegirNuevoItem() {
+            const random = Math.floor(Math.random() * estadoJuego.itemsActuales.length);
+            estadoJuego.itemSolicitado = estadoJuego.itemsActuales[random];
+            cartelito.textContent = estadoJuego.itemSolicitado.nombreIdioma;
+        }
+
+        let itemEnArrastre = null;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        function handleDragStart(e) {
+            if (estadoJuego.pausado) return;
+            itemEnArrastre = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            offsetX = e.clientX - this.offsetLeft;
+            offsetY = e.clientY - this.offsetTop;
+        }
+
+        function handleDragEnd(e) {
+            if (!itemEnArrastre) return;
+            itemEnArrastre.classList.remove('dragging');
+            itemEnArrastre = null;
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            if (!itemEnArrastre || estadoJuego.pausado) return;
+
+            const esCorrect = itemEnArrastre.dataset.key === estadoJuego.itemSolicitado.key;
+
+            if (esCorrect) {
+                crearParticulas(itemEnArrastre);
+                itemEnArrastre.style.display = 'none';
+                estadoJuego.puntuacion++;
+                elegirNuevoItem();
+            } else {
+                const posX = itemEnArrastre.style.left;
+                const posY = itemEnArrastre.style.top;
+            }
+
+            itemEnArrastre.classList.remove('dragging');
+            itemEnArrastre = null;
+        }
+
+        function crearParticulas(element) {
+            const rect = element.getBoundingClientRect();
+            const cantidad = 8;
+
+            for (let i = 0; i < cantidad; i++) {
+                const particula = document.createElement('div');
+                particula.className = 'particula';
+                particula.textContent = '✨';
+                particula.style.left = rect.left + 'px';
+                particula.style.top = rect.top + 'px';
+                const tx = (Math.random() - 0.5) * 100;
+                particula.style.setProperty('--tx', tx + 'px');
+                document.body.appendChild(particula);
+
+                setTimeout(() => particula.remove(), 1000);
+            }
+        }
+
+        // BOTONES
+        btnInicio.addEventListener('click', volverInicio);
+        btnPausa.addEventListener('click', pausarJuego);
+        btnReanudar.addEventListener('click', reanudarJuego);
+
+        function volverInicio() {
+            estadoJuego.enJuego = false;
+            estadoJuego.pausado = false;
+            panelPausa.style.display = 'none';
+            pantJuego.style.display = 'none';
+            pantInicio.style.display = 'flex';
+            selIdioma.value = '';
+            selTema.value = '';
+            validarSeleccion();
+        }
+
+        function pausarJuego() {
+            estadoJuego.pausado = true;
+            panelPausa.style.display = 'flex';
+        }
+
+        function reanudarJuego() {
+            estadoJuego.pausado = false;
+            panelPausa.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
