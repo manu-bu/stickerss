@@ -290,6 +290,43 @@
         .glitter {
             animation: flotar-glitter 1.2s ease-out forwards;
         }
+
+        /* LUCIERNAGAS */
+        .luciernaga {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ffeb3b 0%, #ffa000 100%);
+            box-shadow: 0 0 8px rgba(255, 235, 59, 0.8), 0 0 16px rgba(255, 160, 0, 0.4);
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        @keyframes volar {
+            0% {
+                opacity: 0;
+                transform: translate(var(--x0), var(--y0)) scale(0.5);
+            }
+            25% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 1;
+                transform: translate(var(--x1), var(--y1)) scale(1);
+            }
+            75% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--x2), var(--y2)) scale(0.5);
+            }
+        }
+
+        .luciernaga {
+            animation: volar var(--duracion) ease-in-out infinite;
+        }
     </style>
 </head>
 <body>
@@ -604,6 +641,46 @@
             estado.pausado = false;
             panelPausa.style.display = 'none';
         }
+
+        // LUCIERNAGAS
+        function crearLuciernagas() {
+            const cantidad = 6;
+            for (let i = 0; i < cantidad; i++) {
+                setTimeout(() => {
+                    const luciernaga = document.createElement('div');
+                    luciernaga.className = 'luciernaga';
+                    
+                    const startX = Math.random() * window.innerWidth;
+                    const startY = Math.random() * window.innerHeight;
+                    
+                    const endX = Math.random() * window.innerWidth;
+                    const endY = Math.random() * window.innerHeight;
+                    
+                    const midX = (startX + endX) / 2 + (Math.random() - 0.5) * 200;
+                    const midY = (startY + endY) / 2 + (Math.random() - 0.5) * 200;
+                    
+                    const duracion = 6 + Math.random() * 8;
+                    
+                    luciernaga.style.setProperty('--x0', startX + 'px');
+                    luciernaga.style.setProperty('--y0', startY + 'px');
+                    luciernaga.style.setProperty('--x1', midX + 'px');
+                    luciernaga.style.setProperty('--y1', midY + 'px');
+                    luciernaga.style.setProperty('--x2', endX + 'px');
+                    luciernaga.style.setProperty('--y2', endY + 'px');
+                    luciernaga.style.setProperty('--duracion', duracion + 's');
+                    
+                    document.body.appendChild(luciernaga);
+                    
+                    setTimeout(() => luciernaga.remove(), duracion * 1000);
+                }, i * 2000);
+            }
+            
+            // Reiniciar ciclo
+            setTimeout(crearLuciernagas, 20000);
+        }
+
+        // Iniciar luciernagas cuando carga la página
+        window.addEventListener('load', crearLuciernagas);
     </script>
 </body>
 </html>
