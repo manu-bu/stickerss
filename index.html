@@ -296,11 +296,11 @@
         /* LUCIERNAGAS */
         .luciernaga {
             position: fixed;
-            width: 8px;
-            height: 8px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
-            background: radial-gradient(circle, #ffeb3b 0%, #ffa000 100%);
-            box-shadow: 0 0 8px rgba(255, 235, 59, 0.8), 0 0 16px rgba(255, 160, 0, 0.4);
+            background: #000000;
+            box-shadow: none;
             pointer-events: none;
             z-index: 5;
         }
@@ -459,6 +459,8 @@
             estado.pausado = false;
             pantInicio.style.display = 'none';
             pantJuego.style.display = 'flex';
+            
+            crearLuciernagas();
             
             await countdown();
             setup();
@@ -679,9 +681,6 @@
             // Reiniciar ciclo
             setTimeout(crearLuciernagas, 20000);
         }
-
-        // Iniciar luciernagas cuando carga la página
-        window.addEventListener('load', crearLuciernagas);
     </script>
 </body>
 </html>
