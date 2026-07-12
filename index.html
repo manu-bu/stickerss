@@ -199,21 +199,22 @@
             position: absolute;
             width: 80px;
             height: 80px;
-            background: #f9f5f0;
-            border: 2.5px solid #d4c5b8;
-            border-radius: 12px;
+            background: transparent;
+            border: none;
+            border-radius: 0;
             cursor: grab;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 36px;
             user-select: none;
-            transition: box-shadow 0.2s ease;
+            transition: opacity 0.2s ease;
             z-index: 10;
         }
 
         .item:hover {
-            box-shadow: 0 4px 12px rgba(107, 90, 74, 0.15);
+            opacity: 0.9;
+            box-shadow: none;
         }
 
         .item:active {
@@ -221,7 +222,7 @@
         }
 
         .item.dragging {
-            opacity: 0.8;
+            opacity: 0.7;
             z-index: 100;
         }
 
@@ -516,8 +517,15 @@
                 element.style.left = x + 'px';
                 element.style.top = y + 'px';
 
+                // Mouse events (desktop)
                 element.addEventListener('dragstart', handleDragStart);
                 element.addEventListener('dragend', handleDragEnd);
+                
+                // Touch events (iPad)
+                element.addEventListener('touchstart', handleTouchStart, false);
+                element.addEventListener('touchmove', handleTouchMove, false);
+                element.addEventListener('touchend', handleTouchEnd, false);
+                
                 grid.appendChild(element);
             });
 
@@ -571,6 +579,61 @@
                 const posY = itemEnArrastre.style.top;
             }
 
+            itemEnArrastre.classList.remove('dragging');
+            itemEnArrastre = null;
+        }
+
+        // TOUCH SUPPORT PARA IPAD
+        function handleTouchStart(e) {
+            if (estadoJuego.pausado) return;
+            itemEnArrastre = e.target.closest('.item');
+            if (!itemEnArrastre) return;
+            
+            itemEnArrastre.classList.add('dragging');
+            const touch = e.touches[0];
+            offsetX = touch.clientX - itemEnArrastre.offsetLeft;
+            offsetY = touch.clientY - itemEnArrastre.offsetTop;
+        }
+
+        function handleTouchMove(e) {
+            if (!itemEnArrastre) return;
+            e.preventDefault();
+            
+            const touch = e.touches[0];
+            const grid = document.getElementById('grid');
+            const gridRect = grid.getBoundingClientRect();
+            
+            let x = touch.clientX - gridRect.left - offsetX;
+            let y = touch.clientY - gridRect.top - offsetY;
+            
+            itemEnArrastre.style.left = Math.max(0, Math.min(x, gridRect.width - 80)) + 'px';
+            itemEnArrastre.style.top = Math.max(0, Math.min(y, gridRect.height - 80)) + 'px';
+        }
+
+        function handleTouchEnd(e) {
+            if (!itemEnArrastre) return;
+            
+            const touch = e.changedTouches[0];
+            const zonaDrop = document.getElementById('zona-drop');
+            const dropRect = zonaDrop.getBoundingClientRect();
+            
+            const x = touch.clientX;
+            const y = touch.clientY;
+            
+            const isInDropZone = x >= dropRect.left && x <= dropRect.right &&
+                                 y >= dropRect.top && y <= dropRect.bottom;
+            
+            if (isInDropZone) {
+                const esCorrect = itemEnArrastre.dataset.key === estadoJuego.itemSolicitado.key;
+                
+                if (esCorrect) {
+                    crearParticulas(itemEnArrastre);
+                    itemEnArrastre.style.display = 'none';
+                    estadoJuego.puntuacion++;
+                    elegirNuevoItem();
+                }
+            }
+            
             itemEnArrastre.classList.remove('dragging');
             itemEnArrastre = null;
         }
