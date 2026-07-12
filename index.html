@@ -115,7 +115,7 @@
             width: 100%;
             height: 100%;
             flex-direction: column;
-            background-image: url('https://raw.githubusercontent.com/manu-bu/stickerss/main/images/fondo.png');
+            background-image: url('https://cdn.jsdelivr.net/gh/manu-bu/stickerss@main/images/fondo.png');
             background-position: center;
             background-size: cover;
             position: relative;
@@ -355,8 +355,8 @@
     </div>
 
     <script>
-        // URL base para las imágenes en GitHub
-        const GITHUB_URL = 'https://raw.githubusercontent.com/manu-bu/stickerss/main';
+        // URL base usando jsDelivr CDN (sin problemas de CORS)
+        const GITHUB_URL = 'https://cdn.jsdelivr.net/gh/manu-bu/stickerss@main';
 
         // DATOS
         const items = {
