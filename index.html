@@ -115,7 +115,7 @@
             width: 100%;
             height: 100%;
             flex-direction: column;
-            background-image: url('https://cdn.jsdelivr.net/gh/manu-bu/stickerss@main/images/fondo.png');
+            background-image: url('./images/fondo.png');
             background-position: center;
             background-size: cover;
             position: relative;
@@ -355,9 +355,6 @@
     </div>
 
     <script>
-        // URL base usando jsDelivr CDN (sin problemas de CORS)
-        const GITHUB_URL = 'https://cdn.jsdelivr.net/gh/manu-bu/stickerss@main';
-
         // DATOS
         const items = {
             comida: {
@@ -477,7 +474,7 @@
 
         function inicializarJuego() {
             gridContenedor.innerHTML = '<div class="celda celda-drop" id="zona-drop"></div>';
-            zonaDrop = document.getElementById('zona-drop');
+            let zonaDrop = document.getElementById('zona-drop');
 
             const itemsDisponibles = Object.keys(items[estadoJuego.tema][estadoJuego.idioma]);
             const itemsSeleccionados = itemsDisponibles.length > 15
@@ -490,11 +487,11 @@
                 nombreIdioma: items[estadoJuego.tema][estadoJuego.idioma][key]
             }));
 
-            colocarItems();
+            colocarItems(zonaDrop);
             elegirNuevoItem();
         }
 
-        function colocarItems() {
+        function colocarItems(zonaDrop) {
             const grid = document.getElementById('grid');
             const gridRect = grid.getBoundingClientRect();
             const celdas = Array.from(grid.querySelectorAll('.celda')).filter(c => !c.classList.contains('celda-drop'));
@@ -507,7 +504,7 @@
 
                 // Crear imagen
                 const img = document.createElement('img');
-                img.src = `${GITHUB_URL}/images/${estadoJuego.tema}/${imagenesItems[item.key]}`;
+                img.src = `./images/${estadoJuego.tema}/${imagenesItems[item.key]}`;
                 img.style.width = '100%';
                 img.style.height = '100%';
                 img.style.objectFit = 'contain';
@@ -624,4 +621,3 @@
     </script>
 </body>
 </html>
- 
