@@ -115,7 +115,9 @@
             width: 100%;
             height: 100%;
             flex-direction: column;
-            background: url('images/fondo.png') center/cover;
+            background-image: url('https://raw.githubusercontent.com/manu-bu/stickerss/main/images/fondo.png');
+            background-position: center;
+            background-size: cover;
             position: relative;
         }
 
@@ -353,6 +355,9 @@
     </div>
 
     <script>
+        // URL base para las imágenes en GitHub
+        const GITHUB_URL = 'https://raw.githubusercontent.com/manu-bu/stickerss/main';
+
         // DATOS
         const items = {
             comida: {
@@ -502,7 +507,7 @@
 
                 // Crear imagen
                 const img = document.createElement('img');
-                img.src = `images/${estadoJuego.tema}/${imagenesItems[item.key]}`;
+                img.src = `${GITHUB_URL}/images/${estadoJuego.tema}/${imagenesItems[item.key]}`;
                 img.style.width = '100%';
                 img.style.height = '100%';
                 img.style.objectFit = 'contain';
