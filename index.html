@@ -109,7 +109,9 @@
             align-items: center;
             padding: 14px 24px;
             gap: 16px;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(245, 241, 237, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 197, 184, 0.3);
         }
 
         .barra-superior button {
@@ -358,11 +360,10 @@
     <div id="pantalla-juego">
         <div class="barra-superior">
             <button id="btn-inicio">Inicio</button>
-            <div class="espacio-barra"></div>
+            <div class="cartelito" id="cartelito"></div>
             <button id="btn-pausa">Pausa</button>
         </div>
         <div class="contenedor-juego">
-            <div class="cartelito" id="cartelito"></div>
             <div class="grid-contenedor" id="grid">
                 <div class="celda-drop" id="zona-drop"></div>
             </div>
