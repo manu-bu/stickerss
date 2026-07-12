@@ -5,19 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Idiomas Zero</title>
+    <title>STICKERS!</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;700&display=swap');
         
         html, body {
             width: 100%;
             height: 100vh;
             overflow: hidden;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: 'Comfortaa', sans-serif;
             background: #f5f1ed;
+            text-transform: uppercase;
         }
 
-        /* PANTALLA DE INICIO */
         #pantalla-inicio {
             width: 100%;
             height: 100%;
@@ -32,7 +34,7 @@
         .titulo {
             font-size: 48px;
             color: #8b7355;
-            font-weight: 300;
+            font-weight: 700;
             letter-spacing: 2px;
         }
 
@@ -46,8 +48,8 @@
         .selector {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            align-items: flex-start;
+            gap: 12px;
+            align-items: center;
         }
 
         .selector label {
@@ -56,21 +58,33 @@
             font-weight: 500;
         }
 
-        .selector select {
-            padding: 10px 14px;
+        .opciones-fila {
+            display: flex;
+            gap: 12px;
+        }
+
+        .opcion-btn {
+            padding: 10px 20px;
             font-size: 14px;
             border: 2.5px solid #d4c5b8;
             border-radius: 8px;
             background: #f9f5f0;
             color: #6b5a4a;
             cursor: pointer;
-            min-width: 220px;
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b5a4a' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 10px center;
-            background-size: 18px;
-            padding-right: 36px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            font-family: 'Comfortaa', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .opcion-btn:hover {
+            background: #faf8f6;
+        }
+
+        .opcion-btn.selected {
+            background: #d4c5b8;
+            color: #fff;
+            font-weight: 600;
         }
 
         #btn-jugar {
@@ -84,6 +98,8 @@
             font-weight: 600;
             transition: all 0.2s ease;
             margin-top: 12px;
+            font-family: 'Comfortaa', sans-serif;
+            text-transform: uppercase;
         }
 
         #btn-jugar:disabled {
@@ -91,7 +107,6 @@
             cursor: not-allowed;
         }
 
-        /* PANTALLA DE JUEGO */
         #pantalla-juego {
             display: none;
             width: 100%;
@@ -124,6 +139,8 @@
             cursor: pointer;
             font-weight: 600;
             transition: all 0.15s ease;
+            font-family: 'Comfortaa', sans-serif;
+            text-transform: uppercase;
         }
 
         .barra-superior button:active {
@@ -156,6 +173,8 @@
             cursor: pointer;
             transition: all 0.2s ease;
             user-select: none;
+            font-family: 'Comfortaa', sans-serif;
+            text-transform: uppercase;
         }
 
         .cartelito:active {
@@ -216,7 +235,6 @@
             50% { opacity: 0.3; }
         }
 
-        /* COUNTDOWN */
         .countdown {
             position: fixed;
             top: 50%;
@@ -227,9 +245,10 @@
             font-weight: bold;
             z-index: 1000;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            font-family: 'Comfortaa', sans-serif;
+            text-transform: uppercase;
         }
 
-        /* PAUSA */
         #panel-pausa {
             display: none;
             position: fixed;
@@ -250,13 +269,15 @@
             padding: 40px 50px;
             text-align: center;
             min-width: 320px;
+            font-family: 'Comfortaa', sans-serif;
+            text-transform: uppercase;
         }
 
         .contenido-pausa div {
             font-size: 40px;
             color: #6b5a4a;
             font-weight: 500;
-            margin-bottom: 24px;
+            margin-bottom: 30px;
         }
 
         .contenido-pausa button {
@@ -268,9 +289,10 @@
             border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
+            font-family: 'Comfortaa', sans-serif;
+            text-transform: uppercase;
         }
 
-        /* GLITTER PARTICLES */
         .glitter {
             position: fixed;
             pointer-events: none;
@@ -293,70 +315,36 @@
             animation: flotar-glitter 1.2s ease-out forwards;
         }
 
-        /* LUCIERNAGAS */
         .luciernaga {
             position: fixed;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: #000000;
-            box-shadow: none;
             pointer-events: none;
             z-index: 5;
-        }
-
-        @keyframes volar {
-            0% {
-                opacity: 0;
-                transform: translate(var(--x0), var(--y0)) scale(0.5);
-            }
-            25% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 1;
-                transform: translate(var(--x1), var(--y1)) scale(1);
-            }
-            75% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-                transform: translate(var(--x2), var(--y2)) scale(0.5);
-            }
-        }
-
-        .luciernaga {
-            animation: volar var(--duracion) ease-in-out infinite;
+            border-radius: 50%;
         }
     </style>
 </head>
 <body>
-    <!-- PANTALLA DE INICIO -->
     <div id="pantalla-inicio">
-        <div class="titulo">Idiomas Zero</div>
+        <div class="titulo">STICKERS!</div>
         <div class="controles">
             <div class="selector">
-                <label for="idioma">Idioma</label>
-                <select id="idioma">
-                    <option value="">Selecciona un idioma</option>
-                    <option value="ingles">Inglés</option>
-                    <option value="frances">Francés</option>
-                </select>
+                <label>IDIOMA</label>
+                <div class="opciones-fila">
+                    <button class="opcion-btn" data-idioma="ingles">Inglés</button>
+                    <button class="opcion-btn" data-idioma="frances">Francés</button>
+                </div>
             </div>
             <div class="selector">
-                <label for="tema">Tema</label>
-                <select id="tema">
-                    <option value="">Selecciona un tema</option>
-                    <option value="comida">Comida</option>
-                    <option value="bano">Baño</option>
-                </select>
+                <label>TEMA</label>
+                <div class="opciones-fila">
+                    <button class="opcion-btn" data-tema="comida">Comida</button>
+                    <button class="opcion-btn" data-tema="bano">Baño</button>
+                </div>
             </div>
             <button id="btn-jugar" disabled>Jugar</button>
         </div>
     </div>
 
-    <!-- PANTALLA DE JUEGO -->
     <div id="pantalla-juego">
         <div class="barra-superior">
             <button id="btn-inicio">Inicio</button>
@@ -370,7 +358,6 @@
         </div>
     </div>
 
-    <!-- PANEL DE PAUSA -->
     <div id="panel-pausa">
         <div class="contenido-pausa">
             <div>Pausa</div>
@@ -379,7 +366,6 @@
     </div>
 
     <script>
-        // VOCABULARIO
         const vocab = {
             comida: {
                 ingles: [
@@ -415,7 +401,6 @@
             }
         };
 
-        // ESTADO
         let estado = {
             idioma: null,
             tema: null,
@@ -426,9 +411,6 @@
             puntuacion: 0
         };
 
-        // DOM
-        const selIdioma = document.getElementById('idioma');
-        const selTema = document.getElementById('tema');
         const btnJugar = document.getElementById('btn-jugar');
         const pantInicio = document.getElementById('pantalla-inicio');
         const pantJuego = document.getElementById('pantalla-juego');
@@ -439,22 +421,41 @@
         const cartelito = document.getElementById('cartelito');
         const grid = document.getElementById('grid');
 
-        // EVENTOS INICIO
-        selIdioma.addEventListener('change', validar);
-        selTema.addEventListener('change', validar);
+        // Botones de idioma y tema
+        const botonesIdioma = document.querySelectorAll('[data-idioma]');
+        const botonesTema = document.querySelectorAll('[data-tema]');
+
+        botonesIdioma.forEach(btn => {
+            btn.addEventListener('click', () => {
+                botonesIdioma.forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                estado.idioma = btn.dataset.idioma;
+                validar();
+            });
+        });
+
+        botonesTema.forEach(btn => {
+            btn.addEventListener('click', () => {
+                botonesTema.forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                estado.tema = btn.dataset.tema;
+                validar();
+            });
+        });
+
+        function validar() {
+            btnJugar.disabled = !estado.idioma || !estado.tema;
+        }
+
         btnJugar.addEventListener('click', iniciar);
         btnInicio.addEventListener('click', volverInicio);
         btnPausa.addEventListener('click', pausar);
         btnReanudar.addEventListener('click', reanudar);
         cartelito.addEventListener('click', reproducirAudio);
 
-        function validar() {
-            btnJugar.disabled = !selIdioma.value || !selTema.value;
-        }
+        window.addEventListener('load', crearLuciernagas);
 
         async function iniciar() {
-            estado.idioma = selIdioma.value;
-            estado.tema = selTema.value;
             estado.enJuego = true;
             estado.pausado = false;
             pantInicio.style.display = 'none';
@@ -524,12 +525,22 @@
         }
 
         function proximoItem() {
-            const random = Math.floor(Math.random() * estado.items.length);
-            estado.itemActual = estado.items[random];
+            // Filtrar items que aún están visibles
+            const itemsDisponibles = estado.items.filter(item => {
+                const element = document.querySelector(`[data-key="${item.key}"]`);
+                return element && element.style.display !== 'none';
+            });
+            
+            if (itemsDisponibles.length === 0) {
+                cartelito.textContent = '¡GANASTE!';
+                return;
+            }
+            
+            const random = Math.floor(Math.random() * itemsDisponibles.length);
+            estado.itemActual = itemsDisponibles[random];
             cartelito.textContent = estado.itemActual.displayText;
         }
 
-        // DRAG & DROP CON TOUCH
         let dragging = null;
         let dragOffset = { x: 0, y: 0 };
 
@@ -575,13 +586,11 @@
                             itemRect.top > dropRect.bottom);
             
             if (enZona && dragging.dataset.key === estado.itemActual.key) {
-                // CORRECTO
                 crearGlitter(itemRect);
                 dragging.style.display = 'none';
                 estado.puntuacion++;
                 proximoItem();
             } else if (enZona) {
-                // INCORRECTO - parpadeo
                 dragging.classList.add('error');
                 setTimeout(() => dragging.classList.remove('error'), 400);
             }
@@ -627,11 +636,13 @@
         function volverInicio() {
             estado.enJuego = false;
             estado.pausado = false;
+            estado.idioma = null;
+            estado.tema = null;
             panelPausa.style.display = 'none';
             pantJuego.style.display = 'none';
             pantInicio.style.display = 'flex';
-            selIdioma.value = '';
-            selTema.value = '';
+            botonesIdioma.forEach(b => b.classList.remove('selected'));
+            botonesTema.forEach(b => b.classList.remove('selected'));
             validar();
         }
 
@@ -645,13 +656,21 @@
             panelPausa.style.display = 'none';
         }
 
-        // LUCIERNAGAS
         function crearLuciernagas() {
-            const cantidad = 6;
+            const cantidad = 20;
             for (let i = 0; i < cantidad; i++) {
                 setTimeout(() => {
                     const luciernaga = document.createElement('div');
                     luciernaga.className = 'luciernaga';
+                    
+                    const isBlanca = i < 13;
+                    const tamaño = isBlanca 
+                        ? 16 + Math.random() * 8
+                        : 2 + Math.random() * 4;
+                    
+                    const brillo = isBlanca 
+                        ? 5 + Math.random() * 8
+                        : 3 + Math.random() * 6;
                     
                     const startX = Math.random() * window.innerWidth;
                     const startY = Math.random() * window.innerHeight;
@@ -659,26 +678,70 @@
                     const endX = Math.random() * window.innerWidth;
                     const endY = Math.random() * window.innerHeight;
                     
-                    const midX = (startX + endX) / 2 + (Math.random() - 0.5) * 200;
-                    const midY = (startY + endY) / 2 + (Math.random() - 0.5) * 200;
+                    const midX = (startX + endX) / 2 + (Math.random() - 0.5) * 120;
+                    const midY = (startY + endY) / 2 + (Math.random() - 0.5) * 120;
                     
-                    const duracion = 6 + Math.random() * 8;
+                    const duracion = isBlanca 
+                        ? 8000 + Math.random() * 6000 
+                        : 12000 + Math.random() * 8000;
                     
-                    luciernaga.style.setProperty('--x0', startX + 'px');
-                    luciernaga.style.setProperty('--y0', startY + 'px');
-                    luciernaga.style.setProperty('--x1', midX + 'px');
-                    luciernaga.style.setProperty('--y1', midY + 'px');
-                    luciernaga.style.setProperty('--x2', endX + 'px');
-                    luciernaga.style.setProperty('--y2', endY + 'px');
-                    luciernaga.style.setProperty('--duracion', duracion + 's');
+                    const cicloTiempo = 4000 + Math.random() * 4000;
+                    const tiempoEncendida = 2000 + Math.random() * 300;
+                    
+                    luciernaga.style.width = tamaño + 'px';
+                    luciernaga.style.height = tamaño + 'px';
+                    
+                    if (isBlanca) {
+                        luciernaga.style.background = `radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.5) 40%, rgba(255,255,255,0.1) 100%)`;
+                        luciernaga.style.boxShadow = `0 0 ${brillo * 1.5}px rgba(255,255,255,0.4)`;
+                    } else {
+                        luciernaga.style.background = 'rgba(210, 180, 140, 0.9)';
+                        luciernaga.style.boxShadow = `0 0 ${brillo}px rgba(210, 180, 140, 0.9)`;
+                    }
+                    
+                    luciernaga.style.left = startX + 'px';
+                    luciernaga.style.top = startY + 'px';
+                    luciernaga.style.opacity = '0';
                     
                     document.body.appendChild(luciernaga);
                     
-                    setTimeout(() => luciernaga.remove(), duracion * 1000);
-                }, i * 2000);
+                    const inicio = Date.now();
+                    const animar = () => {
+                        const elapsed = Date.now() - inicio;
+                        const progress = elapsed / duracion;
+                        
+                        if (progress > 1) {
+                            luciernaga.remove();
+                            return;
+                        }
+                        
+                        const x = (1-progress)**2 * startX + 2*(1-progress)*progress * midX + progress**2 * endX;
+                        const y = (1-progress)**2 * startY + 2*(1-progress)*progress * midY + progress**2 * endY;
+                        
+                        luciernaga.style.left = x + 'px';
+                        luciernaga.style.top = y + 'px';
+                        
+                        const cicloLocal = elapsed % cicloTiempo;
+                        
+                        let opacity;
+                        if (cicloLocal < tiempoEncendida * 0.3) {
+                            opacity = (cicloLocal / (tiempoEncendida * 0.3));
+                        } else if (cicloLocal < tiempoEncendida) {
+                            opacity = 1;
+                        } else if (cicloLocal < tiempoEncendida + 300) {
+                            opacity = 1 - ((cicloLocal - tiempoEncendida) / 300);
+                        } else {
+                            opacity = 0;
+                        }
+                        
+                        luciernaga.style.opacity = opacity * 0.8;
+                        requestAnimationFrame(animar);
+                    };
+                    
+                    animar();
+                }, i * 300);
             }
             
-            // Reiniciar ciclo
             setTimeout(crearLuciernagas, 20000);
         }
     </script>
