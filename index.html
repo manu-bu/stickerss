@@ -3,38 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STICKERS! - Juego de Idiomas</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>STICKERS!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        @property --angulo-led {
-            syntax: '<angle>';
-            inherits: false;
-            initial-value: 0deg;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --font: 'Quicksand', 'Nunito', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
         }
-
-        @-webkit-keyframes girarLed {
-            to { --angulo-led: 360deg; }
-        }
-
-        @keyframes girarLed {
-            to { --angulo-led: 360deg; }
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Quicksand', sans-serif;
-        }
-
-        body {
+        
+        html, body {
+            font-family: var(--font);
             width: 100%;
             height: 100vh;
             overflow: hidden;
-            touch-action: none;
+            background: #f5f1ed;
         }
 
-        /* PANTALLA DE INICIO */
+        * {
+            font-family: var(--font);
+        }
+
         #pantalla-inicio {
             width: 100%;
             height: 100%;
@@ -42,52 +35,77 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            position: relative;
+            gap: 40px;
+            background: #f5f1ed;
             background-image: url('./images/fondo.png');
             background-position: center;
             background-size: cover;
+            background-attachment: fixed;
         }
 
-        .contenedor-inicio {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 40px;
-        }
-
-        .titulo-inicio {
+        .titulo {
             font-size: 48px;
-            font-weight: 700;
-            text-align: center;
-            color: #2b2b2b;
+            color: #8b7355;
+            font-weight: 400;
+            letter-spacing: 2px;
         }
 
-        .botones-inicio {
+        .controles {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
             align-items: center;
         }
 
-        .botones-inicio button {
-            position: relative;
-            padding: 15px 40px;
+        .selector {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .selector label {
             font-size: 16px;
+            color: #6b5a4a;
+            font-weight: 500;
+        }
+
+        .opciones-fila {
+            display: flex;
+            gap: 12px;
+        }
+
+        @property --angulo-led {
+            syntax: '<angle>';
+            inherits: false;
+            initial-value: 0deg;
+        }
+
+        @keyframes girarLed {
+            to { --angulo-led: 360deg; }
+        }
+
+        .opcion-btn {
+            position: relative;
+            padding: 10px 20px;
+            font-size: 14px;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
+            background: #5a4a3a;
+            color: #f5f1ed;
             cursor: pointer;
-            font-weight: 600;
-            background: #2b2b2b;
-            color: #e8e6de;
+            font-weight: 700;
             text-transform: uppercase;
             transition: transform 0.15s ease;
+            box-shadow: none;
+            font-family: var(--font-quicksand);
         }
 
-        .botones-inicio button::before {
+        .opcion-btn::before {
             content: "";
             position: absolute;
-            inset: -6px;
-            border-radius: 11px;
+            inset: -3px;
+            border-radius: 15px;
             background: conic-gradient(
                 from var(--angulo-led),
                 #f5d97a,
@@ -99,84 +117,143 @@
                 #c4e86a,
                 #f5d97a
             );
-            -webkit-background: linear-gradient(45deg, #f5d97a, #e88787, #f0a8d0, #b79bdb, #7ba7e0, #a0e0f5, #c4e86a);
             animation: girarLed 4s linear infinite;
-            -webkit-animation: girarLed 4s linear infinite;
             z-index: -1;
         }
 
-        .botones-inicio button::after {
+        .opcion-btn::after {
             content: "";
             position: absolute;
             inset: 0;
-            border-radius: 8px;
-            background: #2b2b2b;
+            border-radius: 12px;
+            background: #5a4a3a;
             z-index: -1;
         }
 
-        .botones-inicio button:active {
+        .opcion-btn:active {
             transform: scale(0.93);
         }
 
-        /* MODOS PARA BOTÓN JUGAR */
-        .botones-inicio button.apagado {
+        .opcion-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .opcion-btn.selected {
+            background: #d4c5b8;
+            color: #fff;
+            font-weight: 500;
+            animation: rebote 1.2s ease-in-out infinite;
+        }
+
+        @keyframes rebote {
+            0% {
+                transform: translateY(0) scale(1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+            50% {
+                transform: translateY(-8px) scale(1.02);
+                box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        #btn-jugar {
+            padding: 12px 36px;
+            font-size: 18px;
+            background: #f9f5f0;
+            color: #6b5a4a;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            margin-top: 12px;
+            font-family: var(--font-quicksand);
+            position: relative;
+            text-transform: uppercase;
+            z-index: 3;
+        }
+
+        #btn-jugar {
+            position: relative;
+            padding: 12px 36px;
+            font-size: 18px;
+            border: none;
+            border-radius: 18px;
+            background: #5a4a3a;
+            color: #f5f1ed;
+            cursor: pointer;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: transform 0.15s ease;
+            box-shadow: none;
+            font-family: var(--font-quicksand);
+            margin-top: 12px;
+        }
+
+        #btn-jugar::before {
+            content: "";
+            position: absolute;
+            inset: -3px;
+            border-radius: 21px;
+            background: conic-gradient(
+                from var(--angulo-led),
+                #f5d97a,
+                #e88787,
+                #f0a8d0,
+                #b79bdb,
+                #7ba7e0,
+                #a0e0f5,
+                #c4e86a,
+                #f5d97a
+            );
+            animation: girarLedRapido 2s linear infinite;
+            z-index: -1;
+        }
+
+        #btn-jugar::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 18px;
+            background: #5a4a3a;
+            z-index: -1;
+        }
+
+        #btn-jugar:active {
+            transform: scale(0.93);
+        }
+
+        #btn-jugar:disabled {
             opacity: 0.4;
             cursor: not-allowed;
         }
 
-        .botones-inicio button.apagado::before {
-            animation: none;
-            background: #666;
-        }
-
-        .botones-inicio button.encendido {
-            opacity: 1;
-            cursor: pointer;
-        }
-
-        .botones-inicio button.encendido::before {
-            animation: girarLed 4s linear infinite;
-            background: conic-gradient(
-                from var(--angulo-led),
-                #f5d97a,
-                #e88787,
-                #f0a8d0,
-                #b79bdb,
-                #7ba7e0,
-                #a0e0f5,
-                #c4e86a,
-                #f5d97a
-            );
-        }
-
-        /* SELECTOR DE OPCIONES */
-        .grupo-botones {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            justify-content: center;
-            max-width: 600px;
-        }
-
-        .grupo-botones button {
+        #btn-inicio, #btn-pausa {
             position: relative;
-            padding: 12px 24px;
-            font-size: 13px;
+            padding: 8px 24px;
+            font-size: 14px;
             border: none;
-            border-radius: 6px;
+            border-radius: 12px;
+            background: #5a4a3a;
+            color: #f5f1ed;
             cursor: pointer;
-            font-weight: 600;
-            background: #2b2b2b;
-            color: #e8e6de;
+            font-weight: 700;
             text-transform: uppercase;
             transition: transform 0.15s ease;
+            box-shadow: none;
+            font-family: var(--font-quicksand);
         }
 
-        .grupo-botones button::before {
+        #btn-inicio::before, #btn-pausa::before {
             content: "";
             position: absolute;
-            inset: -5px;
-            border-radius: 8px;
+            inset: -3px;
+            border-radius: 15px;
             background: conic-gradient(
                 from var(--angulo-led),
                 #f5d97a,
@@ -188,175 +265,64 @@
                 #c4e86a,
                 #f5d97a
             );
-            -webkit-background: linear-gradient(45deg, #f5d97a, #e88787, #f0a8d0, #b79bdb, #7ba7e0, #a0e0f5, #c4e86a);
             animation: girarLed 4s linear infinite;
-            -webkit-animation: girarLed 4s linear infinite;
             z-index: -1;
         }
 
-        .grupo-botones button::after {
+        #btn-inicio::after, #btn-pausa::after {
             content: "";
             position: absolute;
             inset: 0;
-            border-radius: 6px;
-            background: #2b2b2b;
+            border-radius: 12px;
+            background: #5a4a3a;
             z-index: -1;
         }
 
-        .grupo-botones button:active {
+        #btn-inicio:active, #btn-pausa:active {
             transform: scale(0.93);
         }
 
-        /* MODOS DE BOTONES */
-        .grupo-botones button.apagado {
-            opacity: 0.4;
-        }
-
-        .grupo-botones button.apagado::before {
-            animation: none;
-            background: #666;
-        }
-
-        .grupo-botones button.encendido {
-            opacity: 1;
-        }
-
-        .grupo-botones button.encendido::before {
-            animation: girarLed 4s linear infinite;
-            background: conic-gradient(
-                from var(--angulo-led),
-                #f5d97a,
-                #e88787,
-                #f0a8d0,
-                #b79bdb,
-                #7ba7e0,
-                #a0e0f5,
-                #c4e86a,
-                #f5d97a
-            );
-        }
-
-        .separador-grupos {
-            height: 20px;
-        }
-
-        /* PANTALLA DE JUEGO */
         #pantalla-juego {
             display: none;
             width: 100%;
             height: 100%;
             flex-direction: column;
-            position: relative;
             background-image: url('./images/fondo.png');
             background-position: center;
             background-size: cover;
+            position: relative;
         }
 
-        /* BARRA SUPERIOR - Botones y controles */
         .barra-superior {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 14px 24px;
             gap: 16px;
-            height: auto;
-            border-bottom: 1px solid #ccc;
+            background: rgba(245, 241, 237, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 197, 184, 0.3);
         }
 
         .barra-superior button {
-            position: relative;
             padding: 10px 18px;
             font-size: 13px;
-            border: none;
+            background: #f9f5f0;
+            color: #6b5a4a;
+            border: 4px solid #d4c5b8;
             border-radius: 6px;
             cursor: pointer;
-            font-weight: 600;
-            background: #2b2b2b;
-            color: #e8e6de;
-            text-transform: uppercase;
-            transition: transform 0.15s ease;
-        }
-
-        .barra-superior button::before {
-            content: "";
-            position: absolute;
-            inset: -2px;
-            border-radius: 8px;
-            background: conic-gradient(
-                from var(--angulo-led),
-                #f5d97a,
-                #e88787,
-                #f0a8d0,
-                #b79bdb,
-                #7ba7e0,
-                #a0e0f5,
-                #c4e86a,
-                #f5d97a
-            );
-            animation: girarLed 4s linear infinite;
-            z-index: -1;
-        }
-
-        .barra-superior button::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: 6px;
-            background: #2b2b2b;
-            z-index: -1;
+            font-weight: 500;
+            transition: all 0.15s ease;
+            font-family: var(--font-quicksand);
         }
 
         .barra-superior button:active {
-            transform: scale(0.93);
+            opacity: 0.8;
         }
 
-        #btn-tiempo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 12px;
-            position: relative;
-            min-width: 120px;
-        }
+        .espacio-barra { flex: 1; }
 
-        .tiempo-display {
-            font-size: 14px;
-            font-weight: 600;
-            min-width: 45px;
-        }
-
-        .barra-tiempo {
-            width: 60px;
-            height: 8px;
-            background: #ddd;
-            border-radius: 4px;
-            overflow: hidden;
-            border: 1px solid #999;
-        }
-
-        .barra-tiempo-relleno {
-            height: 100%;
-            background: #4CAF50;
-            width: 100%;
-            transition: width 0.1s linear;
-        }
-
-        .tarjeta-palabra {
-            border: 2px solid #999;
-            border-radius: 6px;
-            padding: 8px 16px;
-            font-size: 14px;
-            text-align: center;
-            font-weight: 500;
-            background: #fff;
-            min-width: 120px;
-        }
-
-        .espacio-barra {
-            flex: 1;
-        }
-
-        /* CONTENEDOR PRINCIPAL DE JUEGO */
         .contenedor-juego {
             flex: 1;
             display: flex;
@@ -367,7 +333,28 @@
             overflow: hidden;
         }
 
-        /* GRID DE ITEMS - Zona de spawns */
+        .cartelito {
+            background: #f9f5f0;
+            border: 4px solid #d4c5b8;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 22px;
+            color: #6b5a4a;
+            text-align: center;
+            font-weight: 400;
+            max-width: 80%;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+            font-family: var(--font-quicksand);
+        }
+
+        .cartelito:active {
+            opacity: 0.8;
+            transform: scale(0.98);
+        }
+
         .grid-contenedor {
             flex: 1;
             display: grid;
@@ -375,50 +362,66 @@
             grid-template-rows: repeat(4, 1fr);
             gap: 8px;
             position: relative;
-            border: 1px solid #ddd;
         }
 
-        /* CELDA DROP - Zona de entrega */
         .celda-drop {
             grid-column: 1 / 3;
             grid-row: 4;
             background: transparent;
-            border: 2px dashed #999;
+            border: 2px dashed rgba(212, 197, 184, 0.2);
             border-radius: 6px;
         }
 
-        /* ITEM - Elementos arrastrables */
         .item {
             position: absolute;
             width: 140px;
             height: 140px;
-            background: #f0f0f0;
-            border: 1px solid #999;
+            background: transparent;
+            border: none;
             cursor: grab;
             display: flex;
             align-items: center;
             justify-content: center;
             user-select: none;
             z-index: 10;
-            border-radius: 4px;
-            font-size: 12px;
-            text-align: center;
-            padding: 4px;
-            text-transform: uppercase;
+            padding: 0;
         }
 
-        .item:active {
-            cursor: grabbing;
-            opacity: 0.7;
+        .item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            pointer-events: none;
+        }
+
+        .item.dragging {
+            opacity: 0.85;
             z-index: 100;
         }
 
-        .item.mandarin {
-            text-transform: none;
+        .item.error {
+            animation: parpadeo 0.4s ease;
         }
 
-        /* MODAL DE CONFIRMACIÓN */
-        #modal-confirmacion {
+        @keyframes parpadeo {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .countdown {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 80px;
+            color: #8b7355;
+            font-weight: bold;
+            z-index: 1000;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            font-family: var(--font-quicksand);
+        }
+
+        #panel-pausa {
             display: none;
             position: fixed;
             top: 0;
@@ -426,714 +429,971 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
+            z-index: 500;
             align-items: center;
             justify-content: center;
         }
 
-        .modal-contenido {
-            background: #fff;
-            padding: 30px;
-            border-radius: 12px;
+        .contenido-pausa {
+            background: #f9f5f0;
+            border: 4px solid #d4c5b8;
+            border-radius: 8px;
+            padding: 40px 50px;
             text-align: center;
-            min-width: 300px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            min-width: 320px;
+            font-family: var(--font-quicksand);
         }
 
-        .modal-contenido h2 {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: #2b2b2b;
+        .contenido-pausa div {
+            font-size: 40px;
+            color: #6b5a4a;
+            font-weight: 400;
+            margin-bottom: 30px;
         }
 
-        .modal-botones {
-            display: flex;
-            gap: 12px;
+        .contenido-pausa button {
+            padding: 12px 32px;
+            font-size: 16px;
+            background: #f9f5f0;
+            color: #6b5a4a;
+            border: 4px solid #d4c5b8;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            font-family: var(--font-quicksand);
+        }
+
+        #panel-confirmacion {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 500;
+            align-items: center;
             justify-content: center;
         }
 
-        .modal-botones button {
-            position: relative;
-            padding: 10px 24px;
-            font-size: 13px;
-            border: none;
+        .contenido-confirmacion {
+            background: #f9f5f0;
+            border: 4px solid #d4c5b8;
+            border-radius: 8px;
+            padding: 40px 50px;
+            text-align: center;
+            min-width: 320px;
+            font-family: var(--font-quicksand);
+        }
+
+        .contenido-confirmacion div {
+            font-size: 20px;
+            color: #6b5a4a;
+            font-weight: 500;
+            margin-bottom: 30px;
+        }
+
+        .contenido-confirmacion button {
+            padding: 12px 24px;
+            font-size: 16px;
+            background: #f9f5f0;
+            color: #6b5a4a;
+            border: 4px solid #d4c5b8;
             border-radius: 6px;
             cursor: pointer;
-            font-weight: 600;
-            background: #2b2b2b;
-            color: #e8e6de;
-            text-transform: uppercase;
-            transition: transform 0.15s ease;
+            font-weight: 500;
+            font-family: var(--font-quicksand);
+            margin: 0 10px;
         }
 
-        .modal-botones button::before {
-            content: "";
-            position: absolute;
-            inset: -2px;
-            border-radius: 8px;
-            background: conic-gradient(
-                from var(--angulo-led),
-                #f5d97a,
-                #e88787,
-                #f0a8d0,
-                #b79bdb,
-                #7ba7e0,
-                #a0e0f5,
-                #c4e86a,
-                #f5d97a
-            );
-            animation: girarLed 4s linear infinite;
-            z-index: -1;
+        .contador-contenedor {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 150px;
         }
 
-        .modal-botones button::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: 6px;
-            background: #2b2b2b;
-            z-index: -1;
-        }
-
-        .modal-botones button:active {
-            transform: scale(0.93);
-        }
-
-        /* MENSAJE DE RONDA COMPLETADA */
-        .mensaje-ronda {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #fff;
-            padding: 40px;
-            border-radius: 12px;
-            text-align: center;
+        .contador-numero {
             font-size: 28px;
-            font-weight: 700;
-            color: #2b2b2b;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-            z-index: 2000;
-            display: none;
+            font-weight: 600;
+            font-family: var(--font);
+            color: #6b5a4a;
+            min-width: 55px;
+            text-align: center;
+        }
+
+        .contador-barra-contenedor {
+            width: 80px;
+            height: 20px;
+            background: #f0e8e0;
+            border: 2px solid #d4c5b8;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .contador-barra {
+            height: 100%;
+            width: 100%;
+            background: #00cc66;
+            transition: width 0.3s ease, background-color 0.3s ease;
+            border-radius: 8px;
+        }
+
+        .contador-barra.amarillo {
+            background: #ffd700;
+        }
+
+        .contador-barra.rojo {
+            background: #ff4444;
+        }
+
+        @keyframes flotar-glitter {
+            0% {
+                opacity: 0.8;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0);
+            }
+        }
+
+        .glitter {
+            animation: flotar-glitter 1.2s ease-out forwards;
+        }
+
+        .luciernaga {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            border-radius: 50%;
         }
     </style>
 </head>
 <body>
-    <!-- PANTALLA DE INICIO -->
     <div id="pantalla-inicio">
-        <div class="contenedor-inicio">
-            <div class="titulo-inicio">STICKERS!</div>
-            
-            <!-- GRUPO IDIOMAS -->
-            <div class="grupo-botones" id="grupo-idiomas">
-                <button class="btn-opcion apagado" data-idioma="ingles">INGLÉS</button>
-                <button class="btn-opcion apagado" data-idioma="frances">FRANCÉS</button>
-                <button class="btn-opcion apagado" data-idioma="italiano">ITALIANO</button>
-                <button class="btn-opcion apagado" data-idioma="ruso">RUSO</button>
-                <button class="btn-opcion apagado" data-idioma="aleman">ALEMÁN</button>
-                <button class="btn-opcion apagado" data-idioma="holandes">HOLANDÉS</button>
-                <button class="btn-opcion apagado" data-idioma="portugues">PORTUGUÉS</button>
+        <div class="titulo">Stickers!</div>
+        <div class="controles">
+            <div class="selector">
+                <label>Idioma</label>
+                <div class="opciones-fila">
+                    <button class="opcion-btn" data-idioma="ingles">INGLÉS</button>
+                    <button class="opcion-btn" data-idioma="frances">FRANCÉS</button>
+                    <button class="opcion-btn" data-idioma="italiano">ITALIANO</button>
+                    <button class="opcion-btn" data-idioma="ruso">RUSO</button>
+                    <button class="opcion-btn" data-idioma="aleman">ALEMÁN</button>
+                    <button class="opcion-btn" data-idioma="chino">CHINO</button>
+                    <button class="opcion-btn" data-idioma="portugues">PORTUGUÉS</button>
+                    <button class="opcion-btn" data-idioma="holandes">HOLANDÉS</button>
+                </div>
             </div>
-
-            <!-- SEPARADOR -->
-            <div class="separador-grupos"></div>
-
-            <!-- GRUPO TEMAS -->
-            <div class="grupo-botones" id="grupo-temas">
-                <button class="btn-opcion apagado" data-tema="animales">ANIMALES</button>
-                <button class="btn-opcion apagado" data-tema="comida">COMIDA</button>
-                <button class="btn-opcion apagado" data-tema="bano">BAÑO</button>
+            <div class="selector">
+                <label>Tema</label>
+                <div class="opciones-fila">
+                    <button class="opcion-btn" data-tema="comida">COMIDA</button>
+                    <button class="opcion-btn" data-tema="bano">BAÑO</button>
+                    <button class="opcion-btn" data-tema="sentimientos">SENTIMIENTOS</button>
+                </div>
             </div>
-
-            <!-- BOTÓN JUGAR ABAJO -->
-            <div class="separador-grupos"></div>
-            <div class="botones-inicio">
-                <button id="btn-jugar" class="apagado">JUGAR</button>
-            </div>
+            <button id="btn-jugar" disabled>¡A JUGAR!</button>
         </div>
     </div>
 
-    <!-- PANTALLA DE JUEGO -->
     <div id="pantalla-juego">
-        <!-- BARRA SUPERIOR -->
         <div class="barra-superior">
-            <button id="btn-inicio">INICIO</button>
-            <div class="tarjeta-palabra" id="tarjeta-palabra">Palabra</div>
-            <div class="espacio-barra"></div>
-            <div id="btn-tiempo">
-                <span class="tiempo-display" id="tiempo-texto">2:00</span>
-                <div class="barra-tiempo">
-                    <div class="barra-tiempo-relleno" id="barra-relleno"></div>
+            <button id="btn-inicio">Inicio</button>
+            <div class="cartelito" id="cartelito"></div>
+            <div class="contador-contenedor">
+                <div class="contador-numero" id="contador-numero">2:00</div>
+                <div class="contador-barra-contenedor">
+                    <div class="contador-barra" id="contador-barra"></div>
                 </div>
             </div>
-            <button id="btn-pausa">PAUSA</button>
+            <button id="btn-pausa">Pausa</button>
         </div>
-
-        <!-- CONTENEDOR PRINCIPAL -->
         <div class="contenedor-juego">
-            <!-- GRID CON ITEMS Y ZONA DROP -->
             <div class="grid-contenedor" id="grid">
-                <!-- ZONA DROP -->
                 <div class="celda-drop" id="zona-drop"></div>
             </div>
         </div>
     </div>
 
-    <!-- MODAL DE CONFIRMACIÓN -->
-    <div id="modal-confirmacion">
-        <div class="modal-contenido">
-            <h2>¿Volver a inicio?</h2>
-            <div class="modal-botones">
-                <button id="btn-confirmar">SI</button>
-                <button id="btn-cancelar">NO</button>
-            </div>
+    <div id="panel-pausa">
+        <div class="contenido-pausa">
+            <div>Pausa</div>
+            <button id="btn-reanudar">Continuar</button>
         </div>
     </div>
 
-    <!-- MENSAJE RONDA COMPLETADA -->
-    <div class="mensaje-ronda" id="mensaje-ronda">¡Ronda Completada!</div>
+    <div id="panel-confirmacion">
+        <div class="contenido-confirmacion">
+            <div>¿Seguro que querés salir?</div>
+            <button id="btn-confirmar-si">Sí, salir</button>
+            <button id="btn-confirmar-no">Cancelar</button>
+        </div>
+    </div>
 
     <script>
-        // ========================================
-        // VOCABULARIO - 3 TEMAS x 3 IDIOMAS
-        // ========================================
         const vocab = {
             comida: {
                 ingles: [
-                    { key: 'hamburguesa', palabra: 'Hamburger' },
-                    { key: 'papas_fritas', palabra: 'French Fries' },
-                    { key: 'carne', palabra: 'Meat' },
-                    { key: 'leche', palabra: 'Milk' },
-                    { key: 'huevo', palabra: 'Egg' },
-                    { key: 'pan', palabra: 'Bread' },
-                    { key: 'ensalada', palabra: 'Salad' },
-                    { key: 'cereales', palabra: 'Cereal' },
-                    { key: 'atun', palabra: 'Tuna' },
-                    { key: 'nueces', palabra: 'Walnuts' }
+                    { key: 'pan', palabra: 'Bread', articulo: 'The', genero: 'neutro' },
+                    { key: 'huevo', palabra: 'Egg', articulo: 'The', genero: 'neutro' },
+                    { key: 'leche', palabra: 'Milk', articulo: '', genero: 'neutro' },
+                    { key: 'cereales', palabra: 'Cereal', articulo: 'The', genero: 'neutro' },
+                    { key: 'chocolate', palabra: 'Chocolate', articulo: '', genero: 'neutro' }
                 ],
                 frances: [
-                    { key: 'hamburguesa', palabra: 'Hamburger' },
-                    { key: 'papas_fritas', palabra: 'Frites' },
-                    { key: 'carne', palabra: 'Viande' },
-                    { key: 'leche', palabra: 'Lait' },
-                    { key: 'huevo', palabra: 'Œuf' },
-                    { key: 'pan', palabra: 'Pain' },
-                    { key: 'ensalada', palabra: 'Salade' },
-                    { key: 'cereales', palabra: 'Céréales' },
-                    { key: 'atun', palabra: 'Thon' },
-                    { key: 'nueces', palabra: 'Noix' }
+                    { key: 'pan', palabra: 'Pain', articulo: 'Le', genero: 'masculino' },
+                    { key: 'huevo', palabra: 'Oeuf', articulo: "L'", genero: 'masculino' },
+                    { key: 'leche', palabra: 'Lait', articulo: 'Le', genero: 'masculino' },
+                    { key: 'cereales', palabra: 'Céréales', articulo: 'Les', genero: 'femenino' },
+                    { key: 'chocolate', palabra: 'Chocolat', articulo: 'Le', genero: 'masculino' }
                 ],
                 italiano: [
-                    { key: 'hamburguesa', palabra: 'Hamburger' },
-                    { key: 'papas_fritas', palabra: 'Patatine Fritte' },
-                    { key: 'carne', palabra: 'Carne' },
-                    { key: 'leche', palabra: 'Latte' },
-                    { key: 'huevo', palabra: 'Uovo' },
-                    { key: 'pan', palabra: 'Pane' },
-                    { key: 'ensalada', palabra: 'Insalata' },
-                    { key: 'cereales', palabra: 'Cereali' },
-                    { key: 'atun', palabra: 'Tonno' },
-                    { key: 'nueces', palabra: 'Noci' }
+                    { key: 'pan', palabra: 'Pane', articulo: 'Il', genero: 'masculino' },
+                    { key: 'huevo', palabra: 'Uovo', articulo: "L'", genero: 'masculino' },
+                    { key: 'leche', palabra: 'Latte', articulo: 'Il', genero: 'masculino' },
+                    { key: 'cereales', palabra: 'Cereali', articulo: 'I', genero: 'plural' },
+                    { key: 'chocolate', palabra: 'Cioccolato', articulo: 'Il', genero: 'masculino' }
                 ],
                 ruso: [
-                    { key: 'hamburguesa', palabra: 'Гамбургер' },
-                    { key: 'papas_fritas', palabra: 'Картофель фри' },
-                    { key: 'carne', palabra: 'Мясо' },
-                    { key: 'leche', palabra: 'Молоко' },
-                    { key: 'huevo', palabra: 'Яйцо' },
-                    { key: 'pan', palabra: 'Хлеб' },
-                    { key: 'ensalada', palabra: 'Салат' },
-                    { key: 'cereales', palabra: 'Хлопья' },
-                    { key: 'atun', palabra: 'Тунец' },
-                    { key: 'nueces', palabra: 'Орехи' }
+                    { key: 'pan', palabra: 'хлеб', articulo: '', genero: 'masculino' },
+                    { key: 'huevo', palabra: 'яйцо', articulo: '', genero: 'neutro' },
+                    { key: 'leche', palabra: 'молоко', articulo: '', genero: 'neutro' },
+                    { key: 'cereales', palabra: 'зёрна', articulo: '', genero: 'plural' },
+                    { key: 'chocolate', palabra: 'шоколад', articulo: '', genero: 'masculino' }
                 ],
                 aleman: [
-                    { key: 'hamburguesa', palabra: 'Hamburger' },
-                    { key: 'papas_fritas', palabra: 'Pommes Frites' },
-                    { key: 'carne', palabra: 'Fleisch' },
-                    { key: 'leche', palabra: 'Milch' },
-                    { key: 'huevo', palabra: 'Ei' },
-                    { key: 'pan', palabra: 'Brot' },
-                    { key: 'ensalada', palabra: 'Salat' },
-                    { key: 'cereales', palabra: 'Getreide' },
-                    { key: 'atun', palabra: 'Thunfisch' },
-                    { key: 'nueces', palabra: 'Nüsse' }
+                    { key: 'pan', palabra: 'Brot', articulo: 'Das', genero: 'neutro' },
+                    { key: 'huevo', palabra: 'Ei', articulo: 'Das', genero: 'neutro' },
+                    { key: 'leche', palabra: 'Milch', articulo: 'Die', genero: 'femenino' },
+                    { key: 'cereales', palabra: 'Getreide', articulo: 'Das', genero: 'neutro' },
+                    { key: 'chocolate', palabra: 'Schokolade', articulo: 'Die', genero: 'femenino' }
                 ],
-                holandes: [
-                    { key: 'hamburguesa', palabra: 'Hamburger' },
-                    { key: 'papas_fritas', palabra: 'Friet' },
-                    { key: 'carne', palabra: 'Vlees' },
-                    { key: 'leche', palabra: 'Melk' },
-                    { key: 'huevo', palabra: 'Ei' },
-                    { key: 'pan', palabra: 'Brood' },
-                    { key: 'ensalada', palabra: 'Salade' },
-                    { key: 'cereales', palabra: 'Graan' },
-                    { key: 'atun', palabra: 'Tonijn' },
-                    { key: 'nueces', palabra: 'Noten' }
+                chino: [
+                    { key: 'pan', palabra: 'miànbāo', articulo: '', genero: 'neutro' },
+                    { key: 'huevo', palabra: 'jīdàn', articulo: '', genero: 'neutro' },
+                    { key: 'leche', palabra: 'niúnǎi', articulo: '', genero: 'neutro' },
+                    { key: 'cereales', palabra: 'zhǔshíwù', articulo: '', genero: 'neutro' },
+                    { key: 'chocolate', palabra: 'qiǎokèlì', articulo: '', genero: 'neutro' }
                 ],
                 portugues: [
-                    { key: 'hamburguesa', palabra: 'Hambúrguer' },
-                    { key: 'papas_fritas', palabra: 'Batatas Fritas' },
-                    { key: 'carne', palabra: 'Carne' },
-                    { key: 'leche', palabra: 'Leite' },
-                    { key: 'huevo', palabra: 'Ovo' },
-                    { key: 'pan', palabra: 'Pão' },
-                    { key: 'ensalada', palabra: 'Salada' },
-                    { key: 'cereales', palabra: 'Cereais' },
-                    { key: 'atun', palabra: 'Atum' },
-                    { key: 'nueces', palabra: 'Nozes' }
-                ]
-            },
-            animales: {
-                ingles: [
-                    { key: 'mariposa', palabra: 'Butterfly' },
-                    { key: 'abeja', palabra: 'Bee' },
-                    { key: 'libelula', palabra: 'Dragonfly' },
-                    { key: 'perro', palabra: 'Dog' },
-                    { key: 'gato', palabra: 'Cat' },
-                    { key: 'cabra', palabra: 'Goat' },
-                    { key: 'ardilla', palabra: 'Squirrel' },
-                    { key: 'conejo', palabra: 'Rabbit' },
-                    { key: 'topo', palabra: 'Mole' },
-                    { key: 'pajaro', palabra: 'Bird' }
-                ],
-                frances: [
-                    { key: 'mariposa', palabra: 'Papillon' },
-                    { key: 'abeja', palabra: 'Abeille' },
-                    { key: 'libelula', palabra: 'Libellule' },
-                    { key: 'perro', palabra: 'Chien' },
-                    { key: 'gato', palabra: 'Chat' },
-                    { key: 'cabra', palabra: 'Chèvre' },
-                    { key: 'ardilla', palabra: 'Écureuil' },
-                    { key: 'conejo', palabra: 'Lapin' },
-                    { key: 'topo', palabra: 'Taupe' },
-                    { key: 'pajaro', palabra: 'Oiseau' }
-                ],
-                italiano: [
-                    { key: 'mariposa', palabra: 'Farfalla' },
-                    { key: 'abeja', palabra: 'Ape' },
-                    { key: 'libelula', palabra: 'Libellula' },
-                    { key: 'perro', palabra: 'Cane' },
-                    { key: 'gato', palabra: 'Gatto' },
-                    { key: 'cabra', palabra: 'Capra' },
-                    { key: 'ardilla', palabra: 'Scoiattolo' },
-                    { key: 'conejo', palabra: 'Coniglio' },
-                    { key: 'topo', palabra: 'Talpa' },
-                    { key: 'pajaro', palabra: 'Uccello' }
-                ],
-                ruso: [
-                    { key: 'mariposa', palabra: 'Бабочка' },
-                    { key: 'abeja', palabra: 'Пчела' },
-                    { key: 'libelula', palabra: 'Стрекоза' },
-                    { key: 'perro', palabra: 'Собака' },
-                    { key: 'gato', palabra: 'Кот' },
-                    { key: 'cabra', palabra: 'Коза' },
-                    { key: 'ardilla', palabra: 'Белка' },
-                    { key: 'conejo', palabra: 'Кролик' },
-                    { key: 'topo', palabra: 'Крот' },
-                    { key: 'pajaro', palabra: 'Птица' }
-                ],
-                aleman: [
-                    { key: 'mariposa', palabra: 'Schmetterling' },
-                    { key: 'abeja', palabra: 'Biene' },
-                    { key: 'libelula', palabra: 'Libelle' },
-                    { key: 'perro', palabra: 'Hund' },
-                    { key: 'gato', palabra: 'Katze' },
-                    { key: 'cabra', palabra: 'Ziege' },
-                    { key: 'ardilla', palabra: 'Eichhörnchen' },
-                    { key: 'conejo', palabra: 'Kaninchen' },
-                    { key: 'topo', palabra: 'Maulwurf' },
-                    { key: 'pajaro', palabra: 'Vogel' }
+                    { key: 'pan', palabra: 'Pão', articulo: 'O', genero: 'masculino' },
+                    { key: 'huevo', palabra: 'Ovo', articulo: 'O', genero: 'masculino' },
+                    { key: 'leche', palabra: 'Leite', articulo: 'O', genero: 'masculino' },
+                    { key: 'cereales', palabra: 'Cereais', articulo: 'Os', genero: 'plural' },
+                    { key: 'chocolate', palabra: 'Chocolate', articulo: 'O', genero: 'masculino' }
                 ],
                 holandes: [
-                    { key: 'mariposa', palabra: 'Vlinder' },
-                    { key: 'abeja', palabra: 'Bij' },
-                    { key: 'libelula', palabra: 'Libelle' },
-                    { key: 'perro', palabra: 'Hond' },
-                    { key: 'gato', palabra: 'Kat' },
-                    { key: 'cabra', palabra: 'Geit' },
-                    { key: 'ardilla', palabra: 'Eekhoorn' },
-                    { key: 'conejo', palabra: 'Konijn' },
-                    { key: 'topo', palabra: 'Mol' },
-                    { key: 'pajaro', palabra: 'Vogel' }
-                ],
-                portugues: [
-                    { key: 'mariposa', palabra: 'Borboleta' },
-                    { key: 'abeja', palabra: 'Abelha' },
-                    { key: 'libelula', palabra: 'Libélula' },
-                    { key: 'perro', palabra: 'Cachorro' },
-                    { key: 'gato', palabra: 'Gato' },
-                    { key: 'cabra', palabra: 'Cabra' },
-                    { key: 'ardilla', palabra: 'Esquilo' },
-                    { key: 'conejo', palabra: 'Coelho' },
-                    { key: 'topo', palabra: 'Toupeira' },
-                    { key: 'pajaro', palabra: 'Pássaro' }
+                    { key: 'pan', palabra: 'Brood', articulo: 'Het', genero: 'neutro' },
+                    { key: 'huevo', palabra: 'Ei', articulo: 'Het', genero: 'neutro' },
+                    { key: 'leche', palabra: 'Melk', articulo: 'De', genero: 'femenino' },
+                    { key: 'cereales', palabra: 'Granen', articulo: 'De', genero: 'plural' },
+                    { key: 'chocolate', palabra: 'Chocolade', articulo: 'De', genero: 'femenino' }
                 ]
             },
             bano: {
                 ingles: [
-                    { key: 'cortina', palabra: 'Curtain' },
-                    { key: 'bata', palabra: 'Robe' },
-                    { key: 'pantuflas', palabra: 'Slippers' },
-                    { key: 'shampoo', palabra: 'Shampoo' },
-                    { key: 'alfombra', palabra: 'Mat' },
-                    { key: 'jabon', palabra: 'Soap' },
-                    { key: 'dentifrico', palabra: 'Toothpaste' },
-                    { key: 'espejo', palabra: 'Mirror' },
-                    { key: 'gorra_ducha', palabra: 'Shower Cap' },
-                    { key: 'crema', palabra: 'Cream' }
+                    { key: 'alfombra', palabra: 'Mat', articulo: 'The', genero: 'neutro' },
+                    { key: 'shampoo', palabra: 'Shampoo', articulo: '', genero: 'neutro' },
+                    { key: 'bata', palabra: 'Robe', articulo: 'The', genero: 'neutro' },
+                    { key: 'pantuflas', palabra: 'Slippers', articulo: '', genero: 'plural' },
+                    { key: 'cortina', palabra: 'Curtain', articulo: 'The', genero: 'neutro' }
                 ],
                 frances: [
-                    { key: 'cortina', palabra: 'Rideau' },
-                    { key: 'bata', palabra: 'Peignoir' },
-                    { key: 'pantuflas', palabra: 'Pantoufles' },
-                    { key: 'shampoo', palabra: 'Shampoing' },
-                    { key: 'alfombra', palabra: 'Tapis' },
-                    { key: 'jabon', palabra: 'Savon' },
-                    { key: 'dentifrico', palabra: 'Dentifrice' },
-                    { key: 'espejo', palabra: 'Miroir' },
-                    { key: 'gorra_ducha', palabra: 'Bonnet de Douche' },
-                    { key: 'crema', palabra: 'Crème' }
+                    { key: 'alfombra', palabra: 'Tapis', articulo: 'Le', genero: 'masculino' },
+                    { key: 'shampoo', palabra: 'Shampoing', articulo: 'Le', genero: 'masculino' },
+                    { key: 'bata', palabra: 'Peignoir', articulo: 'Le', genero: 'masculino' },
+                    { key: 'pantuflas', palabra: 'Pantoufles', articulo: 'Les', genero: 'femenino' },
+                    { key: 'cortina', palabra: 'Rideau', articulo: 'Le', genero: 'masculino' }
                 ],
                 italiano: [
-                    { key: 'cortina', palabra: 'Tenda' },
-                    { key: 'bata', palabra: 'Accappatoio' },
-                    { key: 'pantuflas', palabra: 'Pantofole' },
-                    { key: 'shampoo', palabra: 'Shampoo' },
-                    { key: 'alfombra', palabra: 'Tappetino' },
-                    { key: 'jabon', palabra: 'Sapone' },
-                    { key: 'dentifrico', palabra: 'Dentifricio' },
-                    { key: 'espejo', palabra: 'Specchio' },
-                    { key: 'gorra_ducha', palabra: 'Cuffia da Doccia' },
-                    { key: 'crema', palabra: 'Crema' }
+                    { key: 'alfombra', palabra: 'Tappeto', articulo: 'Il', genero: 'masculino' },
+                    { key: 'shampoo', palabra: 'Shampoo', articulo: 'Lo', genero: 'masculino' },
+                    { key: 'bata', palabra: 'Accappatoio', articulo: "L'", genero: 'masculino' },
+                    { key: 'pantuflas', palabra: 'Pantofole', articulo: 'Le', genero: 'femenino' },
+                    { key: 'cortina', palabra: 'Tenda', articulo: 'La', genero: 'femenino' }
                 ],
                 ruso: [
-                    { key: 'cortina', palabra: 'Занавеска' },
-                    { key: 'bata', palabra: 'Халат' },
-                    { key: 'pantuflas', palabra: 'Тапочки' },
-                    { key: 'shampoo', palabra: 'Шампунь' },
-                    { key: 'alfombra', palabra: 'Коврик' },
-                    { key: 'jabon', palabra: 'Мыло' },
-                    { key: 'dentifrico', palabra: 'Зубная паста' },
-                    { key: 'espejo', palabra: 'Зеркало' },
-                    { key: 'gorra_ducha', palabra: 'Шапочка для душа' },
-                    { key: 'crema', palabra: 'Крем' }
+                    { key: 'alfombra', palabra: 'коврик', articulo: '', genero: 'masculino' },
+                    { key: 'shampoo', palabra: 'шампунь', articulo: '', genero: 'masculino' },
+                    { key: 'bata', palabra: 'халат', articulo: '', genero: 'masculino' },
+                    { key: 'pantuflas', palabra: 'тапочки', articulo: '', genero: 'plural' },
+                    { key: 'cortina', palabra: 'штора', articulo: '', genero: 'femenino' }
                 ],
                 aleman: [
-                    { key: 'cortina', palabra: 'Vorhang' },
-                    { key: 'bata', palabra: 'Bademantel' },
-                    { key: 'pantuflas', palabra: 'Hausschuhe' },
-                    { key: 'shampoo', palabra: 'Shampoo' },
-                    { key: 'alfombra', palabra: 'Matte' },
-                    { key: 'jabon', palabra: 'Seife' },
-                    { key: 'dentifrico', palabra: 'Zahnpasta' },
-                    { key: 'espejo', palabra: 'Spiegel' },
-                    { key: 'gorra_ducha', palabra: 'Bademütze' },
-                    { key: 'crema', palabra: 'Creme' }
+                    { key: 'alfombra', palabra: 'Matte', articulo: 'Die', genero: 'femenino' },
+                    { key: 'shampoo', palabra: 'Shampoo', articulo: 'Das', genero: 'neutro' },
+                    { key: 'bata', palabra: 'Bademantel', articulo: 'Der', genero: 'masculino' },
+                    { key: 'pantuflas', palabra: 'Pantoffeln', articulo: 'Die', genero: 'femenino' },
+                    { key: 'cortina', palabra: 'Vorhang', articulo: 'Der', genero: 'masculino' }
                 ],
-                holandes: [
-                    { key: 'cortina', palabra: 'Gordijn' },
-                    { key: 'bata', palabra: 'Badjas' },
-                    { key: 'pantuflas', palabra: 'Pantoffels' },
-                    { key: 'shampoo', palabra: 'Shampoo' },
-                    { key: 'alfombra', palabra: 'Matje' },
-                    { key: 'jabon', palabra: 'Zeep' },
-                    { key: 'dentifrico', palabra: 'Tandpasta' },
-                    { key: 'espejo', palabra: 'Spiegel' },
-                    { key: 'gorra_ducha', palabra: 'Badmuts' },
-                    { key: 'crema', palabra: 'Crème' }
+                chino: [
+                    { key: 'alfombra', palabra: 'dìtǎn', articulo: '', genero: 'neutro' },
+                    { key: 'shampoo', palabra: 'xǐfà shuǐ', articulo: '', genero: 'neutro' },
+                    { key: 'bata', palabra: 'yùtàobāo', articulo: '', genero: 'neutro' },
+                    { key: 'pantuflas', palabra: 'tuō xié', articulo: '', genero: 'neutro' },
+                    { key: 'cortina', palabra: 'chuānglián', articulo: '', genero: 'neutro' }
                 ],
                 portugues: [
-                    { key: 'cortina', palabra: 'Cortina' },
-                    { key: 'bata', palabra: 'Roupão' },
-                    { key: 'pantuflas', palabra: 'Chinelos' },
-                    { key: 'shampoo', palabra: 'Shampoo' },
-                    { key: 'alfombra', palabra: 'Tapete' },
-                    { key: 'jabon', palabra: 'Sabão' },
-                    { key: 'dentifrico', palabra: 'Pasta de Dente' },
-                    { key: 'espejo', palabra: 'Espelho' },
-                    { key: 'gorra_ducha', palabra: 'Touca de Banho' },
-                    { key: 'crema', palabra: 'Creme' }
+                    { key: 'alfombra', palabra: 'Tapete', articulo: 'O', genero: 'masculino' },
+                    { key: 'shampoo', palabra: 'Shampoo', articulo: 'O', genero: 'masculino' },
+                    { key: 'bata', palabra: 'Roupão', articulo: 'O', genero: 'masculino' },
+                    { key: 'pantuflas', palabra: 'Chinelos', articulo: 'Os', genero: 'plural' },
+                    { key: 'cortina', palabra: 'Cortina', articulo: 'A', genero: 'femenino' }
+                ],
+                holandes: [
+                    { key: 'alfombra', palabra: 'Mat', articulo: 'De', genero: 'femenino' },
+                    { key: 'shampoo', palabra: 'Shampoo', articulo: 'De', genero: 'femenino' },
+                    { key: 'bata', palabra: 'Badjas', articulo: 'De', genero: 'femenino' },
+                    { key: 'pantuflas', palabra: 'Slippers', articulo: 'De', genero: 'femenino' },
+                    { key: 'cortina', palabra: 'Gordijn', articulo: 'Het', genero: 'neutro' }
+                ]
+            },
+            sentimientos: {
+                ingles: [
+                    { key: 'alegre', palabra: 'Happy', articulo: '', genero: 'neutro' },
+                    { key: 'triste', palabra: 'Sad', articulo: '', genero: 'neutro' },
+                    { key: 'enojado', palabra: 'Angry', articulo: '', genero: 'neutro' },
+                    { key: 'asustado', palabra: 'Scared', articulo: '', genero: 'neutro' },
+                    { key: 'sorprendido', palabra: 'Surprised', articulo: '', genero: 'neutro' },
+                    { key: 'avergonzado', palabra: 'Ashamed', articulo: '', genero: 'neutro' },
+                    { key: 'orgulloso', palabra: 'Proud', articulo: '', genero: 'neutro' },
+                    { key: 'tranquilo', palabra: 'Calm', articulo: '', genero: 'neutro' },
+                    { key: 'ansioso', palabra: 'Anxious', articulo: '', genero: 'neutro' },
+                    { key: 'enamorado', palabra: 'In Love', articulo: '', genero: 'neutro' }
+                ],
+                frances: [
+                    { key: 'alegre', palabra: 'Heureux', articulo: '', genero: 'masculino' },
+                    { key: 'triste', palabra: 'Triste', articulo: '', genero: 'masculino' },
+                    { key: 'enojado', palabra: 'Fâché', articulo: '', genero: 'masculino' },
+                    { key: 'asustado', palabra: 'Effrayé', articulo: '', genero: 'masculino' },
+                    { key: 'sorprendido', palabra: 'Surpris', articulo: '', genero: 'masculino' },
+                    { key: 'avergonzado', palabra: 'Honteux', articulo: '', genero: 'masculino' },
+                    { key: 'orgulloso', palabra: 'Fier', articulo: '', genero: 'masculino' },
+                    { key: 'tranquilo', palabra: 'Calme', articulo: '', genero: 'masculino' },
+                    { key: 'ansioso', palabra: 'Anxieux', articulo: '', genero: 'masculino' },
+                    { key: 'enamorado', palabra: 'Amoureux', articulo: '', genero: 'masculino' }
+                ],
+                italiano: [
+                    { key: 'alegre', palabra: 'Felice', articulo: '', genero: 'masculino' },
+                    { key: 'triste', palabra: 'Triste', articulo: '', genero: 'masculino' },
+                    { key: 'enojado', palabra: 'Arrabbiato', articulo: '', genero: 'masculino' },
+                    { key: 'asustado', palabra: 'Spaventato', articulo: '', genero: 'masculino' },
+                    { key: 'sorprendido', palabra: 'Sorpreso', articulo: '', genero: 'masculino' },
+                    { key: 'avergonzado', palabra: 'Vergognoso', articulo: '', genero: 'masculino' },
+                    { key: 'orgulloso', palabra: 'Orgoglioso', articulo: '', genero: 'masculino' },
+                    { key: 'tranquilo', palabra: 'Tranquillo', articulo: '', genero: 'masculino' },
+                    { key: 'ansioso', palabra: 'Ansioso', articulo: '', genero: 'masculino' },
+                    { key: 'enamorado', palabra: 'Innamorato', articulo: '', genero: 'masculino' }
+                ],
+                ruso: [
+                    { key: 'alegre', palabra: 'Счастливый', articulo: '', genero: 'masculino' },
+                    { key: 'triste', palabra: 'Грустный', articulo: '', genero: 'masculino' },
+                    { key: 'enojado', palabra: 'Злой', articulo: '', genero: 'masculino' },
+                    { key: 'asustado', palabra: 'Испуганный', articulo: '', genero: 'masculino' },
+                    { key: 'sorprendido', palabra: 'Удивленный', articulo: '', genero: 'masculino' },
+                    { key: 'avergonzado', palabra: 'Стыдящийся', articulo: '', genero: 'masculino' },
+                    { key: 'orgulloso', palabra: 'Гордый', articulo: '', genero: 'masculino' },
+                    { key: 'tranquilo', palabra: 'Спокойный', articulo: '', genero: 'masculino' },
+                    { key: 'ansioso', palabra: 'Беспокойный', articulo: '', genero: 'masculino' },
+                    { key: 'enamorado', palabra: 'Влюбленный', articulo: '', genero: 'masculino' }
+                ],
+                aleman: [
+                    { key: 'alegre', palabra: 'Glücklich', articulo: '', genero: 'neutro' },
+                    { key: 'triste', palabra: 'Traurig', articulo: '', genero: 'neutro' },
+                    { key: 'enojado', palabra: 'Wütend', articulo: '', genero: 'neutro' },
+                    { key: 'asustado', palabra: 'Verängstigt', articulo: '', genero: 'neutro' },
+                    { key: 'sorprendido', palabra: 'Überrascht', articulo: '', genero: 'neutro' },
+                    { key: 'avergonzado', palabra: 'Beschämt', articulo: '', genero: 'neutro' },
+                    { key: 'orgulloso', palabra: 'Stolz', articulo: '', genero: 'neutro' },
+                    { key: 'tranquilo', palabra: 'Ruhig', articulo: '', genero: 'neutro' },
+                    { key: 'ansioso', palabra: 'Ängstlich', articulo: '', genero: 'neutro' },
+                    { key: 'enamorado', palabra: 'Verliebt', articulo: '', genero: 'neutro' }
+                ],
+                chino: [
+                    { key: 'alegre', palabra: 'Huāxìng', articulo: '', genero: 'neutro' },
+                    { key: 'triste', palabra: 'Bēishāng', articulo: '', genero: 'neutro' },
+                    { key: 'enojado', palabra: 'Shēngqì', articulo: '', genero: 'neutro' },
+                    { key: 'asustado', palabra: 'Hàipà', articulo: '', genero: 'neutro' },
+                    { key: 'sorprendido', palabra: 'Jīngyà', articulo: '', genero: 'neutro' },
+                    { key: 'avergonzado', palabra: 'Xiūcì', articulo: '', genero: 'neutro' },
+                    { key: 'orgulloso', palabra: 'Jiàoào', articulo: '', genero: 'neutro' },
+                    { key: 'tranquilo', palabra: 'Pínjìng', articulo: '', genero: 'neutro' },
+                    { key: 'ansioso', palabra: 'Jǐnzhāng', articulo: '', genero: 'neutro' },
+                    { key: 'enamorado', palabra: 'Ài shàng', articulo: '', genero: 'neutro' }
+                ],
+                portugues: [
+                    { key: 'alegre', palabra: 'Feliz', articulo: '', genero: 'masculino' },
+                    { key: 'triste', palabra: 'Triste', articulo: '', genero: 'masculino' },
+                    { key: 'enojado', palabra: 'Furioso', articulo: '', genero: 'masculino' },
+                    { key: 'asustado', palabra: 'Assustado', articulo: '', genero: 'masculino' },
+                    { key: 'sorprendido', palabra: 'Surpreso', articulo: '', genero: 'masculino' },
+                    { key: 'avergonzado', palabra: 'Envergonhado', articulo: '', genero: 'masculino' },
+                    { key: 'orgulloso', palabra: 'Orgulhoso', articulo: '', genero: 'masculino' },
+                    { key: 'tranquilo', palabra: 'Calmo', articulo: '', genero: 'masculino' },
+                    { key: 'ansioso', palabra: 'Ansioso', articulo: '', genero: 'masculino' },
+                    { key: 'enamorado', palabra: 'Apaixonado', articulo: '', genero: 'masculino' }
+                ],
+                holandes: [
+                    { key: 'alegre', palabra: 'Blij', articulo: '', genero: 'neutro' },
+                    { key: 'triste', palabra: 'Verdrietig', articulo: '', genero: 'neutro' },
+                    { key: 'enojado', palabra: 'Boos', articulo: '', genero: 'neutro' },
+                    { key: 'asustado', palabra: 'Bang', articulo: '', genero: 'neutro' },
+                    { key: 'sorprendido', palabra: 'Verrast', articulo: '', genero: 'neutro' },
+                    { key: 'avergonzado', palabra: 'Beschaamd', articulo: '', genero: 'neutro' },
+                    { key: 'orgulloso', palabra: 'Trots', articulo: '', genero: 'neutro' },
+                    { key: 'tranquilo', palabra: 'Rustig', articulo: '', genero: 'neutro' },
+                    { key: 'ansioso', palabra: 'Nerveus', articulo: '', genero: 'neutro' },
+                    { key: 'enamorado', palabra: 'Verliefd', articulo: '', genero: 'neutro' }
                 ]
             }
         };
-        let estadoGlobal = {
-            idiomaSeleccionado: null,
-            temaSeleccionado: null,
-            itemsActuales: [],
-            itemsCompletados: []
+
+        let estado = {
+            idioma: null,
+            tema: null,
+            enJuego: false,
+            pausado: false,
+            items: [],
+            itemActual: null,
+            puntuacion: 0
         };
 
-        // ========================================
-        // NAVEGACIÓN ENTRE PANTALLAS
-        // ========================================
-        function mostrarPantallaInicio() {
-            document.getElementById('pantalla-inicio').style.display = 'flex';
-            document.getElementById('pantalla-juego').style.display = 'none';
-            document.getElementById('modal-confirmacion').style.display = 'none';
+        let contadorInterval = null;
+
+        const btnJugar = document.getElementById('btn-jugar');
+        const pantInicio = document.getElementById('pantalla-inicio');
+        const pantJuego = document.getElementById('pantalla-juego');
+        const btnInicio = document.getElementById('btn-inicio');
+        const btnPausa = document.getElementById('btn-pausa');
+        const panelPausa = document.getElementById('panel-pausa');
+        const btnReanudar = document.getElementById('btn-reanudar');
+        const panelConfirmacion = document.getElementById('panel-confirmacion');
+        const btnConfirmarSi = document.getElementById('btn-confirmar-si');
+        const btnConfirmarNo = document.getElementById('btn-confirmar-no');
+        const cartelito = document.getElementById('cartelito');
+        const grid = document.getElementById('grid');
+
+        const botonesIdioma = document.querySelectorAll('[data-idioma]');
+        const botonesTema = document.querySelectorAll('[data-tema]');
+
+        botonesIdioma.forEach(btn => {
+            btn.addEventListener('click', () => {
+                botonesIdioma.forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                estado.idioma = btn.dataset.idioma;
+                validar();
+            });
+        });
+
+        botonesTema.forEach(btn => {
+            btn.addEventListener('click', () => {
+                botonesTema.forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                estado.tema = btn.dataset.tema;
+                validar();
+            });
+        });
+
+        function validar() {
+            btnJugar.disabled = !estado.idioma || !estado.tema;
         }
 
-        function mostrarPantallaJuego() {
-            document.getElementById('pantalla-inicio').style.display = 'none';
-            document.getElementById('pantalla-juego').style.display = 'flex';
-            document.getElementById('modal-confirmacion').style.display = 'none';
-            inicializarJuego();
+        btnJugar.addEventListener('click', iniciar);
+        btnInicio.addEventListener('click', mostrarConfirmacion);
+        btnPausa.addEventListener('click', pausar);
+        btnReanudar.addEventListener('click', reanudar);
+        btnConfirmarSi.addEventListener('click', volverInicio);
+        btnConfirmarNo.addEventListener('click', cancelarConfirmacion);
+        cartelito.addEventListener('click', reproducirAudio);
+
+        window.addEventListener('load', () => {
+            crearLuciernagas();
+            crearBurbujasOpacas();
+        });
+
+        async function iniciar() {
+            estado.enJuego = true;
+            estado.pausado = false;
+            pantInicio.style.display = 'none';
+            pantJuego.style.display = 'flex';
+            
+            crearLuciernagas();
+            
+            await countdown();
+            setup();
         }
 
-        function mostrarModal() {
-            document.getElementById('modal-confirmacion').style.display = 'flex';
-        }
-
-        function ocultarModal() {
-            document.getElementById('modal-confirmacion').style.display = 'none';
-        }
-
-        // ========================================
-        // SISTEMA DE OPCIONES (IDIOMAS Y TEMAS)
-        // ========================================
-        function configurarGrupo(grupoId, tipoSeleccion) {
-            const grupo = document.getElementById(grupoId);
-            grupo.querySelectorAll('.btn-opcion').forEach(boton => {
-                boton.addEventListener('click', function() {
-                    // Apagar todos del grupo
-                    grupo.querySelectorAll('.btn-opcion').forEach(btn => {
-                        btn.classList.add('apagado');
-                        btn.classList.remove('encendido');
-                    });
-                    
-                    // Encender solo el clickeado
-                    this.classList.remove('apagado');
-                    this.classList.add('encendido');
-
-                    // Guardar selección
-                    if (tipoSeleccion === 'idioma') {
-                        estadoGlobal.idiomaSeleccionado = this.dataset.idioma;
-                    } else if (tipoSeleccion === 'tema') {
-                        estadoGlobal.temaSeleccionado = this.dataset.tema;
+        function countdown() {
+            return new Promise(resolve => {
+                let n = 3;
+                const div = document.createElement('div');
+                div.className = 'countdown';
+                document.body.appendChild(div);
+                
+                const timer = setInterval(() => {
+                    div.textContent = n;
+                    n--;
+                    if (n < 0) {
+                        clearInterval(timer);
+                        div.remove();
+                        resolve();
                     }
-
-                    // Validar y actualizar JUGAR
-                    validarYActualizarJugar();
-                });
+                }, 1000);
             });
         }
 
-        function validarYActualizarJugar() {
-            const btnJugar = document.getElementById('btn-jugar');
-            if (estadoGlobal.idiomaSeleccionado && estadoGlobal.temaSeleccionado) {
-                btnJugar.classList.remove('apagado');
-                btnJugar.classList.add('encendido');
-            } else {
-                btnJugar.classList.add('apagado');
-                btnJugar.classList.remove('encendido');
-            }
+        function setup() {
+            grid.innerHTML = '<div class="celda-drop" id="zona-drop"></div>';
+            
+            const items_vocab = vocab[estado.tema][estado.idioma];
+            estado.items = items_vocab.map(item => ({
+                ...item,
+                displayText: item.articulo ? `${item.articulo} ${item.palabra}` : item.palabra
+            }));
+
+            colocarItems();
+            proximoItem();
+            iniciarContador();
         }
 
-        // ========================================
-        // JUEGO - Inicialización
-        // ========================================
-        function inicializarJuego() {
-            console.log('Juego iniciado con:');
-            console.log('Idioma:', estadoGlobal.idiomaSeleccionado);
-            console.log('Tema:', estadoGlobal.temaSeleccionado);
-            
-            // Obtener items del vocab
-            const itemsDisponibles = vocab[estadoGlobal.temaSeleccionado][estadoGlobal.idiomaSeleccionado];
-            
-            // Seleccionar 5 al azar
-            const itemsAleatorios = [];
-            const indexUsados = new Set();
-            
-            while (itemsAleatorios.length < 5) {
-                const index = Math.floor(Math.random() * itemsDisponibles.length);
-                if (!indexUsados.has(index)) {
-                    indexUsados.add(index);
-                    itemsAleatorios.push(itemsDisponibles[index]);
-                }
-            }
-            
-            estadoGlobal.itemsActuales = itemsAleatorios;
-            estadoGlobal.itemsCompletados = [];
-            
-            // Mostrar palabra en español (primera de la lista)
-            const palabraSpanish = itemsAleatorios[0].key.replace(/_/g, ' ');
-            document.getElementById('tarjeta-palabra').textContent = palabraSpanish.toUpperCase();
-            
-            // Limpiar grid
-            const grid = document.getElementById('grid');
-            const itemsExistentes = grid.querySelectorAll('.item');
-            itemsExistentes.forEach(item => item.remove());
-            
-            // Posicionar items al azar en el grid
-            posicionarItems(itemsAleatorios);
-            
-            console.log('Items cargados:', itemsAleatorios);
-        }
-
-        // ========================================
-        // POSICIONAR ITEMS EN EL GRID
-        // ========================================
-        function posicionarItems(items) {
-            const grid = document.getElementById('grid');
+        function colocarItems() {
             const gridRect = grid.getBoundingClientRect();
-            const zonaDropRect = document.getElementById('zona-drop').getBoundingClientRect();
+            const temasDeTExto = ['sentimientos'];
+            const esTemaDeTExto = temasDeTExto.includes(estado.tema);
             
-            items.forEach((item, index) => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'item';
-                itemDiv.textContent = item.palabra;
-                itemDiv.dataset.key = item.key;
-                itemDiv.draggable = true;
+            estado.items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'item';
+                div.dataset.key = item.key;
                 
-                // Posición aleatoria en el grid (evitando zona drop)
-                let top, left, posicionValida;
-                do {
-                    posicionValida = true;
-                    top = Math.random() * (gridRect.height - 150);
-                    left = Math.random() * (gridRect.width - 150);
-                    
-                    // Evitar zona drop
-                    if (left < 250 && top > gridRect.height - 200) {
-                        posicionValida = false;
-                    }
-                } while (!posicionValida);
+                if (esTemaDeTExto) {
+                    // Para temas de texto: crear cartelito con palabra EN ESPAÑOL
+                    const cartelito = document.createElement('div');
+                    cartelito.className = 'cartelito-item';
+                    // Usar item.key (que es el español) en lugar de item.palabra
+                    const palabraEnEspanol = item.key.charAt(0).toUpperCase() + item.key.slice(1);
+                    cartelito.textContent = palabraEnEspanol;
+                    cartelito.style.fontSize = '16px';
+                    cartelito.style.fontWeight = '600';
+                    cartelito.style.color = '#6b5a4a';
+                    cartelito.style.textAlign = 'center';
+                    cartelito.style.display = 'flex';
+                    cartelito.style.alignItems = 'center';
+                    cartelito.style.justifyContent = 'center';
+                    cartelito.style.background = '#f9f5f0';
+                    cartelito.style.border = '3px solid #d4c5b8';
+                    cartelito.style.borderRadius = '8px';
+                    cartelito.style.padding = '12px 16px';
+                    cartelito.style.width = '140px';
+                    cartelito.style.height = '80px';
+                    cartelito.style.whiteSpace = 'normal';
+                    cartelito.style.wordWrap = 'break-word';
+                    div.appendChild(cartelito);
+                } else {
+                    // Para temas con imágenes
+                    const img = document.createElement('img');
+                    img.src = `./images/${estado.tema}/${item.key}.png`;
+                    div.appendChild(img);
+                }
                 
-                itemDiv.style.top = top + 'px';
-                itemDiv.style.left = left + 'px';
+                const x = Math.random() * (gridRect.width - 140);
+                const y = Math.random() * (gridRect.height - 140);
+                div.style.left = x + 'px';
+                div.style.top = y + 'px';
                 
-                // Touch events para móvil
-                itemDiv.addEventListener('touchstart', touchStart);
-                itemDiv.addEventListener('touchmove', touchMove);
-                itemDiv.addEventListener('touchend', touchEnd);
+                div.addEventListener('touchstart', dragStart, false);
+                div.addEventListener('touchmove', dragMove, false);
+                div.addEventListener('touchend', dragEnd, false);
                 
-                grid.appendChild(itemDiv);
+                grid.appendChild(div);
             });
-            
-            // Zona drop (sin eventos, se maneja en touchEnd)
-            const zonaDrop = document.getElementById('zona-drop');
-            // Touch events manejados en touchEnd
         }
 
-        // ========================================
-        // TOUCH & DROP EVENTS (Móvil)
-        // ========================================
-        let touchItem = null;
-        let touchOffsetX = 0;
-        let touchOffsetY = 0;
-        
-        function touchStart(e) {
-            touchItem = this;
-            const touch = e.touches[0];
-            const rect = this.getBoundingClientRect();
+        function proximoItem() {
+            const itemsDisponibles = estado.items.filter(item => {
+                const element = document.querySelector(`[data-key="${item.key}"]`);
+                return element && element.style.display !== 'none';
+            });
             
-            touchOffsetX = touch.clientX - rect.left;
-            touchOffsetY = touch.clientY - rect.top;
+            if (itemsDisponibles.length === 0) {
+                cartelito.textContent = '¡Ganaste!';
+                cartelito.style.borderColor = '#d4c5b8';
+                return;
+            }
             
-            this.style.opacity = '0.7';
-            this.style.zIndex = '100';
+            const random = Math.floor(Math.random() * itemsDisponibles.length);
+            estado.itemActual = itemsDisponibles[random];
+            cartelito.textContent = estado.itemActual.displayText;
+            
+            // Cambiar color del borde según género
+            const colorPorGenero = {
+                masculino: '#4da6ff',  // celeste
+                femenino: '#ff69b4',   // rosa
+                neutro: '#ffd700',     // amarillo
+                plural: '#00cc66'      // verde
+            };
+            
+            cartelito.style.borderColor = colorPorGenero[estado.itemActual.genero] || '#d4c5b8';
         }
-        
-        function touchMove(e) {
-            if (!touchItem) return;
+
+        let dragging = null;
+        let dragOffset = { x: 0, y: 0 };
+
+        function dragStart(e) {
+            if (estado.pausado) return;
+            dragging = e.target.closest('.item');
+            if (!dragging) return;
+            
+            dragging.classList.add('dragging');
+            const touch = e.touches[0];
+            const rect = dragging.getBoundingClientRect();
+            dragOffset.x = touch.clientX - rect.left;
+            dragOffset.y = touch.clientY - rect.top;
+        }
+
+        function dragMove(e) {
+            if (!dragging || estado.pausado) return;
             e.preventDefault();
             
             const touch = e.touches[0];
-            const grid = document.getElementById('grid');
             const gridRect = grid.getBoundingClientRect();
             
-            let newX = touch.clientX - gridRect.left - touchOffsetX;
-            let newY = touch.clientY - gridRect.top - touchOffsetY;
+            let x = touch.clientX - gridRect.left - dragOffset.x;
+            let y = touch.clientY - gridRect.top - dragOffset.y;
             
-            // Limitar al grid
-            newX = Math.max(0, Math.min(newX, gridRect.width - 140));
-            newY = Math.max(0, Math.min(newY, gridRect.height - 140));
+            x = Math.max(0, Math.min(x, gridRect.width - 140));
+            y = Math.max(0, Math.min(y, gridRect.height - 140));
             
-            touchItem.style.left = newX + 'px';
-            touchItem.style.top = newY + 'px';
+            dragging.style.left = x + 'px';
+            dragging.style.top = y + 'px';
         }
-        
-        function touchEnd(e) {
-            if (!touchItem) return;
+
+        function dragEnd(e) {
+            if (!dragging) return;
             
-            const touch = e.changedTouches[0];
             const zonaDrop = document.getElementById('zona-drop');
-            const zoneRect = zonaDrop.getBoundingClientRect();
+            const dropRect = zonaDrop.getBoundingClientRect();
+            const itemRect = dragging.getBoundingClientRect();
             
-            // Verificar si está dentro de la zona drop
-            if (touch.clientX >= zoneRect.left && 
-                touch.clientX <= zoneRect.right &&
-                touch.clientY >= zoneRect.top && 
-                touch.clientY <= zoneRect.bottom) {
+            const enZona = !(itemRect.right < dropRect.left || 
+                            itemRect.left > dropRect.right || 
+                            itemRect.bottom < dropRect.top || 
+                            itemRect.top > dropRect.bottom);
+            
+            if (enZona && dragging.dataset.key === estado.itemActual.key) {
+                crearGlitter(itemRect);
+                dragging.style.display = 'none';
+                estado.puntuacion++;
+                proximoItem();
+            } else if (enZona) {
+                dragging.classList.add('error');
+                setTimeout(() => dragging.classList.remove('error'), 400);
+            }
+            
+            dragging.classList.remove('dragging');
+            dragging = null;
+        }
+
+        function crearGlitter(rect) {
+            const cantidad = 12;
+            for (let i = 0; i < cantidad; i++) {
+                const g = document.createElement('div');
+                g.className = 'glitter';
+                g.textContent = '•';
+                g.style.left = (rect.left + rect.width / 2) + 'px';
+                g.style.top = (rect.top + rect.height / 2) + 'px';
+                g.style.color = '#d4a574';
                 
-                // Está en la zona drop
-                const palabraObjetivo = estadoGlobal.itemsActuales[0].key;
-                const palabraArrastrada = touchItem.dataset.key;
+                const angulo = (i / cantidad) * Math.PI * 2;
+                const dist = 80 + Math.random() * 40;
+                const tx = Math.cos(angulo) * dist;
+                const ty = Math.sin(angulo) * dist;
                 
-                if (palabraArrastrada === palabraObjetivo) {
-                    // Correcto!
-                    console.log('✅ Correcto!');
-                    touchItem.remove();
-                    
-                    // Agregar a completados
-                    estadoGlobal.itemsCompletados.push(palabraArrastrada);
-                    
-                    // Verificar si completó todos
-                    if (estadoGlobal.itemsCompletados.length === estadoGlobal.itemsActuales.length) {
-                        mostrarRondaCompletada();
-                    } else {
-                        // Siguiente palabra
-                        const proximaPalabra = estadoGlobal.itemsActuales[estadoGlobal.itemsCompletados.length].key.replace(/_/g, ' ');
-                        document.getElementById('tarjeta-palabra').textContent = proximaPalabra.toUpperCase();
-                    }
+                g.style.setProperty('--tx', tx + 'px');
+                g.style.setProperty('--ty', ty + 'px');
+                
+                document.body.appendChild(g);
+                setTimeout(() => g.remove(), 1200);
+            }
+        }
+
+        function reproducirAudio() {
+            if (!estado.itemActual) return;
+            
+            const utterance = new SpeechSynthesisUtterance(estado.itemActual.palabra);
+            
+            // Mapear cada idioma a su código lang nativo con acento correcto
+            const langMap = {
+                'ingles': 'en-GB',        // inglés británico (Queen's English)
+                'frances': 'fr-FR',       // francés de Francia
+                'italiano': 'it-IT',      // italiano de Italia
+                'ruso': 'ru-RU',          // ruso de Rusia
+                'aleman': 'de-DE',        // alemán de Alemania
+                'chino': 'zh-CN',         // chino mandarín de China
+                'portugues': 'pt-PT',     // portugués de Portugal
+                'holandes': 'nl-NL'       // holandés de Países Bajos
+            };
+            
+            utterance.lang = langMap[estado.idioma] || 'en-US';
+            utterance.rate = 0.8;
+            
+            window.speechSynthesis.cancel();
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function volverInicio() {
+            if (contadorInterval) clearInterval(contadorInterval);
+            estado.enJuego = false;
+            estado.pausado = false;
+            estado.idioma = null;
+            estado.tema = null;
+            panelPausa.style.display = 'none';
+            panelConfirmacion.style.display = 'none';
+            pantJuego.style.display = 'none';
+            pantInicio.style.display = 'flex';
+            botonesIdioma.forEach(b => b.classList.remove('selected'));
+            botonesTema.forEach(b => b.classList.remove('selected'));
+            validar();
+        }
+
+        function mostrarConfirmacion() {
+            panelConfirmacion.style.display = 'flex';
+        }
+
+        function cancelarConfirmacion() {
+            panelConfirmacion.style.display = 'none';
+        }
+
+        function iniciarContador() {
+            const contadorNumero = document.getElementById('contador-numero');
+            const contadorBarra = document.getElementById('contador-barra');
+            let tiempoRestante = 120; // 2 minutos en segundos
+            const tiempoTotal = 120;
+
+            contadorNumero.textContent = formatearTiempo(tiempoRestante);
+            contadorBarra.style.width = '100%';
+            contadorBarra.className = 'contador-barra';
+
+            contadorInterval = setInterval(() => {
+                tiempoRestante--;
+
+                const porcentaje = (tiempoRestante / tiempoTotal) * 100;
+                contadorBarra.style.width = porcentaje + '%';
+
+                // Actualizar color según tiempo restante
+                if (tiempoRestante <= 30) {
+                    contadorBarra.className = 'contador-barra rojo';
+                } else if (tiempoRestante <= 60) {
+                    contadorBarra.className = 'contador-barra amarillo';
                 } else {
-                    // Incorrecto - rebota
-                    console.log('❌ Incorrecto');
-                    touchItem.style.backgroundColor = '#ffcccc';
-                    setTimeout(() => {
-                        touchItem.style.backgroundColor = '#f0f0f0';
-                    }, 500);
+                    contadorBarra.className = 'contador-barra';
                 }
-            }
-            
-            touchItem.style.opacity = '1';
-            touchItem.style.zIndex = '10';
-            touchItem = null;
+
+                contadorNumero.textContent = formatearTiempo(tiempoRestante);
+
+                if (tiempoRestante <= 0) {
+                    clearInterval(contadorInterval);
+                    gameOver();
+                }
+            }, 1000);
         }
 
-        // ========================================
-        // RONDA COMPLETADA
-        // ========================================
-        function mostrarRondaCompletada() {
-            const mensaje = document.getElementById('mensaje-ronda');
-            mensaje.style.display = 'block';
-            
-            setTimeout(() => {
-                mensaje.style.display = 'none';
-                mostrarPantallaInicio();
-            }, 2000);
+        function formatearTiempo(segundos) {
+            const mins = Math.floor(segundos / 60);
+            const segs = segundos % 60;
+            return `${mins}:${segs.toString().padStart(2, '0')}`;
         }
 
-        // ========================================
-        // EVENTOS
-        // ========================================
-        document.getElementById('btn-jugar').addEventListener('click', function() {
-            if (this.classList.contains('encendido')) {
-                mostrarPantallaJuego();
+        function gameOver() {
+            estado.enJuego = false;
+            panelPausa.style.display = 'flex';
+            panelPausa.querySelector('.contenido-pausa div').textContent = '¡Tiempo!';
+            panelPausa.querySelector('#btn-reanudar').textContent = 'Volver';
+        }
+
+        function pausar() {
+            estado.pausado = true;
+            panelPausa.style.display = 'flex';
+        }
+
+        function reanudar() {
+            estado.pausado = false;
+            panelPausa.style.display = 'none';
+        }
+
+        function crearLuciernagas() {
+            const cantidad = 3;
+            for (let i = 0; i < cantidad; i++) {
+                const espacioAleatorio = 300 + Math.random() * 1200;
+                setTimeout(() => {
+                    const burbuja = document.createElement('div');
+                    burbuja.className = 'luciernaga';
+                    
+                    const isBlanca = i < 2;
+                    const tamaño = isBlanca 
+                        ? 8 + Math.random() * 28
+                        : 1 + Math.random() * 7;
+                    
+                    const startX = Math.random() * window.innerWidth;
+                    const startY = Math.random() * window.innerHeight;
+                    
+                    const endX = Math.random() * window.innerWidth;
+                    const endY = Math.random() * window.innerHeight;
+                    
+                    const midX = (startX + endX) / 2 + (Math.random() - 0.5) * 120;
+                    const midY = (startY + endY) / 2 + (Math.random() - 0.5) * 120;
+                    
+                    const duracion = isBlanca 
+                        ? 18000 + Math.random() * 12000 
+                        : 22000 + Math.random() * 16000;
+                    
+                    const cicloTiempo = 7600;
+                    const tiempoEncendida = 4000;
+                    
+                    burbuja.style.width = tamaño + 'px';
+                    burbuja.style.height = tamaño + 'px';
+                    burbuja.style.borderRadius = '50%';
+                    burbuja.style.background = `rgba(255, 255, 255, 0.6)`;
+                    burbuja.style.border = `1px solid rgba(255, 255, 255, 0.8)`;
+                    burbuja.style.boxShadow = `none`;
+                    
+                    burbuja.style.left = startX + 'px';
+                    burbuja.style.top = startY + 'px';
+                    burbuja.style.opacity = '0';
+                    
+                    document.body.appendChild(burbuja);
+                    
+                    const inicio = Date.now();
+                    const animar = () => {
+                        const elapsed = Date.now() - inicio;
+                        const progress = elapsed / duracion;
+                        
+                        if (progress > 1) {
+                            burbuja.remove();
+                            return;
+                        }
+                        
+                        const x = (1-progress)**2 * startX + 2*(1-progress)*progress * midX + progress**2 * endX;
+                        const y = (1-progress)**2 * startY + 2*(1-progress)*progress * midY + progress**2 * endY;
+                        
+                        burbuja.style.left = x + 'px';
+                        burbuja.style.top = y + 'px';
+                        
+                        const cicloLocal = elapsed % cicloTiempo;
+                        
+                        let opacity;
+                        if (cicloLocal < 800) {
+                            // Inspirar (fade in suave en 800ms)
+                            opacity = cicloLocal / 800;
+                        } else if (cicloLocal < 4800) {
+                            // Mantener prendida 4 segundos
+                            opacity = 1;
+                        } else if (cicloLocal < 5600) {
+                            // Expirar (fade out suave en 800ms)
+                            opacity = 1 - ((cicloLocal - 4800) / 800);
+                        } else {
+                            // Apagada 2 segundos
+                            opacity = 0;
+                        }
+                        
+                        burbuja.style.opacity = opacity * 0.85;
+                        requestAnimationFrame(animar);
+                    };
+                    
+                    animar();
+                }, espacioAleatorio);
             }
-        });
+            
+            setTimeout(crearLuciernagas, 40000 + Math.random() * 20000);
+        }
 
-        document.getElementById('btn-inicio').addEventListener('click', mostrarModal);
-        document.getElementById('btn-confirmar').addEventListener('click', mostrarPantallaInicio);
-        document.getElementById('btn-cancelar').addEventListener('click', ocultarModal);
-
-        // ========================================
-        // INICIALIZACIÓN AL CARGAR
-        // ========================================
-        configurarGrupo('grupo-idiomas', 'idioma');
-        configurarGrupo('grupo-temas', 'tema');
-        mostrarPantallaInicio();
-
-        console.log('✅ App inicializada');
+        function crearBurbujasOpacas() {
+            const grupoSize = 2;
+            
+            const crearGrupo = () => {
+                for (let i = 0; i < grupoSize; i++) {
+                    setTimeout(() => {
+                        const burbuja = document.createElement('div');
+                        burbuja.className = 'luciernaga';
+                        
+                        const tamaño = 10 + Math.random() * 17.5;
+                        
+                        const startX = Math.random() * window.innerWidth;
+                        const startY = Math.random() * window.innerHeight;
+                        
+                        const endX = Math.random() * window.innerWidth;
+                        const endY = Math.random() * window.innerHeight;
+                        
+                        const midX = (startX + endX) / 2 + (Math.random() - 0.5) * 100;
+                        const midY = (startY + endY) / 2 + (Math.random() - 0.5) * 100;
+                        
+                        const duracion = 16000 + Math.random() * 10000;
+                        
+                        burbuja.style.width = tamaño + 'px';
+                        burbuja.style.height = tamaño + 'px';
+                        burbuja.style.borderRadius = '50%';
+                        burbuja.style.background = `rgba(255, 255, 255, 1)`;
+                        burbuja.style.border = `0.5px solid rgba(255, 255, 255, 1)`;
+                        burbuja.style.boxShadow = `none`;
+                        
+                        burbuja.style.left = startX + 'px';
+                        burbuja.style.top = startY + 'px';
+                        burbuja.style.opacity = '0';
+                        
+                        document.body.appendChild(burbuja);
+                        
+                        const inicio = Date.now();
+                        const animar = () => {
+                            const elapsed = Date.now() - inicio;
+                            const progress = elapsed / duracion;
+                            
+                            if (progress > 1) {
+                                burbuja.remove();
+                                return;
+                            }
+                            
+                            const x = (1-progress)**2 * startX + 2*(1-progress)*progress * midX + progress**2 * endX;
+                            const y = (1-progress)**2 * startY + 2*(1-progress)*progress * midY + progress**2 * endY;
+                            
+                            burbuja.style.left = x + 'px';
+                            burbuja.style.top = y + 'px';
+                            
+                            const cicloTiempo = 7600;
+                            const cicloLocal = elapsed % cicloTiempo;
+                            
+                            let opacity;
+                            if (cicloLocal < 800) {
+                                opacity = cicloLocal / 800;
+                            } else if (cicloLocal < 4800) {
+                                opacity = 1;
+                            } else if (cicloLocal < 5600) {
+                                opacity = 1 - ((cicloLocal - 4800) / 800);
+                            } else {
+                                opacity = 0;
+                            }
+                            
+                            // Cuando termina el ciclo total, desvanecerse suave
+                            const fadeOutDuration = 1200;
+                            const timeUntilEnd = duracion - elapsed;
+                            if (timeUntilEnd < fadeOutDuration) {
+                                opacity = (timeUntilEnd / fadeOutDuration) * opacity;
+                            }
+                            
+                            burbuja.style.opacity = opacity * 1;
+                            requestAnimationFrame(animar);
+                        };
+                        
+                        animar();
+                    }, i * 150);
+                }
+            };
+            
+            crearGrupo();
+            setInterval(crearGrupo, 3000);
+        }
     </script>
 </body>
 </html>
