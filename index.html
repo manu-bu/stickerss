@@ -6,21 +6,26 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>STICKERS!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap');
+        :root {
+            --font: 'Quicksand', 'Nunito', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+        }
         
         html, body {
+            font-family: var(--font);
             width: 100%;
             height: 100vh;
             overflow: hidden;
-            font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
             background: #f5f1ed;
         }
 
         * {
-            font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+            font-family: var(--font);
         }
 
         #pantalla-inicio {
@@ -69,14 +74,14 @@
         .opcion-btn {
             padding: 10px 20px;
             font-size: 14px;
-            border: 2.5px solid #d4c5b8;
+            border: 4px solid #d4c5b8;
             border-radius: 8px;
             background: #f9f5f0;
             color: #6b5a4a;
             cursor: pointer;
             font-weight: 400;
             transition: all 0.2s ease;
-            font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+            font-family: var(--font-quicksand);
         }
 
         .opcion-btn:hover {
@@ -94,13 +99,13 @@
             font-size: 18px;
             background: #f9f5f0;
             color: #6b5a4a;
-            border: 2.5px solid #d4c5b8;
+            border: 4px solid #d4c5b8;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 500;
             transition: all 0.2s ease;
             margin-top: 12px;
-            font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+            font-family: var(--font-quicksand);
         }
 
         #btn-jugar:disabled {
@@ -135,12 +140,12 @@
             font-size: 13px;
             background: #f9f5f0;
             color: #6b5a4a;
-            border: 2.5px solid #d4c5b8;
+            border: 4px solid #d4c5b8;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 500;
             transition: all 0.15s ease;
-            font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+            font-family: var(--font-quicksand);
         }
 
         .barra-superior button:active {
@@ -161,7 +166,7 @@
 
         .cartelito {
             background: #f9f5f0;
-            border: 2.5px solid #d4c5b8;
+            border: 4px solid #d4c5b8;
             border-radius: 8px;
             padding: 10px 20px;
             font-size: 22px;
@@ -173,7 +178,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             user-select: none;
-            font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+            font-family: var(--font-quicksand);
         }
 
         .cartelito:active {
@@ -244,7 +249,7 @@
             font-weight: bold;
             z-index: 1000;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+            font-family: var(--font-quicksand);
         }
 
         #panel-pausa {
@@ -262,12 +267,12 @@
 
         .contenido-pausa {
             background: #f9f5f0;
-            border: 2.5px solid #d4c5b8;
+            border: 4px solid #d4c5b8;
             border-radius: 8px;
             padding: 40px 50px;
             text-align: center;
             min-width: 320px;
-            font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+            font-family: var(--font-quicksand);
         }
 
         .contenido-pausa div {
@@ -282,11 +287,11 @@
             font-size: 16px;
             background: #f9f5f0;
             color: #6b5a4a;
-            border: 2.5px solid #d4c5b8;
+            border: 4px solid #d4c5b8;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 500;
-            font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+            font-family: var(--font-quicksand);
         }
 
         .glitter {
@@ -328,6 +333,12 @@
                 <div class="opciones-fila">
                     <button class="opcion-btn" data-idioma="ingles">Inglés</button>
                     <button class="opcion-btn" data-idioma="frances">Francés</button>
+                    <button class="opcion-btn" data-idioma="italiano">Italiano</button>
+                    <button class="opcion-btn" data-idioma="ruso">Ruso</button>
+                    <button class="opcion-btn" data-idioma="aleman">Alemán</button>
+                    <button class="opcion-btn" data-idioma="chino">Chino</button>
+                    <button class="opcion-btn" data-idioma="portugues">Portugués</button>
+                    <button class="opcion-btn" data-idioma="holandes">Holandés</button>
                 </div>
             </div>
             <div class="selector">
@@ -365,34 +376,118 @@
         const vocab = {
             comida: {
                 ingles: [
-                    { key: 'pan', palabra: 'Bread', articulo: 'The' },
-                    { key: 'huevo', palabra: 'Egg', articulo: 'The' },
-                    { key: 'leche', palabra: 'Milk', articulo: '' },
-                    { key: 'cereales', palabra: 'Cereal', articulo: 'The' },
-                    { key: 'chocolate', palabra: 'Chocolate', articulo: '' }
+                    { key: 'pan', palabra: 'Bread', articulo: 'The', genero: 'neutro' },
+                    { key: 'huevo', palabra: 'Egg', articulo: 'The', genero: 'neutro' },
+                    { key: 'leche', palabra: 'Milk', articulo: '', genero: 'neutro' },
+                    { key: 'cereales', palabra: 'Cereal', articulo: 'The', genero: 'neutro' },
+                    { key: 'chocolate', palabra: 'Chocolate', articulo: '', genero: 'neutro' }
                 ],
                 frances: [
-                    { key: 'pan', palabra: 'Pain', articulo: 'Le' },
-                    { key: 'huevo', palabra: 'Oeuf', articulo: "L'" },
-                    { key: 'leche', palabra: 'Lait', articulo: 'Le' },
-                    { key: 'cereales', palabra: 'Céréales', articulo: 'Les' },
-                    { key: 'chocolate', palabra: 'Chocolat', articulo: 'Le' }
+                    { key: 'pan', palabra: 'Pain', articulo: 'Le', genero: 'masculino' },
+                    { key: 'huevo', palabra: 'Oeuf', articulo: "L'", genero: 'masculino' },
+                    { key: 'leche', palabra: 'Lait', articulo: 'Le', genero: 'masculino' },
+                    { key: 'cereales', palabra: 'Céréales', articulo: 'Les', genero: 'femenino' },
+                    { key: 'chocolate', palabra: 'Chocolat', articulo: 'Le', genero: 'masculino' }
+                ],
+                italiano: [
+                    { key: 'pan', palabra: 'Pane', articulo: 'Il', genero: 'masculino' },
+                    { key: 'huevo', palabra: 'Uovo', articulo: "L'", genero: 'masculino' },
+                    { key: 'leche', palabra: 'Latte', articulo: 'Il', genero: 'masculino' },
+                    { key: 'cereales', palabra: 'Cereali', articulo: 'I', genero: 'plural' },
+                    { key: 'chocolate', palabra: 'Cioccolato', articulo: 'Il', genero: 'masculino' }
+                ],
+                ruso: [
+                    { key: 'pan', palabra: 'хлеб', articulo: '', genero: 'masculino' },
+                    { key: 'huevo', palabra: 'яйцо', articulo: '', genero: 'neutro' },
+                    { key: 'leche', palabra: 'молоко', articulo: '', genero: 'neutro' },
+                    { key: 'cereales', palabra: 'зёрна', articulo: '', genero: 'plural' },
+                    { key: 'chocolate', palabra: 'шоколад', articulo: '', genero: 'masculino' }
+                ],
+                aleman: [
+                    { key: 'pan', palabra: 'Brot', articulo: 'Das', genero: 'neutro' },
+                    { key: 'huevo', palabra: 'Ei', articulo: 'Das', genero: 'neutro' },
+                    { key: 'leche', palabra: 'Milch', articulo: 'Die', genero: 'femenino' },
+                    { key: 'cereales', palabra: 'Getreide', articulo: 'Das', genero: 'neutro' },
+                    { key: 'chocolate', palabra: 'Schokolade', articulo: 'Die', genero: 'femenino' }
+                ],
+                chino: [
+                    { key: 'pan', palabra: 'miànbāo', articulo: '', genero: 'neutro' },
+                    { key: 'huevo', palabra: 'jīdàn', articulo: '', genero: 'neutro' },
+                    { key: 'leche', palabra: 'niúnǎi', articulo: '', genero: 'neutro' },
+                    { key: 'cereales', palabra: 'zhǔshíwù', articulo: '', genero: 'neutro' },
+                    { key: 'chocolate', palabra: 'qiǎokèlì', articulo: '', genero: 'neutro' }
+                ],
+                portugues: [
+                    { key: 'pan', palabra: 'Pão', articulo: 'O', genero: 'masculino' },
+                    { key: 'huevo', palabra: 'Ovo', articulo: 'O', genero: 'masculino' },
+                    { key: 'leche', palabra: 'Leite', articulo: 'O', genero: 'masculino' },
+                    { key: 'cereales', palabra: 'Cereais', articulo: 'Os', genero: 'plural' },
+                    { key: 'chocolate', palabra: 'Chocolate', articulo: 'O', genero: 'masculino' }
+                ],
+                holandes: [
+                    { key: 'pan', palabra: 'Brood', articulo: 'Het', genero: 'neutro' },
+                    { key: 'huevo', palabra: 'Ei', articulo: 'Het', genero: 'neutro' },
+                    { key: 'leche', palabra: 'Melk', articulo: 'De', genero: 'femenino' },
+                    { key: 'cereales', palabra: 'Granen', articulo: 'De', genero: 'plural' },
+                    { key: 'chocolate', palabra: 'Chocolade', articulo: 'De', genero: 'femenino' }
                 ]
             },
             bano: {
                 ingles: [
-                    { key: 'alfombra', palabra: 'Mat', articulo: 'The' },
-                    { key: 'shampoo', palabra: 'Shampoo', articulo: '' },
-                    { key: 'bata', palabra: 'Robe', articulo: 'The' },
-                    { key: 'pantuflas', palabra: 'Slippers', articulo: '' },
-                    { key: 'cortina', palabra: 'Curtain', articulo: 'The' }
+                    { key: 'alfombra', palabra: 'Mat', articulo: 'The', genero: 'neutro' },
+                    { key: 'shampoo', palabra: 'Shampoo', articulo: '', genero: 'neutro' },
+                    { key: 'bata', palabra: 'Robe', articulo: 'The', genero: 'neutro' },
+                    { key: 'pantuflas', palabra: 'Slippers', articulo: '', genero: 'plural' },
+                    { key: 'cortina', palabra: 'Curtain', articulo: 'The', genero: 'neutro' }
                 ],
                 frances: [
-                    { key: 'alfombra', palabra: 'Tapis', articulo: 'Le' },
-                    { key: 'shampoo', palabra: 'Shampoing', articulo: 'Le' },
-                    { key: 'bata', palabra: 'Peignoir', articulo: 'Le' },
-                    { key: 'pantuflas', palabra: 'Pantoufles', articulo: 'Les' },
-                    { key: 'cortina', palabra: 'Rideau', articulo: 'Le' }
+                    { key: 'alfombra', palabra: 'Tapis', articulo: 'Le', genero: 'masculino' },
+                    { key: 'shampoo', palabra: 'Shampoing', articulo: 'Le', genero: 'masculino' },
+                    { key: 'bata', palabra: 'Peignoir', articulo: 'Le', genero: 'masculino' },
+                    { key: 'pantuflas', palabra: 'Pantoufles', articulo: 'Les', genero: 'femenino' },
+                    { key: 'cortina', palabra: 'Rideau', articulo: 'Le', genero: 'masculino' }
+                ],
+                italiano: [
+                    { key: 'alfombra', palabra: 'Tappeto', articulo: 'Il', genero: 'masculino' },
+                    { key: 'shampoo', palabra: 'Shampoo', articulo: 'Lo', genero: 'masculino' },
+                    { key: 'bata', palabra: 'Accappatoio', articulo: "L'", genero: 'masculino' },
+                    { key: 'pantuflas', palabra: 'Pantofole', articulo: 'Le', genero: 'femenino' },
+                    { key: 'cortina', palabra: 'Tenda', articulo: 'La', genero: 'femenino' }
+                ],
+                ruso: [
+                    { key: 'alfombra', palabra: 'коврик', articulo: '', genero: 'masculino' },
+                    { key: 'shampoo', palabra: 'шампунь', articulo: '', genero: 'masculino' },
+                    { key: 'bata', palabra: 'халат', articulo: '', genero: 'masculino' },
+                    { key: 'pantuflas', palabra: 'тапочки', articulo: '', genero: 'plural' },
+                    { key: 'cortina', palabra: 'штора', articulo: '', genero: 'femenino' }
+                ],
+                aleman: [
+                    { key: 'alfombra', palabra: 'Matte', articulo: 'Die', genero: 'femenino' },
+                    { key: 'shampoo', palabra: 'Shampoo', articulo: 'Das', genero: 'neutro' },
+                    { key: 'bata', palabra: 'Bademantel', articulo: 'Der', genero: 'masculino' },
+                    { key: 'pantuflas', palabra: 'Pantoffeln', articulo: 'Die', genero: 'femenino' },
+                    { key: 'cortina', palabra: 'Vorhang', articulo: 'Der', genero: 'masculino' }
+                ],
+                chino: [
+                    { key: 'alfombra', palabra: 'dìtǎn', articulo: '', genero: 'neutro' },
+                    { key: 'shampoo', palabra: 'xǐfà shuǐ', articulo: '', genero: 'neutro' },
+                    { key: 'bata', palabra: 'yùtàobāo', articulo: '', genero: 'neutro' },
+                    { key: 'pantuflas', palabra: 'tuō xié', articulo: '', genero: 'neutro' },
+                    { key: 'cortina', palabra: 'chuānglián', articulo: '', genero: 'neutro' }
+                ],
+                portugues: [
+                    { key: 'alfombra', palabra: 'Tapete', articulo: 'O', genero: 'masculino' },
+                    { key: 'shampoo', palabra: 'Shampoo', articulo: 'O', genero: 'masculino' },
+                    { key: 'bata', palabra: 'Roupão', articulo: 'O', genero: 'masculino' },
+                    { key: 'pantuflas', palabra: 'Chinelos', articulo: 'Os', genero: 'plural' },
+                    { key: 'cortina', palabra: 'Cortina', articulo: 'A', genero: 'femenino' }
+                ],
+                holandes: [
+                    { key: 'alfombra', palabra: 'Mat', articulo: 'De', genero: 'femenino' },
+                    { key: 'shampoo', palabra: 'Shampoo', articulo: 'De', genero: 'femenino' },
+                    { key: 'bata', palabra: 'Badjas', articulo: 'De', genero: 'femenino' },
+                    { key: 'pantuflas', palabra: 'Slippers', articulo: 'De', genero: 'femenino' },
+                    { key: 'cortina', palabra: 'Gordijn', articulo: 'Het', genero: 'neutro' }
                 ]
             }
         };
@@ -527,12 +622,23 @@
             
             if (itemsDisponibles.length === 0) {
                 cartelito.textContent = '¡Ganaste!';
+                cartelito.style.borderColor = '#d4c5b8';
                 return;
             }
             
             const random = Math.floor(Math.random() * itemsDisponibles.length);
             estado.itemActual = itemsDisponibles[random];
             cartelito.textContent = estado.itemActual.displayText;
+            
+            // Cambiar color del borde según género
+            const colorPorGenero = {
+                masculino: '#4da6ff',  // celeste
+                femenino: '#ff69b4',   // rosa
+                neutro: '#ffd700',     // amarillo
+                plural: '#00cc66'      // verde
+            };
+            
+            cartelito.style.borderColor = colorPorGenero[estado.itemActual.genero] || '#d4c5b8';
         }
 
         let dragging = null;
