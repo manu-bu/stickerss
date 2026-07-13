@@ -593,6 +593,7 @@
                     <button class="opcion-btn" data-tema="comida">COMIDA</button>
                     <button class="opcion-btn" data-tema="bano">BAÑO</button>
                     <button class="opcion-btn" data-tema="sentimientos">SENTIMIENTOS</button>
+                    <button class="opcion-btn" data-tema="comida_t">COMIDA_T</button>
                 </div>
             </div>
             <button id="btn-jugar" disabled>¡A JUGAR!</button>
@@ -848,6 +849,184 @@
                     { key: 'ansioso', palabra: 'Nerveus', articulo: '', genero: 'neutro' },
                     { key: 'enamorado', palabra: 'Verliefd', articulo: '', genero: 'neutro' }
                 ]
+            },
+            comida_t: {
+                ingles: [
+                    { key: 'pollo', palabra: 'Chicken', articulo: '', genero: 'neutro' },
+                    { key: 'carne_res', palabra: 'Beef', articulo: '', genero: 'neutro' },
+                    { key: 'cerdo', palabra: 'Pork', articulo: '', genero: 'neutro' },
+                    { key: 'pavo', palabra: 'Turkey', articulo: '', genero: 'neutro' },
+                    { key: 'jamon', palabra: 'Ham', articulo: '', genero: 'neutro' },
+                    { key: 'salchichas', palabra: 'Sausages', articulo: '', genero: 'neutro' },
+                    { key: 'pescado', palabra: 'Fish', articulo: '', genero: 'neutro' },
+                    { key: 'salmon', palabra: 'Salmon', articulo: '', genero: 'neutro' },
+                    { key: 'atun', palabra: 'Tuna', articulo: '', genero: 'neutro' },
+                    { key: 'camarones', palabra: 'Shrimp', articulo: '', genero: 'neutro' },
+                    { key: 'leche', palabra: 'Milk', articulo: '', genero: 'neutro' },
+                    { key: 'queso', palabra: 'Cheese', articulo: '', genero: 'neutro' },
+                    { key: 'mantequilla', palabra: 'Butter', articulo: '', genero: 'neutro' },
+                    { key: 'yogur', palabra: 'Yogurt', articulo: '', genero: 'neutro' },
+                    { key: 'crema', palabra: 'Cream', articulo: '', genero: 'neutro' },
+                    { key: 'nueces', palabra: 'Walnuts', articulo: '', genero: 'neutro' },
+                    { key: 'almendras', palabra: 'Almonds', articulo: '', genero: 'neutro' },
+                    { key: 'avellanas', palabra: 'Hazelnuts', articulo: '', genero: 'neutro' },
+                    { key: 'mani', palabra: 'Peanuts', articulo: '', genero: 'neutro' },
+                    { key: 'pistacho', palabra: 'Pistachio', articulo: '', genero: 'neutro' }
+                ],
+                frances: [
+                    { key: 'pollo', palabra: 'Poulet', articulo: 'Le', genero: 'masculino' },
+                    { key: 'carne_res', palabra: 'Boeuf', articulo: 'Le', genero: 'masculino' },
+                    { key: 'cerdo', palabra: 'Porc', articulo: 'Le', genero: 'masculino' },
+                    { key: 'pavo', palabra: 'Dinde', articulo: 'La', genero: 'femenino' },
+                    { key: 'jamon', palabra: 'Jambon', articulo: 'Le', genero: 'masculino' },
+                    { key: 'salchichas', palabra: 'Saucisses', articulo: 'Les', genero: 'femenino' },
+                    { key: 'pescado', palabra: 'Poisson', articulo: 'Le', genero: 'masculino' },
+                    { key: 'salmon', palabra: 'Saumon', articulo: 'Le', genero: 'masculino' },
+                    { key: 'atun', palabra: 'Thon', articulo: 'Le', genero: 'masculino' },
+                    { key: 'camarones', palabra: 'Crevettes', articulo: 'Les', genero: 'femenino' },
+                    { key: 'leche', palabra: 'Lait', articulo: 'Le', genero: 'masculino' },
+                    { key: 'queso', palabra: 'Fromage', articulo: 'Le', genero: 'masculino' },
+                    { key: 'mantequilla', palabra: 'Beurre', articulo: 'Le', genero: 'masculino' },
+                    { key: 'yogur', palabra: 'Yaourt', articulo: 'Le', genero: 'masculino' },
+                    { key: 'crema', palabra: 'Crème', articulo: 'La', genero: 'femenino' },
+                    { key: 'nueces', palabra: 'Noix', articulo: 'Les', genero: 'femenino' },
+                    { key: 'almendras', palabra: 'Amandes', articulo: 'Les', genero: 'femenino' },
+                    { key: 'avellanas', palabra: 'Noisettes', articulo: 'Les', genero: 'femenino' },
+                    { key: 'mani', palabra: 'Cacahuètes', articulo: 'Les', genero: 'femenino' },
+                    { key: 'pistacho', palabra: 'Pistache', articulo: 'La', genero: 'femenino' }
+                ],
+                italiano: [
+                    { key: 'pollo', palabra: 'Pollo', articulo: 'Il', genero: 'masculino' },
+                    { key: 'carne_res', palabra: 'Manzo', articulo: 'Il', genero: 'masculino' },
+                    { key: 'cerdo', palabra: 'Maiale', articulo: 'Il', genero: 'masculino' },
+                    { key: 'pavo', palabra: 'Tacchino', articulo: 'Il', genero: 'masculino' },
+                    { key: 'jamon', palabra: 'Prosciutto', articulo: 'Il', genero: 'masculino' },
+                    { key: 'salchichas', palabra: 'Salsicce', articulo: 'Le', genero: 'femenino' },
+                    { key: 'pescado', palabra: 'Pesce', articulo: 'Il', genero: 'masculino' },
+                    { key: 'salmon', palabra: 'Salmone', articulo: 'Il', genero: 'masculino' },
+                    { key: 'atun', palabra: 'Tonno', articulo: 'Il', genero: 'masculino' },
+                    { key: 'camarones', palabra: 'Gamberetti', articulo: 'I', genero: 'masculino' },
+                    { key: 'leche', palabra: 'Latte', articulo: 'Il', genero: 'masculino' },
+                    { key: 'queso', palabra: 'Formaggio', articulo: 'Il', genero: 'masculino' },
+                    { key: 'mantequilla', palabra: 'Burro', articulo: 'Il', genero: 'masculino' },
+                    { key: 'yogur', palabra: 'Yogurt', articulo: 'Lo', genero: 'masculino' },
+                    { key: 'crema', palabra: 'Panna', articulo: 'La', genero: 'femenino' },
+                    { key: 'nueces', palabra: 'Noci', articulo: 'Le', genero: 'femenino' },
+                    { key: 'almendras', palabra: 'Mandorle', articulo: 'Le', genero: 'femenino' },
+                    { key: 'avellanas', palabra: 'Nocciole', articulo: 'Le', genero: 'femenino' },
+                    { key: 'mani', palabra: 'Arachidi', articulo: 'Le', genero: 'femenino' },
+                    { key: 'pistacho', palabra: 'Pistacchio', articulo: 'Il', genero: 'masculino' }
+                ],
+                ruso: [
+                    { key: 'pollo', palabra: 'Курица', articulo: '', genero: 'femenino' },
+                    { key: 'carne_res', palabra: 'Говядина', articulo: '', genero: 'femenino' },
+                    { key: 'cerdo', palabra: 'Свинина', articulo: '', genero: 'femenino' },
+                    { key: 'pavo', palabra: 'Индейка', articulo: '', genero: 'femenino' },
+                    { key: 'jamon', palabra: 'Ветчина', articulo: '', genero: 'femenino' },
+                    { key: 'salchichas', palabra: 'Колбаса', articulo: '', genero: 'femenino' },
+                    { key: 'pescado', palabra: 'Рыба', articulo: '', genero: 'femenino' },
+                    { key: 'salmon', palabra: 'Лосось', articulo: '', genero: 'masculino' },
+                    { key: 'atun', palabra: 'Тунец', articulo: '', genero: 'masculino' },
+                    { key: 'camarones', palabra: 'Креветки', articulo: '', genero: 'femenino' },
+                    { key: 'leche', palabra: 'Молоко', articulo: '', genero: 'neutro' },
+                    { key: 'queso', palabra: 'Сыр', articulo: '', genero: 'masculino' },
+                    { key: 'mantequilla', palabra: 'Сливочное масло', articulo: '', genero: 'neutro' },
+                    { key: 'yogur', palabra: 'Йогурт', articulo: '', genero: 'masculino' },
+                    { key: 'crema', palabra: 'Сливки', articulo: '', genero: 'femenino' },
+                    { key: 'nueces', palabra: 'Грецкие орехи', articulo: '', genero: 'masculino' },
+                    { key: 'almendras', palabra: 'Миндаль', articulo: '', genero: 'masculino' },
+                    { key: 'avellanas', palabra: 'Фундук', articulo: '', genero: 'masculino' },
+                    { key: 'mani', palabra: 'Арахис', articulo: '', genero: 'masculino' },
+                    { key: 'pistacho', palabra: 'Фисташка', articulo: '', genero: 'femenino' }
+                ],
+                aleman: [
+                    { key: 'pollo', palabra: 'Huhn', articulo: 'Das', genero: 'neutro' },
+                    { key: 'carne_res', palabra: 'Rindfleisch', articulo: 'Das', genero: 'neutro' },
+                    { key: 'cerdo', palabra: 'Schweinefleisch', articulo: 'Das', genero: 'neutro' },
+                    { key: 'pavo', palabra: 'Truthahn', articulo: 'Der', genero: 'masculino' },
+                    { key: 'jamon', palabra: 'Schinken', articulo: 'Der', genero: 'masculino' },
+                    { key: 'salchichas', palabra: 'Würste', articulo: 'Die', genero: 'femenino' },
+                    { key: 'pescado', palabra: 'Fisch', articulo: 'Der', genero: 'masculino' },
+                    { key: 'salmon', palabra: 'Lachs', articulo: 'Der', genero: 'masculino' },
+                    { key: 'atun', palabra: 'Thunfisch', articulo: 'Der', genero: 'masculino' },
+                    { key: 'camarones', palabra: 'Garnelen', articulo: 'Die', genero: 'femenino' },
+                    { key: 'leche', palabra: 'Milch', articulo: 'Die', genero: 'femenino' },
+                    { key: 'queso', palabra: 'Käse', articulo: 'Der', genero: 'masculino' },
+                    { key: 'mantequilla', palabra: 'Butter', articulo: 'Die', genero: 'femenino' },
+                    { key: 'yogur', palabra: 'Joghurt', articulo: 'Das', genero: 'neutro' },
+                    { key: 'crema', palabra: 'Sahne', articulo: 'Die', genero: 'femenino' },
+                    { key: 'nueces', palabra: 'Walnüsse', articulo: 'Die', genero: 'femenino' },
+                    { key: 'almendras', palabra: 'Mandeln', articulo: 'Die', genero: 'femenino' },
+                    { key: 'avellanas', palabra: 'Haselnüsse', articulo: 'Die', genero: 'femenino' },
+                    { key: 'mani', palabra: 'Erdnüsse', articulo: 'Die', genero: 'femenino' },
+                    { key: 'pistacho', palabra: 'Pistazie', articulo: 'Die', genero: 'femenino' }
+                ],
+                chino: [
+                    { key: 'pollo', palabra: 'Jī ròu', articulo: '', genero: 'neutro' },
+                    { key: 'carne_res', palabra: 'Niú ròu', articulo: '', genero: 'neutro' },
+                    { key: 'cerdo', palabra: 'Zhū ròu', articulo: '', genero: 'neutro' },
+                    { key: 'pavo', palabra: 'Huǒ jī', articulo: '', genero: 'neutro' },
+                    { key: 'jamon', palabra: 'Huǒtuǐ', articulo: '', genero: 'neutro' },
+                    { key: 'salchichas', palabra: 'Cháng', articulo: '', genero: 'neutro' },
+                    { key: 'pescado', palabra: 'Yú', articulo: '', genero: 'neutro' },
+                    { key: 'salmon', palabra: 'Guǐ yú', articulo: '', genero: 'neutro' },
+                    { key: 'atun', palabra: 'Tūn yú', articulo: '', genero: 'neutro' },
+                    { key: 'camarones', palabra: 'Xiā', articulo: '', genero: 'neutro' },
+                    { key: 'leche', palabra: 'Niú nǎi', articulo: '', genero: 'neutro' },
+                    { key: 'queso', palabra: 'Chī sī', articulo: '', genero: 'neutro' },
+                    { key: 'mantequilla', palabra: 'Huáng yóu', articulo: '', genero: 'neutro' },
+                    { key: 'yogur', palabra: 'Suānniú nǎi', articulo: '', genero: 'neutro' },
+                    { key: 'crema', palabra: 'Nái yóu', articulo: '', genero: 'neutro' },
+                    { key: 'nueces', palabra: 'Héhétao', articulo: '', genero: 'neutro' },
+                    { key: 'almendras', palabra: 'Xìngrén', articulo: '', genero: 'neutro' },
+                    { key: 'avellanas', palabra: 'Zhèhézi', articulo: '', genero: 'neutro' },
+                    { key: 'mani', palabra: 'Huāshēng', articulo: '', genero: 'neutro' },
+                    { key: 'pistacho', palabra: 'Áshùhuāshēng', articulo: '', genero: 'neutro' }
+                ],
+                portugues: [
+                    { key: 'pollo', palabra: 'Frango', articulo: 'O', genero: 'masculino' },
+                    { key: 'carne_res', palabra: 'Carne Vermelha', articulo: 'A', genero: 'femenino' },
+                    { key: 'cerdo', palabra: 'Porco', articulo: 'O', genero: 'masculino' },
+                    { key: 'pavo', palabra: 'Peru', articulo: 'O', genero: 'masculino' },
+                    { key: 'jamon', palabra: 'Presunto', articulo: 'O', genero: 'masculino' },
+                    { key: 'salchichas', palabra: 'Salsichas', articulo: 'As', genero: 'femenino' },
+                    { key: 'pescado', palabra: 'Peixe', articulo: 'O', genero: 'masculino' },
+                    { key: 'salmon', palabra: 'Salmão', articulo: 'O', genero: 'masculino' },
+                    { key: 'atun', palabra: 'Atum', articulo: 'O', genero: 'masculino' },
+                    { key: 'camarones', palabra: 'Camarões', articulo: 'Os', genero: 'masculino' },
+                    { key: 'leche', palabra: 'Leite', articulo: 'O', genero: 'masculino' },
+                    { key: 'queso', palabra: 'Queijo', articulo: 'O', genero: 'masculino' },
+                    { key: 'mantequilla', palabra: 'Manteiga', articulo: 'A', genero: 'femenino' },
+                    { key: 'yogur', palabra: 'Iogurte', articulo: 'O', genero: 'masculino' },
+                    { key: 'crema', palabra: 'Creme', articulo: 'O', genero: 'masculino' },
+                    { key: 'nueces', palabra: 'Nozes', articulo: 'As', genero: 'femenino' },
+                    { key: 'almendras', palabra: 'Amêndoas', articulo: 'As', genero: 'femenino' },
+                    { key: 'avellanas', palabra: 'Avelãs', articulo: 'As', genero: 'femenino' },
+                    { key: 'mani', palabra: 'Amendoim', articulo: 'O', genero: 'masculino' },
+                    { key: 'pistacho', palabra: 'Pistácio', articulo: 'O', genero: 'masculino' }
+                ],
+                holandes: [
+                    { key: 'pollo', palabra: 'Kip', articulo: 'De', genero: 'femenino' },
+                    { key: 'carne_res', palabra: 'Rundvlees', articulo: 'Het', genero: 'neutro' },
+                    { key: 'cerdo', palabra: 'Varkensvlees', articulo: 'Het', genero: 'neutro' },
+                    { key: 'pavo', palabra: 'Kalkoen', articulo: 'De', genero: 'femenino' },
+                    { key: 'jamon', palabra: 'Ham', articulo: 'De', genero: 'femenino' },
+                    { key: 'salchichas', palabra: 'Worstjes', articulo: 'De', genero: 'femenino' },
+                    { key: 'pescado', palabra: 'Vis', articulo: 'De', genero: 'femenino' },
+                    { key: 'salmon', palabra: 'Zalm', articulo: 'De', genero: 'femenino' },
+                    { key: 'atun', palabra: 'Tonijn', articulo: 'De', genero: 'femenino' },
+                    { key: 'camarones', palabra: 'Garnalen', articulo: 'De', genero: 'femenino' },
+                    { key: 'leche', palabra: 'Melk', articulo: 'De', genero: 'femenino' },
+                    { key: 'queso', palabra: 'Kaas', articulo: 'De', genero: 'femenino' },
+                    { key: 'mantequilla', palabra: 'Boter', articulo: 'De', genero: 'femenino' },
+                    { key: 'yogur', palabra: 'Yoghurt', articulo: 'De', genero: 'femenino' },
+                    { key: 'crema', palabra: 'Slagroom', articulo: 'De', genero: 'femenino' },
+                    { key: 'nueces', palabra: 'Walnoten', articulo: 'De', genero: 'femenino' },
+                    { key: 'almendras', palabra: 'Amandelen', articulo: 'De', genero: 'femenino' },
+                    { key: 'avellanas', palabra: 'Hazelnoten', articulo: 'De', genero: 'femenino' },
+                    { key: 'mani', palabra: 'Pinda\'s', articulo: 'De', genero: 'femenino' },
+                    { key: 'pistacho', palabra: 'Pistache', articulo: 'De', genero: 'femenino' }
+                ]
             }
         };
 
@@ -961,7 +1140,7 @@
 
         function colocarItems() {
             const gridRect = grid.getBoundingClientRect();
-            const temasDeTExto = ['sentimientos'];
+            const temasDeTExto = ['sentimientos', 'comida_t'];
             const esTemaDeTExto = temasDeTExto.includes(estado.tema);
             
             estado.items.forEach(item => {
