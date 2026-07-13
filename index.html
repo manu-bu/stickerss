@@ -844,7 +844,20 @@
             if (!estado.itemActual) return;
             
             const utterance = new SpeechSynthesisUtterance(estado.itemActual.palabra);
-            utterance.lang = estado.idioma === 'ingles' ? 'en-US' : 'fr-FR';
+            
+            // Mapear cada idioma a su código lang nativo con acento correcto
+            const langMap = {
+                'ingles': 'en-GB',        // inglés británico (Queen's English)
+                'frances': 'fr-FR',       // francés de Francia
+                'italiano': 'it-IT',      // italiano de Italia
+                'ruso': 'ru-RU',          // ruso de Rusia
+                'aleman': 'de-DE',        // alemán de Alemania
+                'chino': 'zh-CN',         // chino mandarín de China
+                'portugues': 'pt-PT',     // portugués de Portugal
+                'holandes': 'nl-NL'       // holandés de Países Bajos
+            };
+            
+            utterance.lang = langMap[estado.idioma] || 'en-US';
             utterance.rate = 0.8;
             
             window.speechSynthesis.cancel();
