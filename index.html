@@ -670,6 +670,31 @@
             border-color: #6b5a4a;
         }
 
+        .select-palabras {
+            padding: 8px 16px;
+            font-size: 12px;
+            border: 2px solid #d4c5b8;
+            border-radius: 8px;
+            background: #f9f5f0;
+            color: #6b5a4a;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: all 0.15s ease;
+            font-family: var(--font);
+            min-width: 150px;
+        }
+
+        .select-palabras:hover {
+            background: #f0e8e0;
+        }
+
+        .select-palabras:focus {
+            outline: none;
+            border-color: #6b5a4a;
+            background: #e8ddd0;
+        }
+
         #btn-inicio-palabras {
             padding: 10px 24px;
             font-size: 12px;
@@ -775,7 +800,6 @@
                     <button class="opcion-btn" data-idioma="italiano">ITALIANO</button>
                     <button class="opcion-btn" data-idioma="ruso">RUSO</button>
                     <button class="opcion-btn" data-idioma="aleman">ALEMÁN</button>
-                    <button class="opcion-btn" data-idioma="chino">CHINO</button>
                     <button class="opcion-btn" data-idioma="portugues">PORTUGUÉS</button>
                     <button class="opcion-btn" data-idioma="holandes">HOLANDÉS</button>
                 </div>
@@ -830,23 +854,22 @@
         <div class="barra-palabras">
             <div class="selector-palabras">
                 <label>Idioma</label>
-                <div class="opciones-palabras">
-                    <button class="btn-palabra-opcion" data-idioma-pal="ingles">INGLÉS</button>
-                    <button class="btn-palabra-opcion" data-idioma-pal="frances">FRANCÉS</button>
-                    <button class="btn-palabra-opcion" data-idioma-pal="italiano">ITALIANO</button>
-                    <button class="btn-palabra-opcion" data-idioma-pal="ruso">RUSO</button>
-                    <button class="btn-palabra-opcion" data-idioma-pal="aleman">ALEMÁN</button>
-                    <button class="btn-palabra-opcion" data-idioma-pal="chino">CHINO</button>
-                    <button class="btn-palabra-opcion" data-idioma-pal="portugues">PORTUGUÉS</button>
-                    <button class="btn-palabra-opcion" data-idioma-pal="holandes">HOLANDÉS</button>
-                </div>
+                <select id="select-idioma-pal" class="select-palabras">
+                    <option value="ingles">INGLÉS</option>
+                    <option value="frances">FRANCÉS</option>
+                    <option value="italiano">ITALIANO</option>
+                    <option value="ruso">RUSO</option>
+                    <option value="aleman">ALEMÁN</option>
+                    <option value="portugues">PORTUGUÉS</option>
+                    <option value="holandes">HOLANDÉS</option>
+                </select>
             </div>
             <div class="selector-palabras">
                 <label>Tema</label>
-                <div class="opciones-palabras">
-                    <button class="btn-palabra-opcion" data-tema-pal="comida">COMIDA</button>
-                    <button class="btn-palabra-opcion" data-tema-pal="sentimientos">SENTIMIENTOS</button>
-                </div>
+                <select id="select-tema-pal" class="select-palabras">
+                    <option value="comida">COMIDA</option>
+                    <option value="sentimientos">SENTIMIENTOS</option>
+                </select>
             </div>
             <button id="btn-inicio-palabras">INICIO</button>
         </div>
@@ -1025,38 +1048,6 @@
                     { key: 'sopa', palabra: 'Suppe', articulo: 'Die', genero: 'femenino' },
                     { key: 'postre', palabra: 'Nachtisch', articulo: 'Der', genero: 'masculino' }
                 ],
-                chino: [
-                    { key: 'pan', palabra: 'miànbāo', articulo: '', genero: 'neutro' },
-                    { key: 'queso', palabra: 'ruǎnluò', articulo: '', genero: 'neutro' },
-                    { key: 'jamón', palabra: 'huǒtuǐ', articulo: '', genero: 'neutro' },
-                    { key: 'huevo', palabra: 'jīdàn', articulo: '', genero: 'neutro' },
-                    { key: 'mantequilla', palabra: 'huángyóu', articulo: '', genero: 'neutro' },
-                    { key: 'café', palabra: 'kāfēi', articulo: '', genero: 'neutro' },
-                    { key: 'té', palabra: 'chá', articulo: '', genero: 'neutro' },
-                    { key: 'leche', palabra: 'niúnǎi', articulo: '', genero: 'neutro' },
-                    { key: 'miel', palabra: 'mìfēng', articulo: '', genero: 'neutro' },
-                    { key: 'mermelada', palabra: 'guǒjiàng', articulo: '', genero: 'neutro' },
-                    { key: 'cereales', palabra: 'zhǔshíwù', articulo: '', genero: 'neutro' },
-                    { key: 'yogur', palabra: 'suānniúnǎi', articulo: '', genero: 'neutro' },
-                    { key: 'frutas', palabra: 'guǒzi', articulo: '', genero: 'plural' },
-                    { key: 'manzana', palabra: 'píngguǒ', articulo: '', genero: 'neutro' },
-                    { key: 'plátano', palabra: 'xiāngjiāo', articulo: '', genero: 'neutro' },
-                    { key: 'naranja', palabra: 'júzi', articulo: '', genero: 'neutro' },
-                    { key: 'fresa', palabra: 'cǎomeimei', articulo: '', genero: 'neutro' },
-                    { key: 'tocino', palabra: 'péigēnròu', articulo: '', genero: 'neutro' },
-                    { key: 'salmón', palabra: 'guǐyú', articulo: '', genero: 'neutro' },
-                    { key: 'pollo', palabra: 'jīròu', articulo: '', genero: 'neutro' },
-                    { key: 'ensalada', palabra: 'shālā', articulo: '', genero: 'neutro' },
-                    { key: 'verduras', palabra: 'shūcài', articulo: '', genero: 'neutro' },
-                    { key: 'tomate', palabra: 'xīhóngshì', articulo: '', genero: 'neutro' },
-                    { key: 'cebolla', palabra: 'yángcōng', articulo: '', genero: 'neutro' },
-                    { key: 'lechuga', palabra: 'wòju', articulo: '', genero: 'neutro' },
-                    { key: 'patata', palabra: 'tǔdòu', articulo: '', genero: 'neutro' },
-                    { key: 'pasta', palabra: 'miàntiao', articulo: '', genero: 'neutro' },
-                    { key: 'arroz', palabra: 'dàomǐ', articulo: '', genero: 'neutro' },
-                    { key: 'sopa', palabra: 'tāng', articulo: '', genero: 'neutro' },
-                    { key: 'postre', palabra: 'tiándiǎn', articulo: '', genero: 'neutro' }
-                ],
                 portugues: [
                     { key: 'pan', palabra: 'Pão', articulo: 'O', genero: 'masculino' },
                     { key: 'queso', palabra: 'Queijo', articulo: 'O', genero: 'masculino' },
@@ -1183,18 +1174,6 @@
                     { key: 'ansioso', palabra: 'Ängstlich', articulo: '', genero: 'neutro' },
                     { key: 'enamorado', palabra: 'Verliebt', articulo: '', genero: 'neutro' }
                 ],
-                chino: [
-                    { key: 'alegre', palabra: 'Huāxìng', articulo: '', genero: 'neutro' },
-                    { key: 'triste', palabra: 'Bēishāng', articulo: '', genero: 'neutro' },
-                    { key: 'enojado', palabra: 'Shēngqì', articulo: '', genero: 'neutro' },
-                    { key: 'asustado', palabra: 'Hàipà', articulo: '', genero: 'neutro' },
-                    { key: 'sorprendido', palabra: 'Jīngyà', articulo: '', genero: 'neutro' },
-                    { key: 'avergonzado', palabra: 'Xiūcì', articulo: '', genero: 'neutro' },
-                    { key: 'orgulloso', palabra: 'Jiàoào', articulo: '', genero: 'neutro' },
-                    { key: 'tranquilo', palabra: 'Pínjìng', articulo: '', genero: 'neutro' },
-                    { key: 'ansioso', palabra: 'Jǐnzhāng', articulo: '', genero: 'neutro' },
-                    { key: 'enamorado', palabra: 'Ài shàng', articulo: '', genero: 'neutro' }
-                ],
                 portugues: [
                     { key: 'alegre', palabra: 'Feliz', articulo: '', genero: 'masculino' },
                     { key: 'triste', palabra: 'Triste', articulo: '', genero: 'masculino' },
@@ -1251,8 +1230,8 @@
         const botonesTema = document.querySelectorAll('[data-tema]');
         
         const pantallaPalabras = document.getElementById('pantalla-palabras');
-        const botonesIdiomaP = document.querySelectorAll('[data-idioma-pal]');
-        const botonesTemaP = document.querySelectorAll('[data-tema-pal]');
+        const selectIdiomaP = document.getElementById('select-idioma-pal');
+        const selectTemaP = document.getElementById('select-tema-pal');
         const btnPalabras = document.getElementById('btn-palabras');
         const btnInicioPalabras = document.getElementById('btn-inicio-palabras');
         const contenedorPalabras = document.getElementById('contenedor-palabras');
@@ -1280,22 +1259,14 @@
             });
         });
 
-        botonesIdiomaP.forEach(btn => {
-            btn.addEventListener('click', () => {
-                botonesIdiomaP.forEach(b => b.classList.remove('selected'));
-                btn.classList.add('selected');
-                estadoPalabras.idioma = btn.dataset.idiomaPal;
-                mostrarPalabras();
-            });
+        selectIdiomaP.addEventListener('change', (e) => {
+            estadoPalabras.idioma = e.target.value;
+            mostrarPalabras();
         });
 
-        botonesTemaP.forEach(btn => {
-            btn.addEventListener('click', () => {
-                botonesTemaP.forEach(b => b.classList.remove('selected'));
-                btn.classList.add('selected');
-                estadoPalabras.tema = btn.dataset.temaPal;
-                mostrarPalabras();
-            });
+        selectTemaP.addEventListener('change', (e) => {
+            estadoPalabras.tema = e.target.value;
+            mostrarPalabras();
         });
 
         btnPalabras.addEventListener('click', abrirPalabras);
@@ -1530,7 +1501,6 @@
                 'italiano': 'it-IT',      // italiano de Italia
                 'ruso': 'ru-RU',          // ruso de Rusia
                 'aleman': 'de-DE',        // alemán de Alemania
-                'chino': 'zh-CN',         // chino mandarín de China
                 'portugues': 'pt-PT',     // portugués de Portugal
                 'holandes': 'nl-NL'       // holandés de Países Bajos
             };
@@ -1625,14 +1595,8 @@
         function abrirPalabras() {
             pantInicio.style.display = 'none';
             pantallaPalabras.style.display = 'flex';
-            botonesIdiomaP.forEach(b => b.classList.remove('selected'));
-            botonesTemaP.forEach(b => b.classList.remove('selected'));
-            botonesIdiomaP.forEach(b => {
-                if (b.dataset.idiomaPal === estadoPalabras.idioma) b.classList.add('selected');
-            });
-            botonesTemaP.forEach(b => {
-                if (b.dataset.temaPal === estadoPalabras.tema) b.classList.add('selected');
-            });
+            selectIdiomaP.value = estadoPalabras.idioma;
+            selectTemaP.value = estadoPalabras.tema;
             mostrarPalabras();
         }
 
@@ -1650,7 +1614,6 @@
                 'italiano': 'it-IT',
                 'ruso': 'ru-RU',
                 'aleman': 'de-DE',
-                'chino': 'zh-CN',
                 'portugues': 'pt-PT',
                 'holandes': 'nl-NL'
             };
@@ -1689,7 +1652,7 @@
                 const btnSonido = document.createElement('button');
                 btnSonido.className = 'btn-sonido';
                 btnSonido.textContent = '';
-                btnSonido.addEventListener('click', () => reproducirPalabra(textoIdioma));
+                btnSonido.addEventListener('click', () => reproducirPalabra(item.palabra));
                 
                 div.appendChild(palabraPrincipal);
                 div.appendChild(palabraEspanol);
