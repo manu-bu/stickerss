@@ -98,7 +98,7 @@
             text-transform: uppercase;
             transition: transform 0.15s ease;
             box-shadow: none;
-            font-family: var(--font-quicksand);
+            font-family: var(--font);
         }
 
         .opcion-btn::before {
@@ -162,23 +162,6 @@
         }
 
         #btn-jugar {
-            padding: 12px 36px;
-            font-size: 18px;
-            background: #f9f5f0;
-            color: #6b5a4a;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 700;
-            transition: all 0.2s ease;
-            margin-top: 12px;
-            font-family: var(--font-quicksand);
-            position: relative;
-            text-transform: uppercase;
-            z-index: 3;
-        }
-
-        #btn-jugar {
             position: relative;
             padding: 12px 36px;
             font-size: 18px;
@@ -191,8 +174,9 @@
             text-transform: uppercase;
             transition: transform 0.15s ease;
             box-shadow: none;
-            font-family: var(--font-quicksand);
+            font-family: var(--font);
             margin-top: 12px;
+            z-index: 3;
         }
 
         #btn-jugar::before {
@@ -246,7 +230,7 @@
             text-transform: uppercase;
             transition: transform 0.15s ease;
             box-shadow: none;
-            font-family: var(--font-quicksand);
+            font-family: var(--font);
         }
 
         #btn-inicio::before, #btn-pausa::before {
@@ -314,7 +298,7 @@
             cursor: pointer;
             font-weight: 500;
             transition: all 0.15s ease;
-            font-family: var(--font-quicksand);
+            font-family: var(--font);
         }
 
         .barra-superior button:active {
@@ -347,7 +331,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             user-select: none;
-            font-family: var(--font-quicksand);
+            font-family: var(--font);
         }
 
         .cartelito:active {
@@ -418,7 +402,7 @@
             font-weight: bold;
             z-index: 1000;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            font-family: var(--font-quicksand);
+            font-family: var(--font);
         }
 
         #panel-pausa {
@@ -441,7 +425,7 @@
             padding: 40px 50px;
             text-align: center;
             min-width: 320px;
-            font-family: var(--font-quicksand);
+            font-family: var(--font);
         }
 
         .contenido-pausa div {
@@ -460,7 +444,7 @@
             border-radius: 6px;
             cursor: pointer;
             font-weight: 500;
-            font-family: var(--font-quicksand);
+            font-family: var(--font);
         }
 
         #panel-confirmacion {
@@ -483,7 +467,7 @@
             padding: 40px 50px;
             text-align: center;
             min-width: 320px;
-            font-family: var(--font-quicksand);
+            font-family: var(--font);
         }
 
         .contenido-confirmacion div {
@@ -502,7 +486,7 @@
             border-radius: 6px;
             cursor: pointer;
             font-weight: 500;
-            font-family: var(--font-quicksand);
+            font-family: var(--font);
             margin: 0 10px;
         }
 
@@ -591,7 +575,6 @@
                 <label>Tema</label>
                 <div class="opciones-fila">
                     <button class="opcion-btn" data-tema="comida">COMIDA</button>
-                    <button class="opcion-btn" data-tema="bano">BAÑO</button>
                     <button class="opcion-btn" data-tema="sentimientos">SENTIMIENTOS</button>
                 </div>
             </div>
@@ -634,121 +617,272 @@
     </div>
 
     <script>
+        // Constantes globales
+        const TEMAS_DE_TEXTO = ['sentimientos', 'comida'];
+        const COLOR_POR_GENERO = {
+            masculino: '#4da6ff',  // celeste
+            femenino: '#ff69b4',   // rosa
+            neutro: '#ffd700',     // amarillo
+            plural: '#00cc66'      // verde
+        };
+        
         const vocab = {
             comida: {
                 ingles: [
                     { key: 'pan', palabra: 'Bread', articulo: 'The', genero: 'neutro' },
+                    { key: 'queso', palabra: 'Cheese', articulo: '', genero: 'neutro' },
+                    { key: 'jamón', palabra: 'Ham', articulo: '', genero: 'neutro' },
                     { key: 'huevo', palabra: 'Egg', articulo: 'The', genero: 'neutro' },
+                    { key: 'mantequilla', palabra: 'Butter', articulo: '', genero: 'neutro' },
+                    { key: 'café', palabra: 'Coffee', articulo: '', genero: 'neutro' },
+                    { key: 'té', palabra: 'Tea', articulo: '', genero: 'neutro' },
                     { key: 'leche', palabra: 'Milk', articulo: '', genero: 'neutro' },
-                    { key: 'cereales', palabra: 'Cereal', articulo: 'The', genero: 'neutro' },
-                    { key: 'chocolate', palabra: 'Chocolate', articulo: '', genero: 'neutro' }
+                    { key: 'miel', palabra: 'Honey', articulo: '', genero: 'neutro' },
+                    { key: 'mermelada', palabra: 'Jam', articulo: '', genero: 'neutro' },
+                    { key: 'cereales', palabra: 'Cereal', articulo: '', genero: 'neutro' },
+                    { key: 'yogur', palabra: 'Yogurt', articulo: '', genero: 'neutro' },
+                    { key: 'frutas', palabra: 'Fruits', articulo: '', genero: 'plural' },
+                    { key: 'manzana', palabra: 'Apple', articulo: 'An', genero: 'neutro' },
+                    { key: 'plátano', palabra: 'Banana', articulo: 'A', genero: 'neutro' },
+                    { key: 'naranja', palabra: 'Orange', articulo: 'An', genero: 'neutro' },
+                    { key: 'fresa', palabra: 'Strawberry', articulo: 'A', genero: 'neutro' },
+                    { key: 'tocino', palabra: 'Bacon', articulo: '', genero: 'neutro' },
+                    { key: 'salmón', palabra: 'Salmon', articulo: '', genero: 'neutro' },
+                    { key: 'pollo', palabra: 'Chicken', articulo: '', genero: 'neutro' },
+                    { key: 'ensalada', palabra: 'Salad', articulo: 'A', genero: 'neutro' },
+                    { key: 'verduras', palabra: 'Vegetables', articulo: '', genero: 'plural' },
+                    { key: 'tomate', palabra: 'Tomato', articulo: 'A', genero: 'neutro' },
+                    { key: 'cebolla', palabra: 'Onion', articulo: 'An', genero: 'neutro' },
+                    { key: 'lechuga', palabra: 'Lettuce', articulo: '', genero: 'neutro' },
+                    { key: 'patata', palabra: 'Potato', articulo: 'A', genero: 'neutro' },
+                    { key: 'pasta', palabra: 'Pasta', articulo: '', genero: 'neutro' },
+                    { key: 'arroz', palabra: 'Rice', articulo: '', genero: 'neutro' },
+                    { key: 'sopa', palabra: 'Soup', articulo: '', genero: 'neutro' },
+                    { key: 'postre', palabra: 'Dessert', articulo: 'A', genero: 'neutro' }
                 ],
                 frances: [
                     { key: 'pan', palabra: 'Pain', articulo: 'Le', genero: 'masculino' },
+                    { key: 'queso', palabra: 'Fromage', articulo: 'Le', genero: 'masculino' },
+                    { key: 'jamón', palabra: 'Jambon', articulo: 'Le', genero: 'masculino' },
                     { key: 'huevo', palabra: 'Oeuf', articulo: "L'", genero: 'masculino' },
+                    { key: 'mantequilla', palabra: 'Beurre', articulo: 'Le', genero: 'masculino' },
+                    { key: 'café', palabra: 'Café', articulo: 'Le', genero: 'masculino' },
+                    { key: 'té', palabra: 'Thé', articulo: 'Le', genero: 'masculino' },
                     { key: 'leche', palabra: 'Lait', articulo: 'Le', genero: 'masculino' },
+                    { key: 'miel', palabra: 'Miel', articulo: 'Le', genero: 'masculino' },
+                    { key: 'mermelada', palabra: 'Confiture', articulo: 'La', genero: 'femenino' },
                     { key: 'cereales', palabra: 'Céréales', articulo: 'Les', genero: 'femenino' },
-                    { key: 'chocolate', palabra: 'Chocolat', articulo: 'Le', genero: 'masculino' }
+                    { key: 'yogur', palabra: 'Yaourt', articulo: 'Le', genero: 'masculino' },
+                    { key: 'frutas', palabra: 'Fruits', articulo: 'Les', genero: 'plural' },
+                    { key: 'manzana', palabra: 'Pomme', articulo: 'La', genero: 'femenino' },
+                    { key: 'plátano', palabra: 'Banane', articulo: 'La', genero: 'femenino' },
+                    { key: 'naranja', palabra: 'Orange', articulo: "L'", genero: 'femenino' },
+                    { key: 'fresa', palabra: 'Fraise', articulo: 'La', genero: 'femenino' },
+                    { key: 'tocino', palabra: 'Lard', articulo: 'Le', genero: 'masculino' },
+                    { key: 'salmón', palabra: 'Saumon', articulo: 'Le', genero: 'masculino' },
+                    { key: 'pollo', palabra: 'Poulet', articulo: 'Le', genero: 'masculino' },
+                    { key: 'ensalada', palabra: 'Salade', articulo: 'La', genero: 'femenino' },
+                    { key: 'verduras', palabra: 'Légumes', articulo: 'Les', genero: 'plural' },
+                    { key: 'tomate', palabra: 'Tomate', articulo: 'La', genero: 'femenino' },
+                    { key: 'cebolla', palabra: 'Oignon', articulo: "L'", genero: 'masculino' },
+                    { key: 'lechuga', palabra: 'Laitue', articulo: 'La', genero: 'femenino' },
+                    { key: 'patata', palabra: 'Pomme de terre', articulo: 'La', genero: 'femenino' },
+                    { key: 'pasta', palabra: 'Pates', articulo: 'Les', genero: 'plural' },
+                    { key: 'arroz', palabra: 'Riz', articulo: 'Le', genero: 'masculino' },
+                    { key: 'sopa', palabra: 'Soupe', articulo: 'La', genero: 'femenino' },
+                    { key: 'postre', palabra: 'Dessert', articulo: 'Le', genero: 'masculino' }
                 ],
                 italiano: [
                     { key: 'pan', palabra: 'Pane', articulo: 'Il', genero: 'masculino' },
+                    { key: 'queso', palabra: 'Formaggio', articulo: 'Il', genero: 'masculino' },
+                    { key: 'jamón', palabra: 'Prosciutto', articulo: 'Il', genero: 'masculino' },
                     { key: 'huevo', palabra: 'Uovo', articulo: "L'", genero: 'masculino' },
+                    { key: 'mantequilla', palabra: 'Burro', articulo: 'Il', genero: 'masculino' },
+                    { key: 'café', palabra: 'Caffè', articulo: 'Il', genero: 'masculino' },
+                    { key: 'té', palabra: 'Tè', articulo: 'Il', genero: 'masculino' },
                     { key: 'leche', palabra: 'Latte', articulo: 'Il', genero: 'masculino' },
+                    { key: 'miel', palabra: 'Miele', articulo: 'Il', genero: 'masculino' },
+                    { key: 'mermelada', palabra: 'Marmellata', articulo: 'La', genero: 'femenino' },
                     { key: 'cereales', palabra: 'Cereali', articulo: 'I', genero: 'plural' },
-                    { key: 'chocolate', palabra: 'Cioccolato', articulo: 'Il', genero: 'masculino' }
+                    { key: 'yogur', palabra: 'Yogurt', articulo: 'Lo', genero: 'masculino' },
+                    { key: 'frutas', palabra: 'Frutta', articulo: 'La', genero: 'femenino' },
+                    { key: 'manzana', palabra: 'Mela', articulo: 'La', genero: 'femenino' },
+                    { key: 'plátano', palabra: 'Banana', articulo: 'La', genero: 'femenino' },
+                    { key: 'naranja', palabra: 'Arancia', articulo: "L'", genero: 'femenino' },
+                    { key: 'fresa', palabra: 'Fragola', articulo: 'La', genero: 'femenino' },
+                    { key: 'tocino', palabra: 'Pancetta', articulo: 'La', genero: 'femenino' },
+                    { key: 'salmón', palabra: 'Salmone', articulo: 'Il', genero: 'masculino' },
+                    { key: 'pollo', palabra: 'Pollo', articulo: 'Il', genero: 'masculino' },
+                    { key: 'ensalada', palabra: 'Insalata', articulo: "L'", genero: 'femenino' },
+                    { key: 'verduras', palabra: 'Verdure', articulo: 'Le', genero: 'femenino' },
+                    { key: 'tomate', palabra: 'Pomodoro', articulo: 'Il', genero: 'masculino' },
+                    { key: 'cebolla', palabra: 'Cipolla', articulo: 'La', genero: 'femenino' },
+                    { key: 'lechuga', palabra: 'Lattuga', articulo: 'La', genero: 'femenino' },
+                    { key: 'patata', palabra: 'Patata', articulo: 'La', genero: 'femenino' },
+                    { key: 'pasta', palabra: 'Pasta', articulo: 'La', genero: 'femenino' },
+                    { key: 'arroz', palabra: 'Riso', articulo: 'Il', genero: 'masculino' },
+                    { key: 'sopa', palabra: 'Zuppa', articulo: 'La', genero: 'femenino' },
+                    { key: 'postre', palabra: 'Dolce', articulo: 'Il', genero: 'masculino' }
                 ],
                 ruso: [
                     { key: 'pan', palabra: 'хлеб', articulo: '', genero: 'masculino' },
+                    { key: 'queso', palabra: 'сыр', articulo: '', genero: 'masculino' },
+                    { key: 'jamón', palabra: 'ветчина', articulo: '', genero: 'femenino' },
                     { key: 'huevo', palabra: 'яйцо', articulo: '', genero: 'neutro' },
+                    { key: 'mantequilla', palabra: 'масло', articulo: '', genero: 'neutro' },
+                    { key: 'café', palabra: 'кофе', articulo: '', genero: 'masculino' },
+                    { key: 'té', palabra: 'чай', articulo: '', genero: 'masculino' },
                     { key: 'leche', palabra: 'молоко', articulo: '', genero: 'neutro' },
+                    { key: 'miel', palabra: 'мёд', articulo: '', genero: 'masculino' },
+                    { key: 'mermelada', palabra: 'варенье', articulo: '', genero: 'neutro' },
                     { key: 'cereales', palabra: 'зёрна', articulo: '', genero: 'plural' },
-                    { key: 'chocolate', palabra: 'шоколад', articulo: '', genero: 'masculino' }
+                    { key: 'yogur', palabra: 'йогурт', articulo: '', genero: 'masculino' },
+                    { key: 'frutas', palabra: 'фрукты', articulo: '', genero: 'plural' },
+                    { key: 'manzana', palabra: 'яблоко', articulo: '', genero: 'neutro' },
+                    { key: 'plátano', palabra: 'банан', articulo: '', genero: 'masculino' },
+                    { key: 'naranja', palabra: 'апельсин', articulo: '', genero: 'masculino' },
+                    { key: 'fresa', palabra: 'клубника', articulo: '', genero: 'femenino' },
+                    { key: 'tocino', palabra: 'бекон', articulo: '', genero: 'masculino' },
+                    { key: 'salmón', palabra: 'лосось', articulo: '', genero: 'masculino' },
+                    { key: 'pollo', palabra: 'курица', articulo: '', genero: 'femenino' },
+                    { key: 'ensalada', palabra: 'салат', articulo: '', genero: 'masculino' },
+                    { key: 'verduras', palabra: 'овощи', articulo: '', genero: 'plural' },
+                    { key: 'tomate', palabra: 'помидор', articulo: '', genero: 'masculino' },
+                    { key: 'cebolla', palabra: 'лук', articulo: '', genero: 'masculino' },
+                    { key: 'lechuga', palabra: 'салат-латук', articulo: '', genero: 'masculino' },
+                    { key: 'patata', palabra: 'картофель', articulo: '', genero: 'masculino' },
+                    { key: 'pasta', palabra: 'паста', articulo: '', genero: 'femenino' },
+                    { key: 'arroz', palabra: 'рис', articulo: '', genero: 'masculino' },
+                    { key: 'sopa', palabra: 'суп', articulo: '', genero: 'masculino' },
+                    { key: 'postre', palabra: 'десерт', articulo: '', genero: 'masculino' }
                 ],
                 aleman: [
                     { key: 'pan', palabra: 'Brot', articulo: 'Das', genero: 'neutro' },
+                    { key: 'queso', palabra: 'Käse', articulo: 'Der', genero: 'masculino' },
+                    { key: 'jamón', palabra: 'Schinken', articulo: 'Der', genero: 'masculino' },
                     { key: 'huevo', palabra: 'Ei', articulo: 'Das', genero: 'neutro' },
+                    { key: 'mantequilla', palabra: 'Butter', articulo: 'Die', genero: 'femenino' },
+                    { key: 'café', palabra: 'Kaffee', articulo: 'Der', genero: 'masculino' },
+                    { key: 'té', palabra: 'Tee', articulo: 'Der', genero: 'masculino' },
                     { key: 'leche', palabra: 'Milch', articulo: 'Die', genero: 'femenino' },
+                    { key: 'miel', palabra: 'Honig', articulo: 'Der', genero: 'masculino' },
+                    { key: 'mermelada', palabra: 'Marmelade', articulo: 'Die', genero: 'femenino' },
                     { key: 'cereales', palabra: 'Getreide', articulo: 'Das', genero: 'neutro' },
-                    { key: 'chocolate', palabra: 'Schokolade', articulo: 'Die', genero: 'femenino' }
+                    { key: 'yogur', palabra: 'Joghurt', articulo: 'Das', genero: 'neutro' },
+                    { key: 'frutas', palabra: 'Früchte', articulo: 'Die', genero: 'plural' },
+                    { key: 'manzana', palabra: 'Apfel', articulo: 'Der', genero: 'masculino' },
+                    { key: 'plátano', palabra: 'Banane', articulo: 'Die', genero: 'femenino' },
+                    { key: 'naranja', palabra: 'Orange', articulo: 'Die', genero: 'femenino' },
+                    { key: 'fresa', palabra: 'Erdbeere', articulo: 'Die', genero: 'femenino' },
+                    { key: 'tocino', palabra: 'Speck', articulo: 'Der', genero: 'masculino' },
+                    { key: 'salmón', palabra: 'Lachs', articulo: 'Der', genero: 'masculino' },
+                    { key: 'pollo', palabra: 'Hähnchen', articulo: 'Das', genero: 'neutro' },
+                    { key: 'ensalada', palabra: 'Salat', articulo: 'Der', genero: 'masculino' },
+                    { key: 'verduras', palabra: 'Gemüse', articulo: 'Das', genero: 'neutro' },
+                    { key: 'tomate', palabra: 'Tomate', articulo: 'Die', genero: 'femenino' },
+                    { key: 'cebolla', palabra: 'Zwiebel', articulo: 'Die', genero: 'femenino' },
+                    { key: 'lechuga', palabra: 'Lattich', articulo: 'Der', genero: 'masculino' },
+                    { key: 'patata', palabra: 'Kartoffel', articulo: 'Die', genero: 'femenino' },
+                    { key: 'pasta', palabra: 'Pasta', articulo: 'Die', genero: 'femenino' },
+                    { key: 'arroz', palabra: 'Reis', articulo: 'Der', genero: 'masculino' },
+                    { key: 'sopa', palabra: 'Suppe', articulo: 'Die', genero: 'femenino' },
+                    { key: 'postre', palabra: 'Nachtisch', articulo: 'Der', genero: 'masculino' }
                 ],
                 chino: [
                     { key: 'pan', palabra: 'miànbāo', articulo: '', genero: 'neutro' },
+                    { key: 'queso', palabra: 'ruǎnluò', articulo: '', genero: 'neutro' },
+                    { key: 'jamón', palabra: 'huǒtuǐ', articulo: '', genero: 'neutro' },
                     { key: 'huevo', palabra: 'jīdàn', articulo: '', genero: 'neutro' },
+                    { key: 'mantequilla', palabra: 'huángyóu', articulo: '', genero: 'neutro' },
+                    { key: 'café', palabra: 'kāfēi', articulo: '', genero: 'neutro' },
+                    { key: 'té', palabra: 'chá', articulo: '', genero: 'neutro' },
                     { key: 'leche', palabra: 'niúnǎi', articulo: '', genero: 'neutro' },
+                    { key: 'miel', palabra: 'mìfēng', articulo: '', genero: 'neutro' },
+                    { key: 'mermelada', palabra: 'guǒjiàng', articulo: '', genero: 'neutro' },
                     { key: 'cereales', palabra: 'zhǔshíwù', articulo: '', genero: 'neutro' },
-                    { key: 'chocolate', palabra: 'qiǎokèlì', articulo: '', genero: 'neutro' }
+                    { key: 'yogur', palabra: 'suānniúnǎi', articulo: '', genero: 'neutro' },
+                    { key: 'frutas', palabra: 'guǒzi', articulo: '', genero: 'plural' },
+                    { key: 'manzana', palabra: 'píngguǒ', articulo: '', genero: 'neutro' },
+                    { key: 'plátano', palabra: 'xiāngjiāo', articulo: '', genero: 'neutro' },
+                    { key: 'naranja', palabra: 'júzi', articulo: '', genero: 'neutro' },
+                    { key: 'fresa', palabra: 'cǎomeimei', articulo: '', genero: 'neutro' },
+                    { key: 'tocino', palabra: 'péigēnròu', articulo: '', genero: 'neutro' },
+                    { key: 'salmón', palabra: 'guǐyú', articulo: '', genero: 'neutro' },
+                    { key: 'pollo', palabra: 'jīròu', articulo: '', genero: 'neutro' },
+                    { key: 'ensalada', palabra: 'shālā', articulo: '', genero: 'neutro' },
+                    { key: 'verduras', palabra: 'shūcài', articulo: '', genero: 'neutro' },
+                    { key: 'tomate', palabra: 'xīhóngshì', articulo: '', genero: 'neutro' },
+                    { key: 'cebolla', palabra: 'yángcōng', articulo: '', genero: 'neutro' },
+                    { key: 'lechuga', palabra: 'wòju', articulo: '', genero: 'neutro' },
+                    { key: 'patata', palabra: 'tǔdòu', articulo: '', genero: 'neutro' },
+                    { key: 'pasta', palabra: 'miàntiao', articulo: '', genero: 'neutro' },
+                    { key: 'arroz', palabra: 'dàomǐ', articulo: '', genero: 'neutro' },
+                    { key: 'sopa', palabra: 'tāng', articulo: '', genero: 'neutro' },
+                    { key: 'postre', palabra: 'tiándiǎn', articulo: '', genero: 'neutro' }
                 ],
                 portugues: [
                     { key: 'pan', palabra: 'Pão', articulo: 'O', genero: 'masculino' },
+                    { key: 'queso', palabra: 'Queijo', articulo: 'O', genero: 'masculino' },
+                    { key: 'jamón', palabra: 'Presunto', articulo: 'O', genero: 'masculino' },
                     { key: 'huevo', palabra: 'Ovo', articulo: 'O', genero: 'masculino' },
+                    { key: 'mantequilla', palabra: 'Manteiga', articulo: 'A', genero: 'femenino' },
+                    { key: 'café', palabra: 'Café', articulo: 'O', genero: 'masculino' },
+                    { key: 'té', palabra: 'Chá', articulo: 'O', genero: 'masculino' },
                     { key: 'leche', palabra: 'Leite', articulo: 'O', genero: 'masculino' },
+                    { key: 'miel', palabra: 'Mel', articulo: '', genero: 'neutro' },
+                    { key: 'mermelada', palabra: 'Geléia', articulo: 'A', genero: 'femenino' },
                     { key: 'cereales', palabra: 'Cereais', articulo: 'Os', genero: 'plural' },
-                    { key: 'chocolate', palabra: 'Chocolate', articulo: 'O', genero: 'masculino' }
+                    { key: 'yogur', palabra: 'Iogurte', articulo: 'O', genero: 'masculino' },
+                    { key: 'frutas', palabra: 'Frutas', articulo: 'As', genero: 'plural' },
+                    { key: 'manzana', palabra: 'Maçã', articulo: 'A', genero: 'femenino' },
+                    { key: 'plátano', palabra: 'Banana', articulo: 'A', genero: 'femenino' },
+                    { key: 'naranja', palabra: 'Laranja', articulo: 'A', genero: 'femenino' },
+                    { key: 'fresa', palabra: 'Morango', articulo: 'O', genero: 'masculino' },
+                    { key: 'tocino', palabra: 'Toucinho', articulo: 'O', genero: 'masculino' },
+                    { key: 'salmón', palabra: 'Salmão', articulo: 'O', genero: 'masculino' },
+                    { key: 'pollo', palabra: 'Frango', articulo: 'O', genero: 'masculino' },
+                    { key: 'ensalada', palabra: 'Salada', articulo: 'A', genero: 'femenino' },
+                    { key: 'verduras', palabra: 'Legumes', articulo: 'Os', genero: 'plural' },
+                    { key: 'tomate', palabra: 'Tomate', articulo: 'O', genero: 'masculino' },
+                    { key: 'cebolla', palabra: 'Cebola', articulo: 'A', genero: 'femenino' },
+                    { key: 'lechuga', palabra: 'Alface', articulo: 'A', genero: 'femenino' },
+                    { key: 'patata', palabra: 'Batata', articulo: 'A', genero: 'femenino' },
+                    { key: 'pasta', palabra: 'Massa', articulo: 'A', genero: 'femenino' },
+                    { key: 'arroz', palabra: 'Arroz', articulo: 'O', genero: 'masculino' },
+                    { key: 'sopa', palabra: 'Sopa', articulo: 'A', genero: 'femenino' },
+                    { key: 'postre', palabra: 'Sobremesa', articulo: 'A', genero: 'femenino' }
                 ],
                 holandes: [
                     { key: 'pan', palabra: 'Brood', articulo: 'Het', genero: 'neutro' },
+                    { key: 'queso', palabra: 'Kaas', articulo: 'De', genero: 'femenino' },
+                    { key: 'jamón', palabra: 'Ham', articulo: 'De', genero: 'femenino' },
                     { key: 'huevo', palabra: 'Ei', articulo: 'Het', genero: 'neutro' },
+                    { key: 'mantequilla', palabra: 'Boter', articulo: 'De', genero: 'femenino' },
+                    { key: 'café', palabra: 'Koffie', articulo: 'De', genero: 'femenino' },
+                    { key: 'té', palabra: 'Thee', articulo: 'De', genero: 'femenino' },
                     { key: 'leche', palabra: 'Melk', articulo: 'De', genero: 'femenino' },
+                    { key: 'miel', palabra: 'Honing', articulo: 'De', genero: 'femenino' },
+                    { key: 'mermelada', palabra: 'Jam', articulo: 'De', genero: 'femenino' },
                     { key: 'cereales', palabra: 'Granen', articulo: 'De', genero: 'plural' },
-                    { key: 'chocolate', palabra: 'Chocolade', articulo: 'De', genero: 'femenino' }
-                ]
-            },
-            bano: {
-                ingles: [
-                    { key: 'alfombra', palabra: 'Mat', articulo: 'The', genero: 'neutro' },
-                    { key: 'shampoo', palabra: 'Shampoo', articulo: '', genero: 'neutro' },
-                    { key: 'bata', palabra: 'Robe', articulo: 'The', genero: 'neutro' },
-                    { key: 'pantuflas', palabra: 'Slippers', articulo: '', genero: 'plural' },
-                    { key: 'cortina', palabra: 'Curtain', articulo: 'The', genero: 'neutro' }
-                ],
-                frances: [
-                    { key: 'alfombra', palabra: 'Tapis', articulo: 'Le', genero: 'masculino' },
-                    { key: 'shampoo', palabra: 'Shampoing', articulo: 'Le', genero: 'masculino' },
-                    { key: 'bata', palabra: 'Peignoir', articulo: 'Le', genero: 'masculino' },
-                    { key: 'pantuflas', palabra: 'Pantoufles', articulo: 'Les', genero: 'femenino' },
-                    { key: 'cortina', palabra: 'Rideau', articulo: 'Le', genero: 'masculino' }
-                ],
-                italiano: [
-                    { key: 'alfombra', palabra: 'Tappeto', articulo: 'Il', genero: 'masculino' },
-                    { key: 'shampoo', palabra: 'Shampoo', articulo: 'Lo', genero: 'masculino' },
-                    { key: 'bata', palabra: 'Accappatoio', articulo: "L'", genero: 'masculino' },
-                    { key: 'pantuflas', palabra: 'Pantofole', articulo: 'Le', genero: 'femenino' },
-                    { key: 'cortina', palabra: 'Tenda', articulo: 'La', genero: 'femenino' }
-                ],
-                ruso: [
-                    { key: 'alfombra', palabra: 'коврик', articulo: '', genero: 'masculino' },
-                    { key: 'shampoo', palabra: 'шампунь', articulo: '', genero: 'masculino' },
-                    { key: 'bata', palabra: 'халат', articulo: '', genero: 'masculino' },
-                    { key: 'pantuflas', palabra: 'тапочки', articulo: '', genero: 'plural' },
-                    { key: 'cortina', palabra: 'штора', articulo: '', genero: 'femenino' }
-                ],
-                aleman: [
-                    { key: 'alfombra', palabra: 'Matte', articulo: 'Die', genero: 'femenino' },
-                    { key: 'shampoo', palabra: 'Shampoo', articulo: 'Das', genero: 'neutro' },
-                    { key: 'bata', palabra: 'Bademantel', articulo: 'Der', genero: 'masculino' },
-                    { key: 'pantuflas', palabra: 'Pantoffeln', articulo: 'Die', genero: 'femenino' },
-                    { key: 'cortina', palabra: 'Vorhang', articulo: 'Der', genero: 'masculino' }
-                ],
-                chino: [
-                    { key: 'alfombra', palabra: 'dìtǎn', articulo: '', genero: 'neutro' },
-                    { key: 'shampoo', palabra: 'xǐfà shuǐ', articulo: '', genero: 'neutro' },
-                    { key: 'bata', palabra: 'yùtàobāo', articulo: '', genero: 'neutro' },
-                    { key: 'pantuflas', palabra: 'tuō xié', articulo: '', genero: 'neutro' },
-                    { key: 'cortina', palabra: 'chuānglián', articulo: '', genero: 'neutro' }
-                ],
-                portugues: [
-                    { key: 'alfombra', palabra: 'Tapete', articulo: 'O', genero: 'masculino' },
-                    { key: 'shampoo', palabra: 'Shampoo', articulo: 'O', genero: 'masculino' },
-                    { key: 'bata', palabra: 'Roupão', articulo: 'O', genero: 'masculino' },
-                    { key: 'pantuflas', palabra: 'Chinelos', articulo: 'Os', genero: 'plural' },
-                    { key: 'cortina', palabra: 'Cortina', articulo: 'A', genero: 'femenino' }
-                ],
-                holandes: [
-                    { key: 'alfombra', palabra: 'Mat', articulo: 'De', genero: 'femenino' },
-                    { key: 'shampoo', palabra: 'Shampoo', articulo: 'De', genero: 'femenino' },
-                    { key: 'bata', palabra: 'Badjas', articulo: 'De', genero: 'femenino' },
-                    { key: 'pantuflas', palabra: 'Slippers', articulo: 'De', genero: 'femenino' },
-                    { key: 'cortina', palabra: 'Gordijn', articulo: 'Het', genero: 'neutro' }
+                    { key: 'yogur', palabra: 'Yoghurt', articulo: 'De', genero: 'femenino' },
+                    { key: 'frutas', palabra: 'Fruit', articulo: 'Het', genero: 'neutro' },
+                    { key: 'manzana', palabra: 'Appel', articulo: 'De', genero: 'femenino' },
+                    { key: 'plátano', palabra: 'Banaan', articulo: 'De', genero: 'femenino' },
+                    { key: 'naranja', palabra: 'Sinaasappel', articulo: 'De', genero: 'femenino' },
+                    { key: 'fresa', palabra: 'Aardbei', articulo: 'De', genero: 'femenino' },
+                    { key: 'tocino', palabra: 'Spek', articulo: 'De', genero: 'femenino' },
+                    { key: 'salmón', palabra: 'Zalm', articulo: 'De', genero: 'femenino' },
+                    { key: 'pollo', palabra: 'Kip', articulo: 'De', genero: 'femenino' },
+                    { key: 'ensalada', palabra: 'Salade', articulo: 'De', genero: 'femenino' },
+                    { key: 'verduras', palabra: 'Groente', articulo: 'De', genero: 'femenino' },
+                    { key: 'tomate', palabra: 'Tomaat', articulo: 'De', genero: 'femenino' },
+                    { key: 'cebolla', palabra: 'Ui', articulo: 'De', genero: 'femenino' },
+                    { key: 'lechuga', palabra: 'Sla', articulo: 'De', genero: 'femenino' },
+                    { key: 'patata', palabra: 'Aardappel', articulo: 'De', genero: 'femenino' },
+                    { key: 'pasta', palabra: 'Pasta', articulo: 'De', genero: 'femenino' },
+                    { key: 'arroz', palabra: 'Rijst', articulo: 'De', genero: 'femenino' },
+                    { key: 'sopa', palabra: 'Soep', articulo: 'De', genero: 'femenino' },
+                    { key: 'postre', palabra: 'Dessert', articulo: 'Het', genero: 'neutro' }
                 ]
             },
             sentimientos: {
@@ -948,7 +1082,13 @@
         function setup() {
             grid.innerHTML = '<div class="celda-drop" id="zona-drop"></div>';
             
-            const items_vocab = vocab[estado.tema][estado.idioma];
+            let items_vocab = vocab[estado.tema][estado.idioma];
+            
+            // Si es COMIDA, seleccionar 20 al azar de los 30 disponibles
+            if (estado.tema === 'comida') {
+                items_vocab = items_vocab.sort(() => Math.random() - 0.5).slice(0, 20);
+            }
+            
             estado.items = items_vocab.map(item => ({
                 ...item,
                 displayText: item.articulo ? `${item.articulo} ${item.palabra}` : item.palabra
@@ -961,43 +1101,34 @@
 
         function colocarItems() {
             const gridRect = grid.getBoundingClientRect();
-            const temasDeTExto = ['sentimientos'];
-            const esTemaDeTExto = temasDeTExto.includes(estado.tema);
             
             estado.items.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'item';
                 div.dataset.key = item.key;
                 
-                if (esTemaDeTExto) {
-                    // Para temas de texto: crear cartelito con palabra EN ESPAÑOL
-                    const cartelito = document.createElement('div');
-                    cartelito.className = 'cartelito-item';
-                    // Usar item.key (que es el español) en lugar de item.palabra
-                    const palabraEnEspanol = item.key.charAt(0).toUpperCase() + item.key.slice(1);
-                    cartelito.textContent = palabraEnEspanol;
-                    cartelito.style.fontSize = '16px';
-                    cartelito.style.fontWeight = '600';
-                    cartelito.style.color = '#6b5a4a';
-                    cartelito.style.textAlign = 'center';
-                    cartelito.style.display = 'flex';
-                    cartelito.style.alignItems = 'center';
-                    cartelito.style.justifyContent = 'center';
-                    cartelito.style.background = '#f9f5f0';
-                    cartelito.style.border = '3px solid #d4c5b8';
-                    cartelito.style.borderRadius = '8px';
-                    cartelito.style.padding = '12px 16px';
-                    cartelito.style.width = '140px';
-                    cartelito.style.height = '80px';
-                    cartelito.style.whiteSpace = 'normal';
-                    cartelito.style.wordWrap = 'break-word';
-                    div.appendChild(cartelito);
-                } else {
-                    // Para temas con imágenes
-                    const img = document.createElement('img');
-                    img.src = `./images/${estado.tema}/${item.key}.png`;
-                    div.appendChild(img);
-                }
+                // Crear cartelito con palabra EN IDIOMA ELEGIDO
+                const cartelito = document.createElement('div');
+                cartelito.className = 'cartelito-item';
+                // Mostrar la palabra en el idioma elegido (con artículo si existe)
+                const palabraEnIdioma = item.articulo ? `${item.articulo} ${item.palabra}` : item.palabra;
+                cartelito.textContent = palabraEnIdioma;
+                cartelito.style.fontSize = '16px';
+                cartelito.style.fontWeight = '600';
+                cartelito.style.color = '#6b5a4a';
+                cartelito.style.textAlign = 'center';
+                cartelito.style.display = 'flex';
+                cartelito.style.alignItems = 'center';
+                cartelito.style.justifyContent = 'center';
+                cartelito.style.background = '#f9f5f0';
+                cartelito.style.border = '3px solid #d4c5b8';
+                cartelito.style.borderRadius = '8px';
+                cartelito.style.padding = '12px 16px';
+                cartelito.style.width = '140px';
+                cartelito.style.height = '80px';
+                cartelito.style.whiteSpace = 'normal';
+                cartelito.style.wordWrap = 'break-word';
+                div.appendChild(cartelito);
                 
                 const x = Math.random() * (gridRect.width - 140);
                 const y = Math.random() * (gridRect.height - 140);
@@ -1026,17 +1157,17 @@
             
             const random = Math.floor(Math.random() * itemsDisponibles.length);
             estado.itemActual = itemsDisponibles[random];
-            cartelito.textContent = estado.itemActual.displayText;
+            
+            // Para tema SENTIMIENTOS, mostrar español arriba
+            if (TEMAS_DE_TEXTO.includes(estado.tema)) {
+                // Mostrar palabra EN ESPAÑOL
+                cartelito.textContent = estado.itemActual.key.charAt(0).toUpperCase() + estado.itemActual.key.slice(1);
+            } else {
+                cartelito.textContent = estado.itemActual.displayText;
+            }
             
             // Cambiar color del borde según género
-            const colorPorGenero = {
-                masculino: '#4da6ff',  // celeste
-                femenino: '#ff69b4',   // rosa
-                neutro: '#ffd700',     // amarillo
-                plural: '#00cc66'      // verde
-            };
-            
-            cartelito.style.borderColor = colorPorGenero[estado.itemActual.genero] || '#d4c5b8';
+            cartelito.style.borderColor = COLOR_POR_GENERO[estado.itemActual.genero] || '#d4c5b8';
         }
 
         let dragging = null;
