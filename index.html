@@ -620,10 +620,10 @@
         // Constantes globales
         const TEMAS_DE_TEXTO = ['sentimientos', 'comida'];
         const COLOR_POR_GENERO = {
-            masculino: '#4da6ff',  // celeste
-            femenino: '#ff69b4',   // rosa
-            neutro: '#ffd700',     // amarillo
-            plural: '#00cc66'      // verde
+            masculino: '#B4D7F1',  // azul pastel suave
+            femenino: '#FFD1E8',   // rosa pastel claro
+            neutro: '#FFE680',     // amarillo pastel vibrante
+            plural: '#B4E7B4'      // verde pastel
         };
         
         const vocab = {
@@ -1121,7 +1121,7 @@
                 cartelito.style.alignItems = 'center';
                 cartelito.style.justifyContent = 'center';
                 cartelito.style.background = '#f9f5f0';
-                cartelito.style.border = '3px solid #d4c5b8';
+                cartelito.style.border = `5px solid ${COLOR_POR_GENERO[item.genero] || '#d4c5b8'}`;
                 cartelito.style.borderRadius = '8px';
                 cartelito.style.padding = '12px 16px';
                 cartelito.style.width = '140px';
@@ -1165,9 +1165,6 @@
             } else {
                 cartelito.textContent = estado.itemActual.displayText;
             }
-            
-            // Cambiar color del borde según género
-            cartelito.style.borderColor = COLOR_POR_GENERO[estado.itemActual.genero] || '#d4c5b8';
         }
 
         let dragging = null;
