@@ -217,6 +217,57 @@
             cursor: not-allowed;
         }
 
+        #btn-palabras {
+            position: relative;
+            padding: 12px 36px;
+            font-size: 18px;
+            border: none;
+            border-radius: 18px;
+            background: #5a4a3a;
+            color: #f5f1ed;
+            cursor: pointer;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: transform 0.15s ease;
+            box-shadow: none;
+            font-family: var(--font);
+            margin-top: 12px;
+            z-index: 3;
+        }
+
+        #btn-palabras::before {
+            content: "";
+            position: absolute;
+            inset: -3px;
+            border-radius: 21px;
+            background: conic-gradient(
+                from var(--angulo-led),
+                #f5d97a,
+                #e88787,
+                #f0a8d0,
+                #b79bdb,
+                #7ba7e0,
+                #a0e0f5,
+                #c4e86a,
+                #f5d97a
+            );
+            animation: girarLedRapido 2s linear infinite;
+            z-index: -1;
+        }
+
+        #btn-palabras::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 18px;
+            background: #5a4a3a;
+            z-index: -1;
+        }
+
+        #btn-palabras:active {
+            transform: scale(0.93);
+        }
+
         #btn-inicio, #btn-pausa {
             position: relative;
             padding: 8px 24px;
@@ -552,6 +603,164 @@
             z-index: 0;
             border-radius: 50%;
         }
+
+        #pantalla-palabras {
+            display: none;
+            width: 100%;
+            height: 100vh;
+            flex-direction: column;
+            background: #f5f1ed;
+            overflow: hidden;
+        }
+
+        .barra-palabras {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 16px 24px;
+            gap: 20px;
+            background: rgba(245, 241, 237, 0.95);
+            border-bottom: 1px solid rgba(212, 197, 184, 0.3);
+            flex-wrap: wrap;
+        }
+
+        .selector-palabras {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .selector-palabras label {
+            font-size: 13px;
+            color: #6b5a4a;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .opciones-palabras {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-palabra-opcion {
+            padding: 8px 16px;
+            font-size: 12px;
+            border: 2px solid #d4c5b8;
+            border-radius: 8px;
+            background: #f9f5f0;
+            color: #6b5a4a;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: all 0.15s ease;
+            font-family: var(--font);
+        }
+
+        .btn-palabra-opcion:active {
+            transform: scale(0.95);
+        }
+
+        .btn-palabra-opcion.selected {
+            background: #6b5a4a;
+            color: #f5f1ed;
+            border-color: #6b5a4a;
+        }
+
+        #btn-inicio-palabras {
+            padding: 10px 24px;
+            font-size: 12px;
+            border: 2px solid #d4c5b8;
+            border-radius: 8px;
+            background: #f9f5f0;
+            color: #6b5a4a;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: all 0.15s ease;
+            font-family: var(--font);
+        }
+
+        #btn-inicio-palabras:active {
+            transform: scale(0.95);
+        }
+
+        .contenedor-palabras {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .palabra-item {
+            padding: 16px 20px;
+            background: #f9f5f0;
+            border-left: 5px solid;
+            border-radius: 6px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .palabra-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .palabra-principal {
+            font-size: 18px;
+            font-weight: 700;
+            color: #6b5a4a;
+            letter-spacing: 0.5px;
+            font-family: var(--font);
+        }
+
+        .palabra-espanol {
+            font-size: 13px;
+            color: #999;
+            font-weight: 500;
+            font-family: var(--font);
+        }
+
+        .btn-sonido {
+            width: 32px;
+            height: 32px;
+            background: #d4c5b8;
+            border: 2px solid #b8a89a;
+            border-radius: 6px;
+            cursor: pointer;
+            padding: 0;
+            margin-left: auto;
+            transition: all 0.2s ease;
+            opacity: 0.8;
+            font-family: var(--font);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .btn-sonido::before {
+            content: "♪";
+            font-size: 16px;
+            color: #6b5a4a;
+            font-weight: 700;
+        }
+
+        .btn-sonido:hover {
+            opacity: 1;
+            transform: scale(1.1);
+            background: #c5b6a8;
+        }
+
+        .btn-sonido:active {
+            transform: scale(0.95);
+        }
     </style>
 </head>
 <body>
@@ -579,6 +788,7 @@
                 </div>
             </div>
             <button id="btn-jugar" disabled>¡A JUGAR!</button>
+            <button id="btn-palabras">PALABRAS</button>
         </div>
     </div>
 
@@ -614,6 +824,33 @@
             <button id="btn-confirmar-si">Sí, salir</button>
             <button id="btn-confirmar-no">Cancelar</button>
         </div>
+    </div>
+
+    <div id="pantalla-palabras">
+        <div class="barra-palabras">
+            <div class="selector-palabras">
+                <label>Idioma</label>
+                <div class="opciones-palabras">
+                    <button class="btn-palabra-opcion" data-idioma-pal="ingles">INGLÉS</button>
+                    <button class="btn-palabra-opcion" data-idioma-pal="frances">FRANCÉS</button>
+                    <button class="btn-palabra-opcion" data-idioma-pal="italiano">ITALIANO</button>
+                    <button class="btn-palabra-opcion" data-idioma-pal="ruso">RUSO</button>
+                    <button class="btn-palabra-opcion" data-idioma-pal="aleman">ALEMÁN</button>
+                    <button class="btn-palabra-opcion" data-idioma-pal="chino">CHINO</button>
+                    <button class="btn-palabra-opcion" data-idioma-pal="portugues">PORTUGUÉS</button>
+                    <button class="btn-palabra-opcion" data-idioma-pal="holandes">HOLANDÉS</button>
+                </div>
+            </div>
+            <div class="selector-palabras">
+                <label>Tema</label>
+                <div class="opciones-palabras">
+                    <button class="btn-palabra-opcion" data-tema-pal="comida">COMIDA</button>
+                    <button class="btn-palabra-opcion" data-tema-pal="sentimientos">SENTIMIENTOS</button>
+                </div>
+            </div>
+            <button id="btn-inicio-palabras">INICIO</button>
+        </div>
+        <div class="contenedor-palabras" id="contenedor-palabras"></div>
     </div>
 
     <script>
@@ -1012,6 +1249,18 @@
 
         const botonesIdioma = document.querySelectorAll('[data-idioma]');
         const botonesTema = document.querySelectorAll('[data-tema]');
+        
+        const pantallaPalabras = document.getElementById('pantalla-palabras');
+        const botonesIdiomaP = document.querySelectorAll('[data-idioma-pal]');
+        const botonesTemaP = document.querySelectorAll('[data-tema-pal]');
+        const btnPalabras = document.getElementById('btn-palabras');
+        const btnInicioPalabras = document.getElementById('btn-inicio-palabras');
+        const contenedorPalabras = document.getElementById('contenedor-palabras');
+        
+        let estadoPalabras = {
+            idioma: 'ingles',
+            tema: 'sentimientos'
+        };
 
         botonesIdioma.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -1030,6 +1279,27 @@
                 validar();
             });
         });
+
+        botonesIdiomaP.forEach(btn => {
+            btn.addEventListener('click', () => {
+                botonesIdiomaP.forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                estadoPalabras.idioma = btn.dataset.idiomaPal;
+                mostrarPalabras();
+            });
+        });
+
+        botonesTemaP.forEach(btn => {
+            btn.addEventListener('click', () => {
+                botonesTemaP.forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                estadoPalabras.tema = btn.dataset.temaPal;
+                mostrarPalabras();
+            });
+        });
+
+        btnPalabras.addEventListener('click', abrirPalabras);
+        btnInicioPalabras.addEventListener('click', volverDesdePalabras);
 
         function validar() {
             btnJugar.disabled = !estado.idioma || !estado.tema;
@@ -1350,6 +1620,82 @@
         function reanudar() {
             estado.pausado = false;
             panelPausa.style.display = 'none';
+        }
+
+        function abrirPalabras() {
+            pantInicio.style.display = 'none';
+            pantallaPalabras.style.display = 'flex';
+            botonesIdiomaP.forEach(b => b.classList.remove('selected'));
+            botonesTemaP.forEach(b => b.classList.remove('selected'));
+            botonesIdiomaP.forEach(b => {
+                if (b.dataset.idiomaPal === estadoPalabras.idioma) b.classList.add('selected');
+            });
+            botonesTemaP.forEach(b => {
+                if (b.dataset.temaPal === estadoPalabras.tema) b.classList.add('selected');
+            });
+            mostrarPalabras();
+        }
+
+        function volverDesdePalabras() {
+            pantallaPalabras.style.display = 'none';
+            pantInicio.style.display = 'flex';
+        }
+
+        function reproducirPalabra(palabra) {
+            const utterance = new SpeechSynthesisUtterance(palabra);
+            
+            const langMap = {
+                'ingles': 'en-US',
+                'frances': 'fr-FR',
+                'italiano': 'it-IT',
+                'ruso': 'ru-RU',
+                'aleman': 'de-DE',
+                'chino': 'zh-CN',
+                'portugues': 'pt-PT',
+                'holandes': 'nl-NL'
+            };
+            
+            utterance.lang = langMap[estadoPalabras.idioma] || 'en-US';
+            utterance.rate = 0.8;
+            
+            window.speechSynthesis.cancel();
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function mostrarPalabras() {
+            const items = vocab[estadoPalabras.tema][estadoPalabras.idioma];
+            
+            // Ordenar por palabra en español (key)
+            const itemsOrdenados = [...items].sort((a, b) => {
+                return a.key.localeCompare(b.key);
+            });
+            
+            contenedorPalabras.innerHTML = '';
+            
+            itemsOrdenados.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'palabra-item';
+                div.style.borderLeftColor = COLOR_POR_GENERO[item.genero] || '#d4c5b8';
+                
+                const palabraPrincipal = document.createElement('div');
+                palabraPrincipal.className = 'palabra-principal';
+                const textoIdioma = item.articulo ? `${item.articulo} ${item.palabra}` : item.palabra;
+                palabraPrincipal.textContent = textoIdioma;
+                
+                const palabraEspanol = document.createElement('div');
+                palabraEspanol.className = 'palabra-espanol';
+                palabraEspanol.textContent = `— ${item.key}`;
+                
+                const btnSonido = document.createElement('button');
+                btnSonido.className = 'btn-sonido';
+                btnSonido.textContent = '';
+                btnSonido.addEventListener('click', () => reproducirPalabra(textoIdioma));
+                
+                div.appendChild(palabraPrincipal);
+                div.appendChild(palabraEspanol);
+                div.appendChild(btnSonido);
+                contenedorPalabras.appendChild(div);
+            });
         }
 
         function crearLuciernagas() {
